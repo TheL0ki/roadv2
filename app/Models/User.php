@@ -9,7 +9,8 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -45,13 +46,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function shift() 
+    public function shift()
     {
         return $this->hasMany(Shift::class);
     }
 
     public function schedule()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class, 'user');
     }
 }

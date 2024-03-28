@@ -9,13 +9,13 @@ class Schedule extends Model
 {
     use HasFactory;
 
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     public function shift()
     {
-        return $this->belongsTo(Shift::class);
+        return $this->belongsTo(Shift::class, 'shift');
     }
 }
