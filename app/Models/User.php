@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Team;
+use App\Models\Schedule;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -46,13 +48,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function shift()
-    {
-        return $this->hasMany(Shift::class);
-    }
-
     public function schedule()
     {
         return $this->hasMany(Schedule::class, 'user');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }

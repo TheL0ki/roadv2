@@ -19,11 +19,11 @@ class ScheduleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user' => User::factory(),
+            'user_id' => User::factory(),
             'day' => fake()->dayOfMonth(),
             'month' => fake()->month(),
             'year' => 2024,
-            'shift' => Shift::factory(),
+            'shift_id' => Shift::factory(),
             'homeOffice' => fake()->boolean(),
         ];
     }

@@ -16,6 +16,6 @@ class Schedule extends Model
 
     public function shift()
     {
-        return $this->belongsTo(Shift::class, 'shift');
+        return $this->belongsTo(Shift::class);
     }
 }
