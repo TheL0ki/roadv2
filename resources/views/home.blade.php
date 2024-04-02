@@ -3,4 +3,7 @@
     @foreach ($schedule as $item)
         {{ $item->shift->display }}
     @endforeach
+    <div>
+        {{ $schedule->links() }}
+    </div>
 </x-layout>

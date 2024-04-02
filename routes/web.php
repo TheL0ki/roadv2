@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $schedule = Schedule::with('shift')->get();
+    $schedule = Schedule::with('shift')->paginate(3);
 
     return view('home', [
         'schedule' => $schedule
