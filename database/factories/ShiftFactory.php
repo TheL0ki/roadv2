@@ -17,11 +17,11 @@ class ShiftFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'V',
-            'display' => 'V',
+            'name' => strtoupper(fake()->randomLetter()),
+            'display' => strtoupper(fake()->randomLetter()),
             'color' => fake()->hexColor(),
             'textColor' => fake()->hexColor(),
-            'hours' => fake()->numberBetween(6,10),
+            'hours' => fake()->numberBetween(6, 10),
             'active' => 1
         ];
     }

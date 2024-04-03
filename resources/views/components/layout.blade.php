@@ -32,10 +32,6 @@
                     <x-nav-link href="/userManagement" :active="request()->is('userManagement')">User Management</x-nav-link>
                     <x-nav-link href="/shiftManagement" :active="request()->is('shiftManagement')">Shift Management</x-nav-link>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
             </div>
         </div>
     </nav>
