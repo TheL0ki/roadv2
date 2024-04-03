@@ -1,14 +1,14 @@
 <?php
 
-use App\Models\Schedule;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $schedule = Schedule::with('shift')->paginate(3);
+    $user = User::with('schedule.shift')->get();
 
     return view('home', [
-        'schedule' => $schedule
+        'user' => $user
     ]);
 });
 

@@ -1,9 +1,7 @@
 <x-layout>
     <x-slot:heading>Home</x-slot:heading>
-    @foreach ($schedule as $item)
-        {{ $item->shift->display }}
+    <?php // dd($user); ?>
+    @foreach ($user as $item)
+        {{ $item->firstName }} {{ $item->lastName }} @foreach ($item->schedule as $schedule) {{ $schedule->shift->id}} [{{ $schedule->shift->display }}] @endforeach<br>
     @endforeach
-    <div>
-        {{ $schedule->links() }}
-    </div>
 </x-layout>
