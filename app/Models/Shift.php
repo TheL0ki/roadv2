@@ -11,6 +11,15 @@ class Shift extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'display',
+        'color',
+        'textColor',
+        'hours',
+        'active'
+    ];
+
     public function schedule()
     {
         return $this->hasMany(Schedule::class);
