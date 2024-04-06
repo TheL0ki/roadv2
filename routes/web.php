@@ -6,11 +6,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $user = User::whereHas('schedule.shift', function(Builder $query) {
-        $query->where('month', 4);
-    })->get();
-
-    // dd($user);
+    $user = User::with(['schedule' => function ($query) {
+        $query->with('shift')->where('month', "=", 4);
+    }])->get();
 
     return view('table.show', [
         'table' => $user,
