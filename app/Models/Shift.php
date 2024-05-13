@@ -20,8 +20,13 @@ class Shift extends Model
         'active'
     ];
 
-    public function schedule()
+    public function schedules()
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

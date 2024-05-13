@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use App\Models\User;
+use App\Models\Schedule;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
-use App\Models\Schedule;
 
 class ScheduleController extends Controller
 {
@@ -13,7 +15,27 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
+        $date = new DateTime();
+
+        $user = User::with(['schedule' => function ($query) use ($date) {
+            $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
+        }])->get();
+    
+        $table = [];
+    
+        foreach ($user as $item) {
+            foreach ($item->schedule as $entry) {
+                $table[$entry->user_id][$entry->day] = $entry;
+            }
+        }
+    
+        $date = new DateTime();
+    
+        return view('table.show', [
+            'user' => $user,
+            'table' => $table,
+            'date' => $date
+        ]);
     }
 
     /**
@@ -35,9 +57,28 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Schedule $schedule)
+    public function show($year, $month)
     {
-        //
+        $displayDate = $year . '-' . $month . '-01';
+        $date = new DateTime($displayDate);
+
+        $user = User::with(['schedule' => function ($query) use ($date) {
+            $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
+        }])->get();
+
+        $table = [];
+
+        foreach ($user as $item) {
+            foreach ($item->schedule as $entry) {
+                $table[$entry->user_id][$entry->day] = $entry;
+            }
+        }
+
+        return view('table.show', [
+            'user' => $user,
+            'table' => $table,
+            'date' => $date
+        ]);
     }
 
     /**

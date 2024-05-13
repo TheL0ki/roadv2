@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use DateTime;
 use App\Models\Team;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -33,6 +34,7 @@ class UserFactory extends Factory
             'team' => Team::factory(),
             'model' => 'VZ',
             'active' => 1,
+            'validFrom' => now(),
             'admin' => 0,
             'remember_token' => Str::random(10),
         ];

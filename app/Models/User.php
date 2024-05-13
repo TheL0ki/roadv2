@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Team;
+use App\Models\Shift;
 use App\Models\Schedule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -61,5 +62,10 @@ class User extends Authenticatable
     public function team()
     {
         return $this->belongsTo(Team::class);
+    }
+
+    public function shifts()
+    {
+        return $this->belongsToMany(Shift::class);
     }
 }

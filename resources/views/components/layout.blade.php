@@ -1,48 +1,52 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-gray-100">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>R.O.A.D</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <style>
-        body {
-            min-height: 75rem;
-            padding-top: 4.5rem;
-        }
-    </style>
+    <title>R.O.A.D</title>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">R.O.A.D</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <x-nav-link href="/" :active="request()->is('/')">Home</x-nav-link>
-                    <x-nav-link href="/settings" :active="request()->is('settings')">Settings</x-nav-link>
-                    <x-nav-link href="/batch" :active="request()->is('batch')">Batch Assign</x-nav-link>
-                    <x-nav-link href="/userManagement" :active="request()->is('userManagement')">User Management</x-nav-link>
-                    <x-nav-link href="/shiftManagement" :active="request()->is('shiftManagement')">Shift Management</x-nav-link>
-                </ul>
+<body class="bg-black/80 text-white pb-20">
+    <div class="px-10">
+        <nav class="flex justify-between items-center py-4 border-b border-white/10">
+            <div>
+                <a href="/">R.O.A.D</a>
             </div>
-        </div>
-    </nav>
+            <div class="space-x-6">
+                <a href="/">Home</a>
+                <a href="/settings">Settings</a>
+                <a href="/batch">Batch Assign</a>
+                <a href="/userManagement">User Management</a>
+                <a href="/shiftManagement">Shift Management</a>
+            </div>
 
-    <main class="container">
-        <h1>{{ $heading; }}</h1>
-        {{ $slot }}
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+            @auth
+                <div class="space-x-6 flex">
+                    <a href="/jobs/create">Post a Job</a>
+
+                    <form method="POST" action="/logout">
+                        @csrf
+                        @method('DELETE')
+
+                        <button>Log Out</button>
+                    </form>
+                </div>
+            @endauth
+
+            @guest()
+                <div class="space-x-6">
+                    <a href="/register">Sign Up</a>
+                    <a href="/login">Log In</a>
+                </div>
+            @endguest
+        </nav>
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
 </body>
 
 </html>

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->bigInteger('team')->nullable();
             $table->string('model');
             $table->boolean('active');
+            $table->dateTime('validFrom');
+            $table->dateTime('validUntil')->nullable();
             $table->boolean('admin');
             $table->rememberToken();
             $table->timestamps();
