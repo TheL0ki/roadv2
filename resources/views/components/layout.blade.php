@@ -20,14 +20,11 @@
             <div class="space-x-6">
                 <a href="/" class="hover:text-blue-400 duration-300">Home</a>
                 <a href="/settings" class="hover:text-blue-400 duration-300">Settings</a>
-                @auth
-                    @if (Auth::user()->admin == '1')
-                        <a href="/batch" class="hover:text-blue-400 duration-300">Batch Assign</a>
-                        <a href="/userManagement" class="hover:text-blue-400 duration-300">User Management</a>
-                        <a href="/shiftManagement" class="hover:text-blue-400 duration-300">Shift Management</a>
-                    @endif
-                @endauth
+                <a href="/batch" class="hover:text-blue-400 duration-300">Batch Assign</a>
+                <a href="/userManagement" class="hover:text-blue-400 duration-300">User Management</a>
+                <a href="/shiftManagement" class="hover:text-blue-400 duration-300">Shift Management</a>
             </div>
+            
             @auth
                 <div class="space-x-6">
                     <form method="POST" action="/logout">
