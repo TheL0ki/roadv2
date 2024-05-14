@@ -11,7 +11,7 @@ class BatchController extends Controller
      */
     public function index()
     {
-        //
+        return view('batch');
     }
 
     /**

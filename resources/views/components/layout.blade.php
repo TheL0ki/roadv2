@@ -18,30 +18,29 @@
                 </a>
             </div>
             <div class="space-x-6">
-                <a href="/" class="hover:text-blue-400">Home</a>
-                <a href="/settings" class="hover:text-blue-400">Settings</a>
-                <a href="/batch" class="hover:text-blue-400">Batch Assign</a>
-                <a href="/userManagement" class="hover:text-blue-400">User Management</a>
-                <a href="/shiftManagement" class="hover:text-blue-400">Shift Management</a>
+                <a href="/" class="hover:text-blue-400 duration-300">Home</a>
+                <a href="/settings" class="hover:text-blue-400 duration-300">Settings</a>
+                @auth
+                    @if (Auth::user()->admin == '1')
+                        <a href="/batch" class="hover:text-blue-400 duration-300">Batch Assign</a>
+                        <a href="/userManagement" class="hover:text-blue-400 duration-300">User Management</a>
+                        <a href="/shiftManagement" class="hover:text-blue-400 duration-300">Shift Management</a>
+                    @endif
+                @endauth
             </div>
-
             @auth
                 <div class="space-x-6">
-                    <a href="/jobs/create">Post a Job</a>
-
                     <form method="POST" action="/logout">
                         @csrf
                         @method('DELETE')
 
-                        <button>Log Out</button>
+                        <x-button>Log Out</x-button>
                     </form>
                 </div>
             @endauth
 
             @guest()
                 <div class="space-x-6">
-                    <a href="/register">Sign Up</a>
-                    <a href="/login">Log In</a>
                 </div>
             @endguest
         </nav>

@@ -30,7 +30,7 @@
             </x-table.body>
         </x-table.table>
         <div class="pt-4">
-            <button>Create New User</button>
-            <button>Create New Team</button>
+            <x-button>Create New User</x-button>
+            <x-button>Create New Team</x-button>
         </div>
 </x-layout>

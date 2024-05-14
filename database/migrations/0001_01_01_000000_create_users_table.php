@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -24,7 +23,7 @@ return new class extends Migration
             $table->boolean('active');
             $table->dateTime('validFrom');
             $table->dateTime('validUntil')->nullable();
-            $table->boolean('admin');
+            $table->boolean('admin')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
