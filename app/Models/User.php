@@ -8,6 +8,9 @@ use App\Models\Shift;
 use App\Models\Schedule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -54,17 +57,17 @@ class User extends Authenticatable
         ];
     }
 
-    public function schedule()
+    public function schedule() : HasMany
     {
         return $this->hasMany(Schedule::class);
     }
 
-    public function team()
+    public function team() : BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function shifts()
+    public function shifts() : BelongsToMany
     {
         return $this->belongsToMany(Shift::class);
     }

@@ -13,18 +13,20 @@
     <div class="px-10">
         <nav class="flex justify-between items-center py-4 border-b border-white/10">
             <div>
-                <a href="/">R.O.A.D</a>
+                <a href="/">
+                    <img src="{{ Vite::asset('resources/images/logo.svg') }}"  class="max-w-32">
+                </a>
             </div>
             <div class="space-x-6">
-                <a href="/">Home</a>
-                <a href="/settings">Settings</a>
-                <a href="/batch">Batch Assign</a>
-                <a href="/userManagement">User Management</a>
-                <a href="/shiftManagement">Shift Management</a>
+                <a href="/" class="hover:text-blue-400">Home</a>
+                <a href="/settings" class="hover:text-blue-400">Settings</a>
+                <a href="/batch" class="hover:text-blue-400">Batch Assign</a>
+                <a href="/userManagement" class="hover:text-blue-400">User Management</a>
+                <a href="/shiftManagement" class="hover:text-blue-400">Shift Management</a>
             </div>
 
             @auth
-                <div class="space-x-6 flex">
+                <div class="space-x-6">
                     <a href="/jobs/create">Post a Job</a>
 
                     <form method="POST" action="/logout">

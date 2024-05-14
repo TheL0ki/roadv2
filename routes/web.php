@@ -1,25 +1,19 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\BatchController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\ScheduleController;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use App\Http\Controllers\SettingsController;
 
 Route::get('/', [ScheduleController::class, 'index']);
 Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
-Route::get('/settings', function () {
-    return view('settings');
-});
+Route::get('/settings', [SettingsController::class, 'index']);
 
-Route::get('/batch', function () {
-    return view('batch');
-});
+Route::get('/batch',[BatchController::class, 'index']);
 
-Route::get('/userManagement', function () {
-    return view('user.show');
-});
+Route::get('/userManagement', [UserController::class, 'index']);
 
-Route::get('/shiftManagement', function () {
-    return view('shift.show');
-});
+Route::get('/shiftManagement', [ShiftController::class, 'index']);

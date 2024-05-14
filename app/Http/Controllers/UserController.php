@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreShiftRequest;
-use App\Http\Requests\UpdateShiftRequest;
-use App\Models\Shift;
+use App\Models\Team;
+use App\Models\User;
+use Illuminate\Http\Request;
 
-class ShiftController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('shift.show');
+        $user = User::where('active', '=', '1')->with('team')->get();
+
+        return view('user.index', ['user' => $user]);
     }
 
     /**
@@ -27,7 +29,7 @@ class ShiftController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreShiftRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,7 +37,7 @@ class ShiftController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Shift $shift)
+    public function show(User $user)
     {
         //
     }
@@ -43,7 +45,7 @@ class ShiftController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Shift $shift)
+    public function edit(User $user)
     {
         //
     }
@@ -51,7 +53,7 @@ class ShiftController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateShiftRequest $request, Shift $shift)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -59,7 +61,7 @@ class ShiftController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Shift $shift)
+    public function destroy(User $user)
     {
         //
     }

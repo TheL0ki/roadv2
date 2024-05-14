@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
-            'team' => Team::factory(),
+            'team_id' => Team::factory(),
             'model' => 'VZ',
             'active' => 1,
             'validFrom' => now(),

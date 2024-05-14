@@ -1,26 +1,26 @@
 <x-layout>
-        <div class="flex justify-center pt-4">
-            <table class="table-auto border-collapse w-full">
-                <thead class="border-b border-white/20">
-                    <th>Name</th>
+        <x-table.table>
+            <x-table.head>
+                <x-table.head-row>
+                    <x-table.head-cell>Name</x-table.head-cell>
                     @for ($i = 1; $i <= $date->format('t'); $i++)
-                        <th>{{ $i }}</th>
+                        <x-table.head-cell>{{ $i }}</x-table.head-cell>
                     @endfor
-                </thead>
-                <tbody>
-                    @foreach ($user as $item)
-                        <tr class="border-b border-r border-white/20 even:bg-black/30">
-                            <td  class="border-r border-l border-white/20"><a href="/schedule/change/{{ $item->id }}"> {{ $item->firstName }} {{ $item->lastName }} </a></td>
-                            @for ($i = 1; $i <= $date->format('t'); $i++)
-                                <td class="border-l border-white/20 w-[50px] text-center">
-                                    @isset ($table[$item->id][$i])
-                                        {{ $table[$item->id][$i]->shift->display }}
-                                    @endisset
-                                </td>
-                            @endfor
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                </x-table.head-row>
+            </x-table.head>
+            <x-table.body>
+                @foreach ($user as $item)
+                    <x-table.body-row>
+                        <x-table.body-cell><a href="/schedule/change/{{ $item->id }}"> {{ $item->firstName }} {{ $item->lastName }} </a></x-table.body-cell>
+                        @for ($i = 1; $i <= $date->format('t'); $i++)
+                            <x-table.body-cell class="w-[50px] text-center">
+                                @isset ($table[$item->id][$i])
+                                    {{ $table[$item->id][$i]->shift->display }}
+                                @endisset
+                            </x-table.body-cell>
+                        @endfor
+                    </x-table.body-row>
+                @endforeach
+            </x-table.body>
+        </x-table.table>
 </x-layout>
