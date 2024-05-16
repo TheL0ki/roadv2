@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use DateTime;
+use App\Models\Role;
 use App\Models\Team;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -33,9 +34,10 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'team_id' => Team::factory(),
             'model' => 'VZ',
+            'profilePic' => 'https://picsum.photos/seed/' . rand(1, 1000) . '/50/50',
+            'role_id' => rand(1, 2),
             'active' => 1,
             'validFrom' => now(),
-            'admin' => 0,
             'remember_token' => Str::random(10),
         ];
     }

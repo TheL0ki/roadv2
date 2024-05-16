@@ -16,22 +16,21 @@ class ScheduleController extends Controller
     public function index()
     {
         $date = new DateTime();
+        $date->setDate($date->format('Y'), $date->format('m'), '01');
 
         $user = User::with(['schedule' => function ($query) use ($date) {
             $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
         }])->get();
-    
+
         $table = [];
-    
+
         foreach ($user as $item) {
             foreach ($item->schedule as $entry) {
                 $table[$entry->user_id][$entry->day] = $entry;
             }
         }
-    
-        $date = new DateTime();
-    
-        return view('table.show', [
+
+        return view('schedule.index', [
             'user' => $user,
             'table' => $table,
             'date' => $date
@@ -86,7 +85,7 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
-        //
+        return redirect('/');
     }
 
     /**
@@ -94,7 +93,7 @@ class ScheduleController extends Controller
      */
     public function update(UpdateScheduleRequest $request, Schedule $schedule)
     {
-        //
+        
     }
 
     /**

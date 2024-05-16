@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -57,18 +58,28 @@ class User extends Authenticatable
         ];
     }
 
-    public function schedule() : HasMany
+    public function schedule(): HasMany
     {
         return $this->hasMany(Schedule::class);
     }
 
-    public function team() : BelongsTo
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function shifts() : BelongsToMany
+    public function shifts(): BelongsToMany
     {
         return $this->belongsToMany(Shift::class);
+    }
+
+    public function managingTeams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
+    public function role() : BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 }

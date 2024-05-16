@@ -1,1 +1,1 @@
-<tr>{{ $slot }}</tr>
+<tr class="py-2">{{ $slot }}</tr>

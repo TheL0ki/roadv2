@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Models\Team;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,10 +21,11 @@ return new class () extends Migration {
             $table->string('password');
             $table->foreignIdFor(Team::class)->nullable();
             $table->string('model');
+            $table->string('profilePic');
             $table->boolean('active');
             $table->dateTime('validFrom');
             $table->dateTime('validUntil')->nullable();
-            $table->boolean('admin')->default(0);
+            $table->foreignIdFor(Role::class);
             $table->rememberToken();
             $table->timestamps();
         });

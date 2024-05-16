@@ -8,6 +8,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingsController;
 
 Route::get('/', [ScheduleController::class, 'index']);
+Route::get('/schedule/change/{id}', [ScheduleController::class, 'edit']);
 Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
 Route::get('/settings', [SettingsController::class, 'index']);
