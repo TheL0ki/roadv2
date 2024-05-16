@@ -18,11 +18,12 @@
                 </a>
             </div>
             <div class="space-x-6">
-                <a href="/" class="hover:text-blue-400 duration-300">Home</a>
-                <a href="/settings" class="hover:text-blue-400 duration-300">Settings</a>
-                <a href="/batch" class="hover:text-blue-400 duration-300">Batch Assign</a>
-                <a href="/userManagement" class="hover:text-blue-400 duration-300">User Management</a>
-                <a href="/shiftManagement" class="hover:text-blue-400 duration-300">Shift Management</a>
+                <x-nav-link href="/">Home</x-nav-link>
+                <x-nav-link href="/settings">Settings</x-nav-link>
+                <x-nav-link href="/batch">Batch Assign</x-nav-link>
+                <x-nav-link href="/userManagement">User Management</x-nav-link>
+                <x-nav-link href="/teamManagement">Team Management</x-nav-link>
+                <x-nav-link href="/shiftManagement">Shift Management</x-nav-link>
             </div>
             
             @auth
