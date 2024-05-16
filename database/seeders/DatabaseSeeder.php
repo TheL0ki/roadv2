@@ -16,13 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create([
-            'name' => 'administrator'
-        ]);
+        $roles = [
+            'administrator',
+            'manager',
+            'user'    
+        ];
 
-        Role::create([
-            'name' => 'user'
-        ]);
+        foreach($roles as $role) {
+            Role::create([
+                'name' => $role
+            ]);
+        }
+        
         $user = User::factory(5)->create();
         $shift = Shift::factory(3)->create();
 

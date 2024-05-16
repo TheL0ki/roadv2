@@ -35,7 +35,7 @@ class UserFactory extends Factory
             'team_id' => Team::factory(),
             'model' => 'VZ',
             'profilePic' => 'https://picsum.photos/seed/' . rand(1, 1000) . '/50/50',
-            'role_id' => rand(1, 2),
+            'role_id' => rand(1, 3),
             'active' => 1,
             'validFrom' => now(),
             'remember_token' => Str::random(10),

@@ -24,7 +24,7 @@
                         <x-table.body-cell>{{ $item->email }}</x-table.body-cell>
                         <x-table.body-cell>{{ $item->team->displayName }}</x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ $item->model }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ ucfirst($item->role->name) }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
                         <x-table.body-cell class="text-center">
                             <x-button class="bg-green-600 hover:bg-green-900">Edit</x-button>
                             <x-button class="bg-red-600 hover:bg-red-900">Delete</x-button>
