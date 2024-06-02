@@ -50,7 +50,7 @@
                 <div class="space-x-6">
                 </div>
                 <div class="space-x-6">
-                    <a href="/login"><x-button>Log In</x-button></a>
+                    <x-button><a href="/login">Log In</a></x-button>
                 </div>
             @endguest
         </nav>
