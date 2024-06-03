@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
+use App\Models\Shift;
 use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
-use App\Models\Shift;
 
 class ShiftController extends Controller
 {
@@ -13,7 +14,8 @@ class ShiftController extends Controller
      */
     public function index()
     {
-        return view('shift.index');
+        $teams = Team::with('shift')->get();
+        return view('shift.index', ['teams' => $teams]);
     }
 
     /**
