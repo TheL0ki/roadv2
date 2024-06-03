@@ -1,10 +1,10 @@
 @props(['loopdate', 'last' => false])
 
 @php
-    $classes = "border-white/20 py-2 px-2";
+    $classes = "border-white/30 py-2 px-2";
 
     if (isset($loopdate) && ($loopdate->format('N') === '6' || $loopdate->format('N') === '7')) {
-        $classes .= ' bg-black';
+        $classes .= ' bg-gray-950 border-b';
     }
 
     if (isset($loopdate) && $loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d')) {

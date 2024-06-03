@@ -30,10 +30,15 @@
                         }
                     @endphp
                     <x-table.body-row>
-                        <x-table.body-cell class="border-r border-l flex">
-                            <div class="px-2 flex items-center">
-                                <a href="/schedule/change/{{ $item->id }}"> {{ $item->firstName }} {{ $item->lastName }} </a>
-                            </div>
+                        <x-table.body-cell class="border-l">
+                            <a href="/schedule/change/{{ $item->id }}" class="flex">
+                                <div>
+                                    <img src="{{ $item->profilePic }}" class="w-[30px] h-[30px] rounded-full">
+                                </div>
+                                <div class="px-2 flex items-center">
+                                    {{ $item->firstName }} {{ $item->lastName }}
+                                </div>
+                            </a>
                         </x-table.body-cell>
                         @for ($i = 1; $i <= $date->format('t'); $i++)
                             <x-table.body-cell class="border-l w-[50px] text-center" :$loopdate :$last >

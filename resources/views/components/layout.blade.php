@@ -28,22 +28,22 @@
                         <x-nav-link href="/shiftManagement">Shift Management</x-nav-link>
                     @endadmin
                 </div>
-                <div class="space-x-6 flex justify-between items-center">
+                <div class="space-x-6 flex justify-between items-center" data-popover-target="userMenu">
                     <div>
-                        {{ auth()->user()->email }}
+                        {{ auth()->user()->firstName }} {{ auth()->user()->lastName }}
                     </div>
                     <div>
                         <img src="{{ auth()->user()->profilePic }}" class="w-[50px] h-[50px] rounded-full">
                     </div>
-                    <div">
+                    <div>
                         <form method="POST" action="/logout">
                             @csrf
                             @method('DELETE')
-    
-                            <x-button>Log Out</x-button>
+        
+                            <button>Log Out</button>
                         </form>
                     </div>
-                </div>
+                </div>              
             @endauth
 
             @guest()
@@ -54,7 +54,7 @@
                 </div>
             @endguest
         </nav>
-        <main class="px-10">
+        <main>
             {{ $slot }}
         </main>
     </div>
