@@ -1,3 +1,3 @@
-<thead class="border-b border-white/20">
+<thead>
     {{ $slot }}
 </thead>

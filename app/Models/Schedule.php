@@ -17,7 +17,7 @@ class Schedule extends Model
         'homeOffice'
     ];
 
-    public function users() : BelongsTo
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -1,18 +1,14 @@
 @props(['loopdate', 'last' => false])
 
 @php
-    $classes = "border-white/30 py-2 px-2";
+    $classes = "py-2 px-2 border border-white/30";
 
     if (isset($loopdate) && ($loopdate->format('N') === '6' || $loopdate->format('N') === '7')) {
-        $classes .= ' bg-gray-950 border-b';
+        $classes .= ' bg-gray-950';
     }
 
     if (isset($loopdate) && $loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d')) {
-        $classes = 'py-2 px-2 border-l border-r border-blue-500';
-    }
-
-    if (isset($loopdate) && $loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d') && $last === true) {
-        $classes = 'py-2 px-2 border-l border-r border-b border-blue-500';
+        $classes .= ' bg-blue-800';
     }
 @endphp
 

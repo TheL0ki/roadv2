@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use DateTime;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Shift;
 use App\Models\Schedule;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
+use Illuminate\Support\Facades\Date;
 
 class ScheduleController extends Controller
 {
@@ -85,22 +88,49 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id, $year, $month)
     {
-
-        $user = User::with('team.shift')->find($id);
+        $displayDate = $year . '-' . $month . '-01';
+        $date = new DateTime($displayDate);
+        $user = User::with('schedule')->find($id);
 
         return view('schedule.edit', [
             'user' => $user,
+            'date' => $date,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Request $request)
     {
-        return redirect('/');
+        $request->validate([
+            'shift' => ['required', 'array'],
+            'shift.*' => ['required', 'array', 'min:1', 'max:2'],
+            'shift.*.shift' => ['required', 'integer'],
+            'user_id' => ['required', 'integer'],
+            'month' => ['required', 'numeric', 'min:1', 'max:12'],
+            'year' => ['required', 'numeric'],
+        ]);
+
+        $user = User::find($request->user_id);
+
+        foreach($request->shift as $day => $details) {
+            
+            $schedule = $user->schedule()->firstOrNew([
+                'day' => $day,
+                'month' => $request->month,
+                'year' => $request->year,
+            ]);
+
+            $schedule->user_id = $user->id;
+            $schedule->shift_id = $details['shift'];
+            $schedule->homeOffice = $details['homeOffice'] ?? 0;
+            $schedule->save();
+        }
+        
+        return redirect('/schedule/' . $request->year .'/' . $request->month);
     }
 
     /**

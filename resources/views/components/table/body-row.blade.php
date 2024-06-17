@@ -1,1 +1,7 @@
-<tr class="border-b border-r border-white/20 even:bg-black/30">{{ $slot }}</tr>
+@php
+    $classes = "even:bg-black/30"
+@endphp
+
+<tr {{ $attributes(['class' => $classes]) }}>
+    {{ $slot }}
+</tr>

@@ -92,8 +92,8 @@
                             }
                         @endphp
                         <x-table.body-row>
-                            <x-table.body-cell class="border-l">
-                                <a href="/schedule/change/{{ $item->id }}" class="flex">
+                            <x-table.body-cell>
+                                <a href="/schedule/change/{{ $item->id }}/{{ $date->format('Y') . '/' . $date->format('n') }}" class="flex">
                                     <div>
                                         <img src="{{ $item->profilePic }}" class="w-[30px] h-[30px] rounded-full">
                                     </div>
@@ -103,7 +103,7 @@
                                 </a>
                             </x-table.body-cell>
                             @for ($i = 1; $i <= $date->format('t'); $i++)
-                                <x-table.body-cell class="border-l w-[50px] text-center" :$loopdate :$last>
+                                <x-table.body-cell class="w-[50px] text-center" :$loopdate :$last>
                                     @isset($table[$item->id][$i])
                                         {{ $table[$item->id][$i]->shift->display }}
                                     @endisset

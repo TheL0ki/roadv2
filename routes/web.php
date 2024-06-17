@@ -15,7 +15,7 @@ Route::post('/login', [SessionController::class, 'store']);
 Route::delete('/logout', [SessionController::class, 'destroy']);
 
 Route::get('/', [ScheduleController::class, 'index']);
-Route::get('/schedule/change/{id}', [ScheduleController::class, 'edit']);
+Route::get('/schedule/change/{id}/{year}/{month}', [ScheduleController::class, 'edit']);
 Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update']);
 Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
