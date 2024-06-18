@@ -32,22 +32,26 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        User::create([
+        $team = Team::factory(3)->create();
+
+        $user = User::create([
             'firstName' => 'Admin',
             'lastName' => 'God',
             'email' => 'login@password.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
-            'team_id' => 1,
             'model' => 'VZ',
             'profilePic' => 'https://picsum.photos/seed/' . rand(1, 1000) . '/50/50',
-            'role_id' => 1,
             'active' => 1,
             'validFrom' => now(),
             'remember_token' => Str::random(10),
         ]);
+
+        $user->team()->associate(Team::find(1));
+        $user->role()->associate(Role::find(1));
+        $user->save();
         
-        $team = Team::factory(3)->create();
+        
         $user = User::factory(5)->recycle($team)->create(new Sequence(
             [
                 'role_id' => 3

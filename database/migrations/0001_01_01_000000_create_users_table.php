@@ -21,11 +21,11 @@ return new class () extends Migration {
             $table->string('password');
             $table->foreignIdFor(Team::class)->nullable();
             $table->string('model');
-            $table->string('profilePic');
-            $table->boolean('active');
-            $table->dateTime('validFrom');
+            $table->string('profilePic')->default('images/profile_placeholder.png');
+            $table->boolean('active')->default(true);
+            $table->dateTime('validFrom')->default(now());
             $table->dateTime('validUntil')->nullable();
-            $table->foreignIdFor(Role::class);
+            $table->foreignIdFor(Role::class)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -9,7 +9,7 @@
     <title>R.O.A.D</title>
 </head>
 
-<body class="bg-black/80 text-white pb-20">
+<body class="bg-neutral-700 text-white pb-20">
     <div class="px-10">
         <nav class="flex justify-between items-center py-2 border-b border-white/10">
             <div>

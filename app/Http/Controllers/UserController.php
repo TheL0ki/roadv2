@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -15,7 +17,11 @@ class UserController extends Controller
     {
         $user = User::where('active', '=', '1')->with('team')->with('role')->get();
 
-        return view('user.index', ['user' => $user]);
+        return view('user.index', [
+            'user' => $user,
+            'teams' => Team::all(),
+            'roles' => Role::all(),
+        ]);
     }
 
     /**
@@ -31,7 +37,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userAttributes = $request->validate([
+            'firstName' => ['required'],
+            'lastName' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', Password::min(6)],
+            'role_id' => ['required'],
+            'team_id' => ['required'],
+            'model' => ['required'],
+        ]);
+
+        $user = User::create($userAttributes);
+
+        $user->team()->associate(Team::find($userAttributes['team_id']));
+        $user->role()->associate(Role::find($userAttributes['role_id']));
+        $user->save();
+
+        return redirect('/userManagement')->with('success', 'User created successfully!');
     }
 
     /**
