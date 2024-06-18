@@ -19,7 +19,7 @@
                         $loopdate = clone $date;
                     @endphp
                     @for ($i = 1; $i <= 15; $i++)
-                        <x-table.head-cell class="border border-white/20" :$loopdate>
+                        <x-table.head-cell class="border border-white/20 w-[100px]" :$loopdate>
                             {{ $i }}
                         </x-table.head-cell>
                         @php
@@ -32,21 +32,7 @@
                         $loopdate = clone $date;
                     @endphp
                     @for ($i = 1; $i <= 15; $i++)
-                        <x-table.body-cell class="text-center" :$loopdate>
-                            <x-form.select name="shift[{{ $i }}][shift]">
-                                @php
-                                    $todayShift = $user->schedule->where('day', $loopdate->format('d'))->where('month', $loopdate->format('m'))->where('year', $loopdate->format('Y'))->first();
-                                @endphp
-                                @if ($todayShift)
-                                    <option value="{{ $todayShift->shift->id }}">{{ $todayShift->shift->display }}</option>
-                                @endif
-                                <option value="null">--</option>
-                                @foreach ($user->team->shift as $shift)
-                                    <option value="{{ $shift->id }}">{{ $shift->display }}</option>
-                                @endforeach
-                            </x-form.select>
-                            HO: <input type="checkbox" name="shift[{{ $i }}][homeOffice]" value="1">
-                        </x-table.body-cell>
+                        <x-shiftSelector :$loopdate :$i :$user></x-shiftSelector>
                         @php
                             $loopdate->modify('+1 Day');
                         @endphp
@@ -58,7 +44,7 @@
                         $loopdate->modify('+15 Days');
                     @endphp
                     @for ($i = 16; $i <= $date->format('t'); $i++)
-                        <x-table.head-cell class="border border-white/20" :$loopdate>
+                        <x-table.head-cell class="border border-white/20 w-[100px]" :$loopdate>
                             {{ $i }}
                         </x-table.head-cell>
                         @php
@@ -72,21 +58,7 @@
                         $loopdate->modify('+15 Days');
                     @endphp
                     @for ($i = 16; $i <= $date->format('t'); $i++)
-                        <x-table.body-cell class="text-center" :$loopdate>
-                            <x-form.select name="shift[{{ $i }}][shift]">
-                                @php
-                                    $todayShift = $user->schedule->where('day', $loopdate->format('d'))->where('month', $loopdate->format('m'))->where('year', $loopdate->format('Y'))->first();
-                                @endphp
-                                @if ($todayShift)
-                                    <option value="{{ $todayShift->shift->id }}">{{ $todayShift->shift->display }}</option>
-                                @endif
-                                <option value="null">--</option>
-                                @foreach ($user->team->shift as $shift)
-                                    <option value="{{ $shift->id }}">{{ $shift->display }}</option>
-                                @endforeach
-                            </x-form.select>
-                            HO: <input type="checkbox" name="shift[{{ $i }}][homeOffice]" value="1">
-                        </x-table.body-cell>
+                        <x-shiftSelector :$loopdate :$i :$user></x-shiftSelector>
                         @php
                             $loopdate->modify('+1 Day');
                         @endphp
