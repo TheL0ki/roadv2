@@ -40,7 +40,7 @@
                                 @if ($todayShift)
                                     <option value="{{ $todayShift->shift->id }}">{{ $todayShift->shift->display }}</option>
                                 @endif
-                                <option value="">--</option>
+                                <option value="null">--</option>
                                 @foreach ($user->team->shift as $shift)
                                     <option value="{{ $shift->id }}">{{ $shift->display }}</option>
                                 @endforeach
@@ -80,7 +80,7 @@
                                 @if ($todayShift)
                                     <option value="{{ $todayShift->shift->id }}">{{ $todayShift->shift->display }}</option>
                                 @endif
-                                <option value="">--</option>
+                                <option value="null">--</option>
                                 @foreach ($user->team->shift as $shift)
                                     <option value="{{ $shift->id }}">{{ $shift->display }}</option>
                                 @endforeach

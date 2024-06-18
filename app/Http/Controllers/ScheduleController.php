@@ -108,7 +108,7 @@ class ScheduleController extends Controller
         $request->validate([
             'shift' => ['required', 'array'],
             'shift.*' => ['required', 'array', 'min:1', 'max:2'],
-            'shift.*.shift' => ['required', 'integer'],
+            'shift.*.shift' => ['required', 'alpha_num'],
             'user_id' => ['required', 'integer'],
             'month' => ['required', 'numeric', 'min:1', 'max:12'],
             'year' => ['required', 'numeric'],
@@ -118,16 +118,26 @@ class ScheduleController extends Controller
 
         foreach($request->shift as $day => $details) {
             
-            $schedule = $user->schedule()->firstOrNew([
-                'day' => $day,
-                'month' => $request->month,
-                'year' => $request->year,
-            ]);
-
-            $schedule->user_id = $user->id;
-            $schedule->shift_id = $details['shift'];
-            $schedule->homeOffice = $details['homeOffice'] ?? 0;
-            $schedule->save();
+            if($details['shift'] === "null") 
+            {
+                $schedule = $user->schedule()->where('day', $day)->where('month', $request->month)->where('year', $request->year)->first();
+                if($schedule) {
+                    $schedule->delete();
+                }
+            }
+            else
+            {
+                $schedule = $user->schedule()->firstOrNew([
+                    'day' => $day,
+                    'month' => $request->month,
+                    'year' => $request->year,
+                ]);
+    
+                $schedule->user_id = $user->id;
+                $schedule->shift_id = $details['shift'];
+                $schedule->homeOffice = $details['homeOffice'] ?? 0;
+                $schedule->save();                
+            }
         }
         
         return redirect('/schedule/' . $request->year .'/' . $request->month);
