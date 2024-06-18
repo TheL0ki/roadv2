@@ -10,14 +10,19 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingsController;
 
-Route::get('/login', [SessionController::class, 'create']);
-Route::post('/login', [SessionController::class, 'store']);
-Route::delete('/logout', [SessionController::class, 'destroy']);
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [SessionController::class, 'create'])->name('login');
+    Route::post('/login', [SessionController::class, 'store']);
+});
 
-Route::get('/', [ScheduleController::class, 'index']);
-Route::get('/schedule/change/{id}/{year}/{month}', [ScheduleController::class, 'edit']);
-Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update']);
-Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
+Route::middleware('auth')->group(function () {
+    Route::get('/', [ScheduleController::class, 'index']);
+    Route::get('/schedule/change/{id}/{year}/{month}', [ScheduleController::class, 'edit']);
+    Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update']);
+    Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
+
+    Route::delete('/logout', [SessionController::class, 'destroy']); 
+});
 
 Route::get('/settings', [SettingsController::class, 'index']);
 
