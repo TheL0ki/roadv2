@@ -28,22 +28,21 @@
                         <x-nav-link href="/shiftManagement">Shift Management</x-nav-link>
                     @endadmin
                 </div>
-                <div class="space-x-6 flex justify-between items-center" data-popover-target="userMenu">
-                    <div>
-                        {{ auth()->user()->firstName }} {{ auth()->user()->lastName }}
-                    </div>
-                    <div>
-                        <img src="{{ auth()->user()->profilePic }}" class="w-[50px] h-[50px] rounded-full">
-                    </div>
-                    <div>
-                        <form method="POST" action="/logout">
-                            @csrf
-                            @method('DELETE')
-        
-                            <button>Log Out</button>
-                        </form>
-                    </div>
-                </div>              
+                <form method="POST" action="/logout">
+                    @csrf
+                    @method('DELETE')
+                    <button class="space-x-6 flex justify-between items-center">
+                        <div>
+                            <img src="{{ auth()->user()->profilePic }}" class="w-[40px] h-[40px] rounded-full">
+                        </div>
+                        <div>
+                            {{ auth()->user()->firstName }} {{ auth()->user()->lastName }}
+                        </div>
+                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </form>           
             @endauth
 
             @guest()
