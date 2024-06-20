@@ -11,6 +11,9 @@
             </x-table.head-row>
         </x-table.head>
         <x-table.body>
+            @php
+                $i = 1;
+            @endphp
             @foreach ($user as $item)
                 <x-table.body-row>
                     <x-table.body-cell>
@@ -28,10 +31,13 @@
                     <x-table.body-cell class="text-center">{{ $item->model }}</x-table.body-cell>
                     <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
                     <x-table.body-cell class="text-center">
-                        <x-button class="bg-green-600 hover:bg-green-900">Edit</x-button>
+                        <x-button class="bg-green-600 hover:bg-green-900" onclick="openModal('editUser{{ $i }}')">Edit</x-button>
                         <x-button class="bg-red-600 hover:bg-red-900">Delete</x-button>
                     </x-table.body-cell>
                 </x-table.body-row>
+                @php
+                    $i++;
+                @endphp
             @endforeach
         </x-table.body>
     </x-table.table>
@@ -43,8 +49,24 @@
 
     <form action="{{ route('user.store') }}" method="POST">
         @csrf
-        <x-form.userModal :$teams :$roles>
+        <x-form.userModal :$teams :$roles modalName="createUserModal">
             <x-slot:heading>Create New User</x-slot:heading>
         </x-form.userModal>
     </form>
+
+    @php
+        $i = 1;
+    @endphp
+    @foreach ($user as $item)
+        <form action="{{ route('user.update', $item->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <x-form.userModal :$teams :$roles modalName="editUser{{ $i }}" :user="$item">
+                <x-slot:heading>Edit User {{ $item->firstName }} {{ $item->lastName }}</x-slot:heading>
+            </x-form.userModal>
+            @php
+                $i++;
+            @endphp
+        </form>
+    @endforeach
 </x-layout>

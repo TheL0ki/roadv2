@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -49,9 +50,7 @@ class UserController extends Controller
 
         $user = User::create($userAttributes);
 
-        $user->team()->associate(Team::find($userAttributes['team_id']));
-        $user->role()->associate(Role::find($userAttributes['role_id']));
-        $user->save();
+        $this->associateUser($user, $userAttributes);
 
         return redirect('/userManagement')->with('success', 'User created successfully!');
     }
@@ -75,9 +74,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        
+        $userAttributes = $request->validate([
+            'firstName' => ['required'],
+            'lastName' => ['required'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'role_id' => ['required'],
+            'team_id' => ['required'],
+            'model' => ['required'],
+        ]);
+
+        $user->update($userAttributes);
+
+        $this->associateUser($user, $userAttributes);
+
+        return redirect('/userManagement')->with('success', 'User updated successfully!');
     }
 
     /**
@@ -86,5 +100,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    protected function associateUser(User $user, $userAttributes) : void
+    {
+        $user->team()->associate(Team::find($userAttributes['team_id']));
+        $user->role()->associate(Role::find($userAttributes['role_id']));
+        $user->save();
     }
 }

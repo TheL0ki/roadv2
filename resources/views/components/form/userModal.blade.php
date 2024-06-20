@@ -1,13 +1,13 @@
-@props(['teams', 'roles'])
+@props(['teams', 'roles', 'modalName', 'user' => null])
 
-<div id="createUserModal" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4">
+<div id="{{ $modalName }}" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4">
     <div class="relative top-20 mx-auto shadow-xl rounded-md bg-neutral-700 max-w-md">
         <div class="flex justify-between p-2 border-b border-white/20">
             <div>
                 <h2 class="text-2xl font-bold text-left">{{ $heading }}</h2>
             </div>
             <div>
-                <button onclick="closeModal('createUserModal')" type="button"
+                <button onclick="closeModal('{{ $modalName }}')" type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -25,8 +25,11 @@
                         <label for="firstName" class="block text-sm font-medium leading-6">First Name</label>
                     </div>
                     <div class="mt-2">
-                        <input name="firstName" type="text" required
-                            class="block w-full bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
+                        @if ($user != null)
+                            <x-form.textInput id="firstName" name="firstName" type="text" required :value="$user->firstName"></x-form.textInput> 
+                        @else
+                            <x-form.textInput id="firstName" name="firstName" type="text" required></x-form.textInput>
+                        @endif
                     </div>
                 </div>
 
@@ -35,28 +38,35 @@
                         <label for="lastName" class="block text-sm font-medium leading-6">Last Name</label>
                     </div>
                     <div class="mt-2">
-                        <input name="lastName" type="text" required
-                            class="block w-full bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
+                        @if ($user != null)
+                            <x-form.textInput id="lastName" name="lastName" type="text" required :value="$user->lastName"></x-form.textInput> 
+                        @else
+                            <x-form.textInput id="lastName" name="lastName" type="text" required></x-form.textInput>
+                        @endif
                     </div>
                 </div>
 
-                <div class="mb-2">
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm font-medium leading-6">Password</label>
+                @if ($user === null)
+                    <div class="mb-2">
+                        <div class="flex items-center justify-between">
+                            <label for="password" class="block text-sm font-medium leading-6">Password</label>
+                        </div>
+                        <div class="mt-2">
+                            <x-form.textInput id="password" name="password" type="password" autocomplete="current-password" required></x-form.textInput>                            
+                        </div>
                     </div>
-                    <div class="mt-2">
-                        <input id="password" name="password" type="password" autocomplete="current-password" required
-                            class="block w-full bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
-                    </div>
-                </div>
+                @endif
                 
                 <div class="mb-2">
                     <div class="flex items-center justify-between">
                         <label for="email" class="block text-sm font-medium leading-6">Email</label>
                     </div>
                     <div class="mt-2">
-                        <input id="email" name="email" type="email" autocomplete="email" required
-                        class="block w-full bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
+                        @if ($user != null)
+                            <x-form.textInput id="email" name="email" type="text" required :value="$user->email"></x-form.textInput> 
+                        @else
+                            <x-form.textInput id="email" name="email" type="text" required></x-form.textInput>
+                        @endif
                     </div>
                 </div>
 
@@ -65,12 +75,11 @@
                         <label for="team" class="block text-sm font-medium leading-6">Team</label>
                     </div>
                     <div class="mt-2">
-                        <select id="team_id" name="team_id" required
-                            class="bg-blend-hard-light block w-full bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
+                        <x-form.select id="team_id" name="team_id" required>
                             @foreach ($teams as $team)
                                 <option value="{{ $team->id }}">{{ $team->displayName }}</option>
                             @endforeach
-                        </select>
+                        </x-form.select>
                     </div>
                 </div>
 
@@ -80,12 +89,11 @@
                     </div>
                     <div class="mt-2">
                         <div class="grid">
-                            <select id="role_id" name="role_id" required
-                                class="bg-blend-hard-light appearance-none row-start-1 col-start-1 bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
+                            <x-form.select id="role_id" name="role_id" required>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
                                 @endforeach
-                            </select>
+                            </x-form.select>
                         </div>
                     </div>
                 </div>
@@ -95,18 +103,17 @@
                         <label for="model" class="block text-sm font-medium leading-6">Model</label>
                     </div>
                     <div class="mt-2">
-                        <select id="model" name="model" required
-                        class="bg-blend-hard-light block w-full bg-neutral-500 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6">
+                        <x-form.select id="model" name="model" required>
                             <option value="ft">Full Time</option>
                             <option value="pt">Part Time</option>
-                        </select>
+                        </x-form.select>
                     </div>
                 </div>
-
             </div>
+
             <div class="flex justify-between pt-2">
                 <x-button class="bg-green-600 hover:bg-green-900">Save</x-button>
-                <x-button class="bg-red-600 hover:bg-red-900" onclick="closeModal('createUserModal')">Cancel</x-button>
+                <x-button class="bg-red-600 hover:bg-red-900" onclick="closeModal('{{ $modalName }}')">Cancel</x-button>
             </div>
         </div>
     </div>
@@ -128,7 +135,7 @@
         event = event || window.event;
         if (event.keyCode === 27) {
             document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-            let modals = document.getElementsById('createUserModal');
+            let modals = document.getElementsById('{{ $modalName }}');
             Array.prototype.slice.call(modals).forEach(i => {
                 i.style.display = 'none'
             })
