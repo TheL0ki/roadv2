@@ -91,7 +91,7 @@
                                 $last = true;
                             }
                         @endphp
-                        <x-table.body-row>
+                        <x-table.body-row class="!h-12">
                             <x-table.body-cell>
                                 <a href="/schedule/change/{{ $item->id }}/{{ $date->format('Y') . '/' . $date->format('n') }}" class="flex">
                                     <div>

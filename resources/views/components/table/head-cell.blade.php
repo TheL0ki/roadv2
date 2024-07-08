@@ -8,7 +8,7 @@
     }
 
     if (isset($loopdate) && $loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d')) {
-        $classes .= '  bg-blue-800';
+        $classes .= ' border-double border-x-2 border-x-blue-700 border-t-2 border-t-blue-700 border-b border-b-white/30';
     }
 @endphp
 
