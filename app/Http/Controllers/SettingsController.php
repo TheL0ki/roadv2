@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -49,9 +52,27 @@ class SettingsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $userAttributes = $request->validate([
+            'email' => ['required', 'email'],
+            'userId' => ['required'],
+            'profilePic' => ['nullable', 'file', File::types(['png', 'jpg', 'jpeg', 'webp', 'gif'])],
+        ]);
+
+        $user = User::find($userAttributes['userId']);
+
+        $user->email = $userAttributes['email'];
+        if(isset($userAttributes['profilePic'])) {
+            if($user->profilePic !== 'profilePic/placeholder.png') {
+                Storage::delete($user->profilePic);
+            }
+            $profilePicPath = $request->profilePic->store('profilePic');
+            $user->profilePic = $profilePicPath;
+        }
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully');
     }
 
     /**

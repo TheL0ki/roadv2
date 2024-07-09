@@ -8,7 +8,7 @@
                     <x-table.head-cell>Team</x-table.head-cell>
                     <x-table.head-cell>Model</x-table.head-cell>
                     <x-table.head-cell>Role</x-table.head-cell>
-                    <x-table.head-cell>Options</x-table.head-cell>
+                    <x-table.head-cell class="w-1/6">Options</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>
@@ -20,7 +20,7 @@
                         <x-table.body-cell>
                             <div class="flex space-x-3">
                                 <div>
-                                    <img src="{{ asset($item->profilePic) }}" class="w-[50px] h-[50px] rounded-full">
+                                    <img src="{{ Vite::asset('storage/app/' . $item->profilePic) }}" class="w-[50px] h-[50px] rounded-full">
                                 </div>
                                 <div class="flex items-center">
                                     <p>{{ $item->firstName . ' ' . $item->lastName }}</p>
@@ -31,10 +31,7 @@
                         <x-table.body-cell>{{ $item->team->displayName }}</x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ $item->model }}</x-table.body-cell>
                         <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
-                        <x-table.body-cell class="text-center">
-                            <x-button class="bg-green-600 hover:bg-green-900" onclick="openModal('editUser{{ $i }}')">Edit</x-button>
-                            <x-button class="bg-red-600 hover:bg-red-900">Delete</x-button>
-                        </x-table.body-cell>
+                        <x-table.options modal="editUser{{ $i }}"></x-table.options>
                     </x-table.body-row>
                     @php
                         $i++;

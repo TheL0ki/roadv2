@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'team_id' => Team::factory(),
             'model' => 'VZ',
-            'profilePic' => 'https://picsum.photos/seed/' . rand(1, 1000) . '/50/50',
+            'profilePic' => 'profilePic/placeholder.png',
             'role_id' => rand(1, 3),
             'active' => 1,
             'validFrom' => now(),

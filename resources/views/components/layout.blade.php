@@ -33,7 +33,7 @@
                     @method('DELETE')
                     <button class="space-x-6 flex justify-between items-center">
                         <div>
-                            <img src="{{ auth()->user()->profilePic }}" class="w-[40px] h-[40px] rounded-full">
+                            <img src="{{ Vite::asset('storage/app/' . Auth::User()->profilePic) }}" class="w-[40px] h-[40px] rounded-full">
                         </div>
                         <div>
                             {{ auth()->user()->firstName }} {{ auth()->user()->lastName }}

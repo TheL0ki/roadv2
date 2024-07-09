@@ -21,10 +21,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update']);
     Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
+    Route::get('/settings', [SettingsController::class, 'index']);
+    Route::patch('/settings', [SettingsController::class, 'update']);
+
     Route::delete('/logout', [SessionController::class, 'destroy']); 
 });
 
-Route::get('/settings', [SettingsController::class, 'index']);
+
 
 Route::get('/batch', [BatchController::class, 'index'])->middleware(Role::class);
 

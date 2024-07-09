@@ -1,6 +1,13 @@
 @props(['user', 'loopdate', 'i'])
+@php
+    if ($loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d')) {
+        $last = true;
+    } else {
+        $last = false;
+    }
+@endphp
 
-<x-table.body-cell class="text-center w-[100px]" :$loopdate>
+<x-table.body-cell class="text-center w-[100px]" :$loopdate :$last>
     <x-form.select name="shift[{{ $i }}][shift]">
         @php
             $todayShift = $user->schedule->where('day', $loopdate->format('d'))->where('month', $loopdate->format('m'))->where('year', $loopdate->format('Y'))->first();
