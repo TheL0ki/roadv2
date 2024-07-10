@@ -43,7 +43,6 @@
     
     <div class="pt-4">
         <x-button onclick="openModal('createUserModal')">Create New User</x-button>
-        <x-button>Create New Team</x-button>
     </div>
 
     <form action="{{ route('user.store') }}" method="POST">
