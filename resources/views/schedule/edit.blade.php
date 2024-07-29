@@ -32,7 +32,7 @@
                         $loopdate = clone $date;
                     @endphp
                     @for ($i = 1; $i <= 15; $i++)
-                        <x-shiftSelector :$loopdate :$i :$user></x-shiftSelector>
+                        <x-shiftSelector :$shifts :$loopdate :$i :$user></x-shiftSelector>
                         @php
                             $loopdate->modify('+1 Day');
                         @endphp
@@ -58,7 +58,7 @@
                         $loopdate->modify('+15 Days');
                     @endphp
                     @for ($i = 16; $i <= $date->format('t'); $i++)
-                        <x-shiftSelector :$loopdate :$i :$user></x-shiftSelector>
+                        <x-shiftSelector :$shifts :$loopdate :$i :$user></x-shiftSelector>
                         @php
                             $loopdate->modify('+1 Day');
                         @endphp

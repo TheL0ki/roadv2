@@ -1,4 +1,4 @@
-@props(['user', 'loopdate', 'i'])
+@props(['shifts', 'user', 'loopdate', 'i'])
 @php
     if ($loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d')) {
         $last = true;
@@ -13,11 +13,11 @@
             $todayShift = $user->schedule->where('day', $loopdate->format('d'))->where('month', $loopdate->format('m'))->where('year', $loopdate->format('Y'))->first();
         @endphp
         @if ($todayShift)
-            <option value="{{ $todayShift->shift->id }}">{{ $todayShift->shift->display }}</option>
+            <option value="{{ $todayShift->shift->id }}">{{ $todayShift->shift->name }}</option>
         @endif
         <option value="null">--</option>
-        @foreach ($user->team->shift as $shift)
-            <option value="{{ $shift->id }}">{{ $shift->display }}</option>
+        @foreach ($shifts as $shift)
+            <option value="{{ $shift->id }}">{{ $shift->name }}</option>
         @endforeach
     </x-form.select>
     @if ($todayShift && $todayShift->shift->hoAllowed === 1)

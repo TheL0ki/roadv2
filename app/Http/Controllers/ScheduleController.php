@@ -97,6 +97,7 @@ class ScheduleController extends Controller
         return view('schedule.edit', [
             'user' => $user,
             'date' => $date,
+            'shifts' => Shift::all(),
         ]);
     }
 
