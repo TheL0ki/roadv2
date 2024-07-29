@@ -26,15 +26,16 @@
     }
 @endphp
 
- @if($type === 'schedule')    
-    <td {{ $attributes(['class' => $classes]) }} style="background: {{ $color }}; color: {{ $textColor }};">
-        <div @if($ho == 1)
-                class="border-b-2 border-red-500"
-            @endif
-        >
-            {{ $slot }}
-        </div>
-    </td>
- @else
-    <td {{ $attributes(['class' => $classes]) }}>{{ $slot }}</td>
- @endif
+@if($type === 'schedule')
+<td {{ $attributes(['class' => $classes]) }} style="background: {{ $color }}; color: {{ $textColor }};">
+    @if($ho == 1)
+        <div class="border-b-2 border-red-500 text-xs">
+    @else
+        <div class="text-xs">
+    @endif
+        {{ $slot }}
+    </div>
+</td>
+@else
+<td {{ $attributes(['class' => $classes]) }}>{{ $slot }}</td>
+@endif
