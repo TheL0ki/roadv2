@@ -20,7 +20,8 @@ class Shift extends Model
         'color',
         'textColor',
         'hours',
-        'active'
+        'active',
+        'hoAllowed',
     ];
 
     public function schedules() : HasMany

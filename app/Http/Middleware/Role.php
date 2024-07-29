@@ -18,7 +18,7 @@ class Role
     {
         $user = Auth::user();
 
-        if ($user && in_array($user->role->name, ['administrator', 'manager'])) {
+        if ($user && in_array($user->role->id, [1, 2])) {
             return $next($request);
         }
 

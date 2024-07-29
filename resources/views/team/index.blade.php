@@ -14,19 +14,19 @@
                     <x-table.body-cell class="text-center">TeamName</x-table.body-cell>
                     <x-table.body-cell class="text-center">TeamManager</x-table.body-cell>
                     <x-table.body-cell class="text-center">TeamMembers</x-table.body-cell>
-                    <x-table.options />
+                    <x-table.options :item=$team category="team" />
                 </x-table.body-row>
                 <x-table.body-row>
                     <x-table.body-cell class="text-center">TeamName</x-table.body-cell>
                     <x-table.body-cell class="text-center">TeamManager</x-table.body-cell>
                     <x-table.body-cell class="text-center">TeamMembers</x-table.body-cell>
-                    <x-table.options />
+                    <x-table.options :item=$team category="team" />
                 </x-table.body-row>
                 <x-table.body-row>
                     <x-table.body-cell class="text-center">TeamName</x-table.body-cell>
                     <x-table.body-cell class="text-center">TeamManager</x-table.body-cell>
                     <x-table.body-cell class="text-center">TeamMembers</x-table.body-cell>
-                    <x-table.options />
+                    <x-table.options :item=$team category="team" />
                 </x-table.body-row>
             </x-table.body>
         </x-table.table>

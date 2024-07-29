@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->string('textColor')->nullable();
             $table->integer('hours');
             $table->boolean('hoAllowed')->default(true);
-            $table->boolean('active');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

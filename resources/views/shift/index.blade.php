@@ -12,49 +12,55 @@
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>
-                <x-table.body-row>
-                    <x-table.body-cell class="text-center">ShiftName</x-table.body-cell>
-                    <x-table.body-cell class="text-center">ShiftDisplay</x-table.body-cell>
-                    <x-table.body-cell>
-                        <div style="background-color: #545e4f; color: #48cb48;">
-                            Background: #545e4f <br>
-                            Text: #48cb48
-                        </div>
-                    </x-table.body-cell>
-                    <x-table.body-cell class="text-center">8.5</x-table.body-cell>
-                    <x-table.body-cell class="text-center">Yes</x-table.body-cell>
-                    <x-table.options />
-                </x-table.body-row>
-                <x-table.body-row>
-                    <x-table.body-cell class="text-center">ShiftName</x-table.body-cell>
-                    <x-table.body-cell class="text-center">ShiftDisplay</x-table.body-cell>
-                    <x-table.body-cell>
-                        <div style="background-color: #545e4f; color: #48cb48;">
-                            Background: #545e4f <br>
-                            Text: #48cb48
-                        </div>
-                    </x-table.body-cell>
-                    <x-table.body-cell class="text-center">8.5</x-table.body-cell>
-                    <x-table.body-cell class="text-center">Yes</x-table.body-cell>
-                    <x-table.options />
-                </x-table.body-row>
-                <x-table.body-row>
-                    <x-table.body-cell class="text-center">ShiftName</x-table.body-cell>
-                    <x-table.body-cell class="text-center">ShiftDisplay</x-table.body-cell>
-                    <x-table.body-cell>
-                        <div style="background-color: #545e4f; color: #48cb48;">
-                            Background: #545e4f <br>
-                            Text: #48cb48
-                        </div>
-                    </x-table.body-cell>
-                    <x-table.body-cell class="text-center">8.5</x-table.body-cell>
-                    <x-table.body-cell class="text-center">Yes</x-table.body-cell>
-                    <x-table.options />
-                </x-table.body-row>
+                @php
+                    $i = 1;
+                @endphp
+                @foreach ($shifts as $shift)
+                    <x-table.body-row>
+                        <x-table.body-cell class="text-center">{{ $shift->name }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ $shift->display }}</x-table.body-cell>
+                        <x-table.body-cell>
+                            <div style="background-color: {{ $shift->color }}; color: {{ $shift->textColor }};">
+                                Background: {{ $shift->color }} <br>
+                                Text: {{ $shift->textColor }}
+                            </div>
+                        </x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ $shift->hours }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ $shift->hoAllowed }}</x-table.body-cell>
+                        <x-table.options :item=$shift category="shift" modal="editShift{{ $i }}" />
+                    </x-table.body-row>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
             </x-table.body>
         </x-table.table>
     </div>
+
     <div class="pt-4">
-        <x-button>Add Shift</x-button>
+        <x-button onclick="openModal('createShiftModal')">Add Shift</x-button>
     </div>
+
+    <form action="{{ route('shift.store') }}" method="POST">
+        @csrf
+        <x-form.shiftModal modalName="createShiftModal">
+            <x-slot:heading>Add Shift</x-slot:heading>
+        </x-form.shiftModal>
+    </form>
+
+    @php
+        $i = 1;
+    @endphp
+    @foreach ($shifts as $item)
+        <form action="{{ route('shift.update', $item->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <x-form.shiftModal modalName="editShift{{ $i }}" :shift="$item">
+                <x-slot:heading>Edit User {{ $item->display }}</x-slot:heading>
+            </x-form.shiftModal>
+            @php
+                $i++;
+            @endphp
+        </form>
+    @endforeach
 </x-layout>
