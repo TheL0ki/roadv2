@@ -103,11 +103,21 @@
                                 </a>
                             </x-table.body-cell>
                             @for ($i = 1; $i <= $date->format('t'); $i++)
-                                <x-table.body-cell class="w-[50px] text-center" :$loopdate :$last>
-                                    @isset($table[$item->id][$i])
+                                @isset($table[$item->id][$i])
+                                    <x-table.body-cell 
+                                        class="w-[50px] text-center" 
+                                        type="schedule" 
+                                        :$loopdate
+                                        :$last 
+                                        color="{{ $table[$item->id][$i]->shift->color }}" 
+                                        textColor="{{ $table[$item->id][$i]->shift->textColor }}"
+                                        ho="{{ $table[$item->id][$i]->homeOffice }}"
+                                    >
                                         {{ $table[$item->id][$i]->shift->display }}
-                                    @endisset
-                                </x-table.body-cell>
+                                    </x-table.body-cell>
+                                @else
+                                    <x-table.body-cell class="w-[50px] text-center" :$loopdate :$last />
+                                @endisset
                                 @php
                                     $loopdate->modify('+1 Day');
                                 @endphp

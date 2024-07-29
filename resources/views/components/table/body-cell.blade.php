@@ -1,7 +1,14 @@
-@props(['loopdate', 'last' => false])
+@props([
+    'loopdate',
+    'last' => false,
+    'type' => false,
+    'color' => false,
+    'textColor' => false,
+    'ho' => false,
+])
 
 @php
-    $classes = "py-2 px-2";
+    $classes = "p-2";
 
     if (isset($loopdate) && ($loopdate->format('N') === '6' || $loopdate->format('N') === '7')) {
         $classes .= ' bg-gray-950';
@@ -17,8 +24,17 @@
     } else {
         $classes .= ' border border-white/30';
     }
-
-
 @endphp
 
-<td {{ $attributes(['class' => $classes]) }}>{{ $slot }}</td>
+ @if($type === 'schedule')    
+    <td {{ $attributes(['class' => $classes]) }} style="background: {{ $color }}; color: {{ $textColor }};">
+        <div @if($ho == 1)
+                class="border-b-2 border-red-500"
+            @endif
+        >
+            {{ $slot }}
+        </div>
+    </td>
+ @else
+    <td {{ $attributes(['class' => $classes]) }}>{{ $slot }}</td>
+ @endif
