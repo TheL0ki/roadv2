@@ -3,34 +3,63 @@
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
-                    <x-table.head-cell class="w-">Name</x-table.head-cell>
+                    <x-table.head-cell>Name</x-table.head-cell>
+                    <x-table.head-cell>Display Name</x-table.head-cell>
                     <x-table.head-cell>Manager</x-table.head-cell>
                     <x-table.head-cell>Members</x-table.head-cell>
                     <x-table.head-cell class="w-1/6">Options</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>
-                <x-table.body-row>
-                    <x-table.body-cell class="text-center">TeamName</x-table.body-cell>
-                    <x-table.body-cell class="text-center">TeamManager</x-table.body-cell>
-                    <x-table.body-cell class="text-center">TeamMembers</x-table.body-cell>
-                    <x-table.options :item=$team category="team" />
-                </x-table.body-row>
-                <x-table.body-row>
-                    <x-table.body-cell class="text-center">TeamName</x-table.body-cell>
-                    <x-table.body-cell class="text-center">TeamManager</x-table.body-cell>
-                    <x-table.body-cell class="text-center">TeamMembers</x-table.body-cell>
-                    <x-table.options :item=$team category="team" />
-                </x-table.body-row>
-                <x-table.body-row>
-                    <x-table.body-cell class="text-center">TeamName</x-table.body-cell>
-                    <x-table.body-cell class="text-center">TeamManager</x-table.body-cell>
-                    <x-table.body-cell class="text-center">TeamMembers</x-table.body-cell>
-                    <x-table.options :item=$team category="team" />
-                </x-table.body-row>
+                @php
+                    $i = 1;
+                @endphp
+                @foreach ($teams as $team)            
+                    <x-table.body-row>
+                        <x-table.body-cell class="text-center">{{ $team->name }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ $team->displayName }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">
+                            @foreach($team->manager as $manager)
+                                {{ $manager->firstName }} {{ $manager->lastName }}
+                            @endforeach
+                        </x-table.body-cell>
+                        <x-table.body-cell class="text-center">
+                            {{ $team->user->count() }}
+                        </x-table.body-cell>
+                        <x-table.options :item=$team category="team" modal="editTeam{{ $i }}"/>
+                    </x-table.body-row>
+                    @php
+                        $i++;
+                    @endphp
+                @endforeach
             </x-table.body>
         </x-table.table>
 
-        <x-button>Add new Team</x-button>
+        <div class="pt-4">
+            <x-button onclick="openModal('createTeamModal')">Add New Team</x-button>
+        </div>
+    
+        <form action="{{ route('team.store') }}" method="POST">
+            @csrf
+            <x-form.teamModal modalName="createTeamModal">
+                <x-slot:heading>Add Team</x-slot:heading>
+            </x-form.teamModal>
+        </form>
+
+        @php
+            $i = 1;
+        @endphp
+        @foreach ($teams as $item)
+            <form action="{{ route('team.update', $item->id) }}" method="POST">
+                @csrf
+                @method('PATCH')
+                <x-form.teamModal modalName="editTeam{{ $i }}" :team="$item">
+                    <x-slot:heading>Edit Team {{ $item->displayName }}</x-slot:heading>
+                </x-form.teamModal>
+                @php
+                    $i++;
+                @endphp
+            </form>
+        @endforeach
     </div>
 </x-layout>

@@ -37,6 +37,9 @@ Route::patch('/userManagement/{id}/update', [UserController::class, 'update'])->
 Route::delete('/userManagement/{id}/destroy', [UserController::class, 'destroy'])->middleware(Role::class)->name('user.destroy');
 
 Route::get('/teamManagement', [TeamController::class, 'index'])->middleware(Role::class);
+Route::post('/teamManagement/store', [TeamController::class, 'store'])->middleware(Role::class)->name('team.store');
+Route::patch('/teamManagement/{id}/update', [TeamController::class, 'update'])->middleware(Role::class)->name('team.update');
+Route::delete('/teamManagement/{id}/destroy', [TeamController::class, 'destroy'])->middleware(Role::class)->name('team.destroy');
 
 Route::get('/shiftManagement', [ShiftController::class, 'index'])->middleware(Role::class);
 Route::post('/shiftManagement/store', [ShiftController::class, 'store'])->middleware(Role::class)->name('shift.store');
