@@ -18,7 +18,7 @@ class Role
     {
         $user = Auth::user();
 
-        if ($user && in_array($user->role->id, [1, 2])) {
+        if ($user && (in_array($user->role->id, [1, 2]) || $user->id == $request->id)) {
             return $next($request);
         }
 

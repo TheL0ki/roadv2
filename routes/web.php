@@ -17,8 +17,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [ScheduleController::class, 'index']);
-    Route::get('/schedule/change/{id}/{year}/{month}', [ScheduleController::class, 'edit']);
-    Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update']);
+    Route::get('/schedule/change/{id}/{year}/{month}', [ScheduleController::class, 'edit'])->middleware(Role::class);
+    Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update'])->middleware(Role::class);
     Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
     Route::get('/settings', [SettingsController::class, 'index']);
@@ -28,20 +28,21 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::middleware(Role::class)->group(function () {
+    Route::get('/batch', [BatchController::class, 'index']);
 
-Route::get('/batch', [BatchController::class, 'index'])->middleware(Role::class);
+    Route::get('/userManagement', [UserController::class, 'index']);
+    Route::post('/userManagement/store', [UserController::class, 'store'])->name('user.store');
+    Route::patch('/userManagement/{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/userManagement/{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
 
-Route::get('/userManagement', [UserController::class, 'index'])->middleware(Role::class);
-Route::post('/userManagement/store', [UserController::class, 'store'])->middleware(Role::class)->name('user.store');
-Route::patch('/userManagement/{id}/update', [UserController::class, 'update'])->middleware(Role::class)->name('user.update');
-Route::delete('/userManagement/{id}/destroy', [UserController::class, 'destroy'])->middleware(Role::class)->name('user.destroy');
+    Route::get('/teamManagement', [TeamController::class, 'index']);
+    Route::post('/teamManagement/store', [TeamController::class, 'store'])->name('team.store');
+    Route::patch('/teamManagement/{id}/update', [TeamController::class, 'update'])->name('team.update');
+    Route::delete('/teamManagement/{id}/destroy', [TeamController::class, 'destroy'])->name('team.destroy');
 
-Route::get('/teamManagement', [TeamController::class, 'index'])->middleware(Role::class);
-Route::post('/teamManagement/store', [TeamController::class, 'store'])->middleware(Role::class)->name('team.store');
-Route::patch('/teamManagement/{id}/update', [TeamController::class, 'update'])->middleware(Role::class)->name('team.update');
-Route::delete('/teamManagement/{id}/destroy', [TeamController::class, 'destroy'])->middleware(Role::class)->name('team.destroy');
-
-Route::get('/shiftManagement', [ShiftController::class, 'index'])->middleware(Role::class);
-Route::post('/shiftManagement/store', [ShiftController::class, 'store'])->middleware(Role::class)->name('shift.store');
-Route::patch('/shiftManagement/{id}/update', [ShiftController::class, 'update'])->middleware(Role::class)->name('shift.update');
-Route::delete('/shiftManagement/{id}/destroy', [ShiftController::class, 'destroy'])->middleware(Role::class)->name('shift.destroy');
+    Route::get('/shiftManagement', [ShiftController::class, 'index']);
+    Route::post('/shiftManagement/store', [ShiftController::class, 'store'])->name('shift.store');
+    Route::patch('/shiftManagement/{id}/update', [ShiftController::class, 'update'])->name('shift.update');
+    Route::delete('/shiftManagement/{id}/destroy', [ShiftController::class, 'destroy'])->name('shift.destroy'); 
+});
