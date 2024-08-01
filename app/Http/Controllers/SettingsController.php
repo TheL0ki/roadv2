@@ -64,7 +64,7 @@ class SettingsController extends Controller
 
         $user->email = $userAttributes['email'];
         if(isset($userAttributes['profilePic'])) {
-            if($user->profilePic !== 'profilePic/placeholder.png') {
+            if($user->profilePic !== NULL) {
                 Storage::delete($user->profilePic);
             }
             $profilePicPath = $request->profilePic->store('profilePic');
