@@ -4,6 +4,14 @@
     "src": "resources/css/app.css",
     "isEntry": true
   },
+  "resources/images/logo.svg": {
+    "file": "assets/logo-SsZxyQJ5.svg",
+    "src": "resources/images/logo.svg"
+  },
+  "resources/images/profile_placeholder.png": {
+    "file": "assets/profile_placeholder-CHQHvspF.png",
+    "src": "resources/images/profile_placeholder.png"
+  },
   "resources/js/app.js": {
     "file": "assets/app-DkDdL2UM.js",
     "name": "app",
