@@ -20,18 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = [
-            'administrator',
-            'manager',
-            'user'    
-        ];
-
-        foreach($roles as $role) {
-            Role::create([
-                'name' => $role
-            ]);
-        }
-
         $team = Team::factory(3)->create();
 
         $user = User::create([
