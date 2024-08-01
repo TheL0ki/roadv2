@@ -67,7 +67,7 @@ class SettingsController extends Controller
             if($user->profilePic !== NULL) {
                 Storage::delete($user->profilePic);
             }
-            $profilePicPath = $request->profilePic->store('profilePic');
+            $profilePicPath = $request->profilePic->store('profilePic', 'public');
             $user->profilePic = $profilePicPath;
         }
         $user->save();
