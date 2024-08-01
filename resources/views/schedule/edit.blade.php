@@ -8,7 +8,7 @@
                     <x-table.head-cell rowspan="4">
                         <div class="flex">
                             <div>
-                                <img src="{{ Vite::asset('storage/app/' . $user->profilePic) }}" class="w-[50px] h-[50px] rounded-full">
+                                <x-profilePic :path="$user->profilePic" class="w-[50px] h-[50px]" />
                             </div>
                             <div class="px-2 flex items-center">
                                 {{ $user->firstName }} {{ $user->lastName }}

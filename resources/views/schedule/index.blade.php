@@ -95,7 +95,7 @@
                             <x-table.body-cell>
                                 <a href="/schedule/change/{{ $item->id }}/{{ $date->format('Y') . '/' . $date->format('n') }}" class="flex">
                                     <div>
-                                        <img src="{{ Vite::asset('storage/app/profilePic/' . $item->profilePic) }}" class="w-[30px] h-[30px] rounded-full">
+                                        <x-profilePic :path="$item->profilePic" class="w-[30px] h-[30px]" />
                                     </div>
                                     <div class="px-2 flex items-center">
                                         {{ $item->firstName }} {{ $item->lastName }}

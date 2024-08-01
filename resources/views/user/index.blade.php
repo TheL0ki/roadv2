@@ -20,7 +20,7 @@
                         <x-table.body-cell>
                             <div class="flex space-x-3">
                                 <div>
-                                    <img src="{{ Vite::asset('storage/app/' . $item->profilePic) }}" class="w-[50px] h-[50px] rounded-full">
+                                    <x-profilePic :path="$item->profilePic" class="w-[50px] h-[50px]" />
                                 </div>
                                 <div class="flex items-center">
                                     <p>{{ $item->firstName . ' ' . $item->lastName }}</p>

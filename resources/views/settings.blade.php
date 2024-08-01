@@ -21,7 +21,7 @@
                         <div class="flex items-center">
                             <div class="w-1/4"><label for="email">Profile picture</label></div>
                             <div class="flex justify-around w-full items-center">
-                                <img src="{{ Vite::asset('storage/app/' . Auth::User()->profilePic) }}" class="w-[50px] rounded-full">
+                                <x-profilePic :path="Auth::user()->profilePic" class="w-[50px] h-[50px]" />
                                 <input type="file" id="profilePic"name="profilePic" accept=".png, .jpg, .jpeg, .gif">
                                 @error('profilePic')
                                     {{ $message }}

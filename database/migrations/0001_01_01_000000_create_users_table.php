@@ -21,7 +21,7 @@ return new class () extends Migration {
             $table->string('password');
             $table->foreignIdFor(Team::class)->nullable();
             $table->string('model');
-            $table->string('profilePic')->default('images/profile_placeholder.png');
+            $table->string('profilePic')->nullable();
             $table->boolean('active')->default(true);
             $table->dateTime('validFrom')->default(now());
             $table->dateTime('validUntil')->nullable();
