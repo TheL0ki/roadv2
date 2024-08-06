@@ -17,6 +17,17 @@ class ProductionSeeder extends Seeder
      */
     public function run(): void
     {
+        $roles = [
+            'administrator',
+            'manager',
+            'user'    
+        ];
+
+        foreach($roles as $role) {
+            Role::create([
+                'name' => $role
+            ]);
+        }
         Team::create([
             'name' => 'AdminTeam',
             'displayName' => 'Admin Team'
