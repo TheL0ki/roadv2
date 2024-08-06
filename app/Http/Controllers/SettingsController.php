@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,38 +16,6 @@ class SettingsController extends Controller
     public function index()
     {
         return view('settings');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -75,11 +44,16 @@ class SettingsController extends Controller
         return redirect()->back()->with('success', 'Profile updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function updatePassword(Request $request)
     {
-        //
+        $userInput = $request->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $user = User::find($request->userId);
+        $user->password = bcrypt($userInput['password']);
+        $user->save();
+
+        return redirect()->back()->with('success', 'Password updated successfully');
     }
 }

@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::patch('/settings', [SettingsController::class, 'update']);
+    Route::patch('/settings', [SettingsController::class, 'updatePassword'])->name('password.update');
 
     Route::delete('/logout', [SessionController::class, 'destroy']); 
 });
