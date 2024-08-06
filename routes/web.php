@@ -22,8 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
     Route::get('/settings', [SettingsController::class, 'index']);
-    Route::patch('/settings', [SettingsController::class, 'update']);
-    Route::patch('/settings', [SettingsController::class, 'updatePassword'])->name('password.update');
+    Route::patch('/settings', [SettingsController::class, 'update'])->name('settings.update');
+    Route::patch('/settings/pwdUpdate', [SettingsController::class, 'updatePassword'])->name('password.update');
 
     Route::delete('/logout', [SessionController::class, 'destroy']); 
 });

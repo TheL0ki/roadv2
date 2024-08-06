@@ -1,6 +1,6 @@
 <x-layout>
     <div class="relative">
-        <form action="/settings" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data">
             @method('PATCH')
             @csrf
             <div class="space-y-4 pt-4 w-full">
@@ -29,13 +29,13 @@
                             </div>
                         </div>
                         <div class="flex justify-between">
+                            <input type="hidden" name="userId" value="{{ Auth::User()->id }}">
                             <x-button role="submit" class="bg-green-600 hover:bg-green-900">Save</x-button>
                             <x-button id="changePWDbtn">Change Password</x-button>
                         </div>
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="userId" value="{{ Auth::User()->id }}">
         </form>
 
         <x-modal.success>
@@ -65,11 +65,11 @@
             openModal('changePWD');
         });
     </script>
-    @if($errors->any())
+    @error('password')
         <script>
             window.onload = function() {
                 openModal('changePWD');
             }
         </script>
-    @endif
+    @enderror
 </x-layout>
