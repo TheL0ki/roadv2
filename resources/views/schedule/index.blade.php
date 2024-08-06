@@ -113,7 +113,7 @@
                                         textColor="{{ $table[$item->id][$i]->shift->textColor }}"                                        
                                         ho="{{ $table[$item->id][$i]->flexLoc }}"
                                     >
-                                        {{ $table[$item->id][$i]->shift->display }}
+                                        @php echo str_replace('-', '-<br>', $table[$item->id][$i]->shift->display); @endphp
                                     </x-table.body-cell>
                                 @else
                                     <x-table.body-cell class="w-[50px] text-center" :$loopdate :$last />
