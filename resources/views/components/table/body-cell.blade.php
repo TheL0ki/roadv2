@@ -8,7 +8,7 @@
 ])
 
 @php
-    $classes = "p-2";
+    $classes = "";
 
     if (isset($loopdate) && ($loopdate->format('N') === '6' || $loopdate->format('N') === '7')) {
         $classes .= ' bg-gray-950';

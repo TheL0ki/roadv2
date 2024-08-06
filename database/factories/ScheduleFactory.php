@@ -24,7 +24,7 @@ class ScheduleFactory extends Factory
             'month' => fake()->month(),
             'year' => 2024,
             'shift_id' => Shift::factory(),
-            'homeOffice' => fake()->boolean(),
+            'flexLoc' => fake()->boolean(),
         ];
     }
 }
