@@ -136,7 +136,7 @@ class ScheduleController extends Controller
     
                 $schedule->user_id = $user->id;
                 $schedule->shift_id = $details['shift'];
-                $schedule->homeOffice = $details['homeOffice'] ?? 0;
+                $schedule->flexLoc = $details['flexLoc'] ?? 0;
                 $schedule->save();                
             }
         }

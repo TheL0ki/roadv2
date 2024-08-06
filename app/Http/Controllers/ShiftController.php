@@ -46,10 +46,10 @@ class ShiftController extends Controller
             'hours' => ['required', 'numeric'],
         ]);
 
-        if($request->hoAllowed) {
-            $shiftAttributes['hoAllowed'] = true;
+        if($request->flexLoc) {
+            $shiftAttributes['flexLoc'] = true;
         } else {
-            $shiftAttributes['hoAllowed'] = false;
+            $shiftAttributes['flexLoc'] = false;
         }
 
         $shift = Shift::create($shiftAttributes);
@@ -94,10 +94,10 @@ class ShiftController extends Controller
             'hours' => ['required', 'numeric'],
         ]);
 
-        if($request->hoAllowed) {
-            $shiftAttributes['hoAllowed'] = true;
+        if($request->flexLoc) {
+            $shiftAttributes['flexLoc'] = true;
         } else {
-            $shiftAttributes['hoAllowed'] = false;
+            $shiftAttributes['flexLoc'] = false;
         }
 
         $shift->update($shiftAttributes);

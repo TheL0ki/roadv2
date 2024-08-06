@@ -19,7 +19,7 @@ return new class () extends Migration {
             $table->tinyInteger('month');
             $table->integer('year');
             $table->foreignIdFor(Shift::class);
-            $table->boolean('homeOffice');
+            $table->boolean('flexLoc');
             $table->timestamps();
         });
     }

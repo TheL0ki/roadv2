@@ -48,7 +48,7 @@
 
                 <div class="mb-2">
                     <div class="flex justify-between">
-                        <label for="color" class="block text-sm font-medium leading-6">Text Color</label>
+                        <label for="color" class="block text-sm font-medium leading-6">Background Color</label>
                     </div>
                     <div class="mt-2">
                         @if ($shift != null)
@@ -87,13 +87,13 @@
 
                 <div class="mb-2">
                     <div class="flex justify-between">
-                        <label for="hoAllowed" class="block text-sm font-medium leading-6">Home Office</label>
+                        <label for="flexLoc" class="block text-sm font-medium leading-6">Flexible Location?</label>
                     </div>
                     <div class="mt-2">
                         @if($shift != null)
-                            <input name="hoAllowed" id="hoAllowed" type="checkbox" @if($shift->hoAllowed == 1) checked @endif/>
+                            <input name="flexLoc" id="flexLoc" type="checkbox" @if($shift->flexLoc == 1) checked @endif/>
                         @else
-                            <input name="hoAllowed" id="hoAllowed" type="checkbox" />
+                            <input name="flexLoc" id="flexLoc" type="checkbox" checked />
                         @endif
                     </div>
                 </div>

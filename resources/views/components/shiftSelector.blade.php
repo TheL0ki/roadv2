@@ -32,8 +32,8 @@
         @endif
     </div>
     <div class="h-full w-full">
-        @if ($todayShift && $todayShift->shift->hoAllowed === 1)
-            Office: <input type="checkbox" name="shift[{{ $i }}][homeOffice]" value="1" @if($todayShift->homeOffice == 1) checked @endif>
+        @if ($todayShift && $todayShift->shift->flexLoc === 1)
+            Office: <input type="checkbox" name="shift[{{ $i }}][flexLoc]" value="1" @if($todayShift->flexLoc == 1) checked @endif>
         @else
             &nbsp;
         @endif

@@ -16,8 +16,8 @@ return new class () extends Migration {
             $table->text('display');
             $table->string('color')->nullable();
             $table->string('textColor')->nullable();
-            $table->integer('hours');
-            $table->boolean('hoAllowed')->default(true);
+            $table->float('hours');
+            $table->boolean('flexLoc')->default(true);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

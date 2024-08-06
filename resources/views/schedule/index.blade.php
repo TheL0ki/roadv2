@@ -108,10 +108,10 @@
                                         class="w-[50px] text-center" 
                                         type="schedule" 
                                         :$loopdate
-                                        :$last 
-                                        color="{{ $table[$item->id][$i]->shift->color }}" 
-                                        textColor="{{ $table[$item->id][$i]->shift->textColor }}"
-                                        ho="{{ $table[$item->id][$i]->homeOffice }}"
+                                        :$last
+                                        color="{{ $table[$item->id][$i]->shift->color }}"
+                                        textColor="{{ $table[$item->id][$i]->shift->textColor }}"                                        
+                                        ho="{{ $table[$item->id][$i]->flexLoc }}"
                                     >
                                         {{ $table[$item->id][$i]->shift->display }}
                                     </x-table.body-cell>
