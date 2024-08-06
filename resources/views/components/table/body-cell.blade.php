@@ -31,7 +31,7 @@
         @if($ho == 1)
             <div class="border-b-2 border-red-500 text-xs">
         @else
-            <div class="text-[10px]">
+            <div class="text-xs">
         @endif
             {{ $slot }}
         </div>
