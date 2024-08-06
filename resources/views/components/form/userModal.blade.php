@@ -76,6 +76,10 @@
                     </div>
                     <div class="mt-2">
                         <x-form.select id="team_id" name="team_id" required>
+                            @if ($user != null)
+                                <option value="{{ $user->team->id }}">{{ $user->team->displayName }}</option>
+                            @endif
+                            <option>--</option>
                             @foreach ($teams as $team)
                                 <option value="{{ $team->id }}">{{ $team->displayName }}</option>
                             @endforeach
@@ -90,6 +94,10 @@
                     <div class="mt-2">
                         <div class="grid">
                             <x-form.select id="role_id" name="role_id" required>
+                                @if ($user != null)
+                                    <option value="{{ $user->role->id }}">{{ $user->role->name }}</option>
+                                @endif
+                                <option>--</option>
                                 @foreach ($roles as $role)
                                     <option value="{{ $role->id }}">{{ ucfirst($role->name) }}</option>
                                 @endforeach
@@ -104,6 +112,10 @@
                     </div>
                     <div class="mt-2">
                         <x-form.select id="model" name="model" required>
+                            @if ($user != null)
+                                <option value="{{ $user->model }}">@php echo $user->model == 'ft' ?  "Full Time" : "Part Time"; @endphp</option>
+                            @endif
+                            <option>--</option>
                             <option value="ft">Full Time</option>
                             <option value="pt">Part Time</option>
                         </x-form.select>
