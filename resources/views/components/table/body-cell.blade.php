@@ -24,6 +24,12 @@
     } else {
         $classes .= ' border border-white/30';
     }
+
+    if($type === 'schedule') {
+        $classes .= ' p-0';
+    } else {
+        $classes .= ' p-2';
+    }
 @endphp
 
 @if($type === 'schedule')
