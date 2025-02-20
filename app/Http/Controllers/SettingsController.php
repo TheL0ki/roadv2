@@ -34,11 +34,12 @@ class SettingsController extends Controller
         $user->email = $userAttributes['email'];
         if(isset($userAttributes['profilePic'])) {
             if($user->profilePic !== NULL) {
-                Storage::delete($user->profilePic);
+                Storage::disk('public')->delete($user->profilePic);
             }
-            $profilePicPath = $request->profilePic->store('profilePic', 'public');
+            $profilePicPath = $request->file("profilePic")->storePublicly('profilePic', 'public');
             $user->profilePic = $profilePicPath;
         }
+        
         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated successfully');

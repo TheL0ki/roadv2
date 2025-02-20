@@ -15,9 +15,9 @@
     }
 
     if (isset($loopdate) && $loopdate->format('Y-m-d') === (new DateTime())->format('Y-m-d')) {
-        $classes .= ' border-solid border-x-2 border-x-blue-700 ';
+        $classes .= ' border-solid border-x-2 border-x-yellow-400 ';
         if($last === true) {
-            $classes .= ' border-b-2 border-b-blue-700';
+            $classes .= ' border-b-2 border-b-yellow-400';
         } else {
             $classes .= ' border-b border-b-white/30';
         }
