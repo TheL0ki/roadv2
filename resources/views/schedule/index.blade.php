@@ -95,7 +95,7 @@
                             <x-table.body-cell>
                                 <a href="/schedule/change/{{ $item->id }}/{{ $date->format('Y') . '/' . $date->format('n') }}" class="flex">
                                     <div>
-                                        <x-profilePic :path="$item->profilePic" class="w-[30px] h-[30px]" />
+                                        <x-profilePic :path="$item->profilePic" class="size-[30px]" />
                                     </div>
                                     <div class="px-2 flex items-center">
                                         {{ $item->firstName }} {{ $item->lastName }}
@@ -105,7 +105,7 @@
                             @for ($i = 1; $i <= $date->format('t'); $i++)
                                 @isset($table[$item->id][$i])
                                     <x-table.body-cell 
-                                        class="w-[50px] text-center" 
+                                        class="w-[50px] text-center !h-12" 
                                         type="schedule" 
                                         :$loopdate
                                         :$last

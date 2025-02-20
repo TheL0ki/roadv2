@@ -35,9 +35,7 @@
 @if($type === 'schedule')
     <td {{ $attributes(['class' => $classes]) }} style="background: {{ $color }}; color: {{ $textColor }};">
         @if($ho == 1)
-            <div class="border-b-2 border-red-500 text-xs">
-        @else
-            <div style="font-size: 0.65rem;">
+            <div class="h-full border-2 border-red-500 content-center">
         @endif
             {{ $slot }}
         </div>
