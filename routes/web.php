@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/settings', [SettingsController::class, 'update'])->name('settings.update');
     Route::patch('/settings/pwdUpdate', [SettingsController::class, 'updatePassword'])->name('password.update');
 
-    Route::delete('/logout', [SessionController::class, 'destroy']); 
+    Route::get('/logout', [SessionController::class, 'destroy']);
 });
 
 

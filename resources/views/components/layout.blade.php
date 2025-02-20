@@ -19,8 +19,6 @@
             </div>
             @auth
                 <div class="space-x-6">
-                    <x-nav-link href="/">Home</x-nav-link>
-                    <x-nav-link href="/settings">Settings</x-nav-link>
                     @admin
                         <x-nav-link href="/batch">Batch Assign</x-nav-link>
                         <x-nav-link href="/userManagement">User Management</x-nav-link>
@@ -28,10 +26,8 @@
                         <x-nav-link href="/shiftManagement">Shift Management</x-nav-link>
                     @endadmin
                 </div>
-                <form method="POST" action="/logout">
-                    @csrf
-                    @method('DELETE')
-                    <button class="space-x-6 flex justify-between items-center">
+                <div class="relative">
+                    <button class="border-l-2 border-r-2 border-t-2 border-neutral-700 space-x-6 flex justify-between items-center" id="dropdown-button">
                         <div>
                             <x-profilePic :path="Auth::User()->profilePic" class="w-[40px] h-[40px]" />
                         </div>
@@ -42,7 +38,16 @@
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                </form>           
+                    
+                    <div id="dropdown-menu" 
+                        class="left-0 w-full border-l-2 border-r-2 border-b-2 border-gray-400 absolute bg-neutral-700 shadow-md 
+                               transition-transform duration-300 ease-in-out transform scale-y-0 origin-top 
+                               opacity-0 pointer-events-none">
+                        <!-- Dropdown items -->
+                        <a href="/settings" class="block py-2 px-4 text-white hover:bg-neutral-600">Settings</a>
+                        <a href="/logout" class="block py-2 px-4 text-white hover:bg-neutral-600">Logout</a>
+                    </div>
+                </div>
             @endauth
 
             @guest()
@@ -57,6 +62,49 @@
             {{ $slot }}
         </main>
     </div>
+    <script type="text/javascript">
+        const dropdownButton = document.getElementById('dropdown-button');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+
+        // Function to open dropdown
+        function openDropdown() {
+            dropdownMenu.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                dropdownMenu.classList.remove('scale-y-0');
+                dropdownButton.classList.remove('border-neutral-700');
+                dropdownButton.classList.add('border-gray-400');
+            }, 10);
+        }
+
+        // Function to close dropdown
+        function closeDropdown() {
+            dropdownMenu.classList.add('scale-y-0');
+            setTimeout(() => {
+                dropdownMenu.classList.add('opacity-0', 'pointer-events-none');
+                dropdownButton.classList.remove('border-gray-400');
+                dropdownButton.classList.add('border-neutral-700');
+            }, 200);
+        }
+
+        // Toggle dropdown on button click
+        dropdownButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent click from propagating to document
+
+            if (dropdownMenu.classList.contains('scale-y-0')) {
+                openDropdown();
+            } else {
+                closeDropdown();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (event) => {
+            if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
+                closeDropdown();
+            }
+        });
+
+    </script>
 </body>
 
 </html>

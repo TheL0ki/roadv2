@@ -3,8 +3,8 @@
         <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data">
             @method('PATCH')
             @csrf
-            <div class="space-y-4 pt-4 w-full">
-                <div class="flex justify-center">
+            <div class="space-y-4 pt-4">
+                <div class="flex justify-center overflow-x-auto">
                     <div class="w-2/5 flex flex-col space-y-4">
                         <div class="flex items-center">
                             <label for="firstName" class="w-1/4">First Name</label>
