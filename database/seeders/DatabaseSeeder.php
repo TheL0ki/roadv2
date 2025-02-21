@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
     {
         $team = Team::factory(3)->create();
 
+        $roleSeeder = new RoleSeeder();
+        $roleSeeder->run();
+
         $user = User::create([
             'firstName' => 'Admin',
             'lastName' => 'God',
@@ -36,8 +39,7 @@ class DatabaseSeeder extends Seeder
 
         $user->team()->associate(Team::find(1));
         $user->role()->associate(Role::find(1));
-        $user->save();
-        
+        $user->save();        
         
         $user = User::factory(5)->recycle($team)->create(new Sequence(
             [

@@ -27,7 +27,7 @@
                     @endadmin
                 </div>
                 <div class="relative">
-                    <button class="border-l-2 border-r-2 border-t-2 border-neutral-700 space-x-6 flex justify-between items-center" id="dropdown-button">
+                    <button class="pt-2 pr-2 pl-2 border-l-2 border-r-2 border-t-2 border-neutral-700 space-x-6 flex justify-between items-center" id="dropdown-button">
                         <div>
                             <x-profilePic :path="Auth::User()->profilePic" class="w-[40px] h-[40px]" />
                         </div>
