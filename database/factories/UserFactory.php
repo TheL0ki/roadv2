@@ -34,7 +34,6 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'team_id' => Team::factory(),
             'model' => 'VZ',
-            'profilePic' => 'profilePic/placeholder.png',
             'role_id' => rand(1, 3),
             'active' => 1,
             'validFrom' => now(),
