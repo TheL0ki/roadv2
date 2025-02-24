@@ -15,6 +15,9 @@ return new class () extends Migration {
             $table->id();
             $table->string('name');
             $table->text('displayName');
+            $table->boolean('active')->default(true);
+            $table->dateTime('deletedAt')->nullable();
+            $table->dateTime('deletedBy')->nullable();
             $table->timestamps();
         });
     }

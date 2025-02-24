@@ -37,16 +37,16 @@
         </div>
     </form>
 
-    <x-modal.success>
-        {{ session('success') }}
-    </x-modal.success>
+    <x-modal.feedback>
+        {{ session('feedback') }}
+    </x-modal.feedback>
 
-    @if (session('success'))
+    @if (session('feedback'))
         <script>
-            document.getElementById("successModal").classList.remove('hidden');
+            document.getElementById("feedbackModal").classList.remove('hidden');
 
             setTimeout(() => {
-                document.getElementById("successModal").classList.add('hidden');
+                document.getElementById("feedbackModal").classList.add('hidden');
             }, 2000);
         </script>
     @endif

@@ -52,7 +52,7 @@ class UserController extends Controller
 
         $this->associateUser($user, $userAttributes);
 
-        return redirect('/userManagement')->with('success', 'User created successfully!');
+        return redirect('/userManagement')->with('feedback', 'userCreated');
     }
 
     /**
@@ -91,7 +91,7 @@ class UserController extends Controller
 
         $this->associateUser($user, $userAttributes);
 
-        return redirect('/userManagement')->with('success', 'User updated successfully!');
+        return redirect('/userManagement')->with('feedback', 'userUpdatedSuccess');
     }
 
     /**
@@ -107,7 +107,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/userManagement')->with('success', 'User deleted successfully!');
+        return redirect('/userManagement')->with('feedback', 'userDeleted');
     }
 
     protected function associateUser(User $user, $userAttributes) : void

@@ -62,4 +62,18 @@
             </form>
         @endforeach
     </div>
+    
+    <x-modal.feedback>
+        {{ session('feedback') }}
+    </x-modal.feedback>
+
+    @if (session('feedback'))
+        <script>
+            document.getElementById("feedbackModal").classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById("feedbackModal").classList.add('hidden');
+            }, 2000);
+        </script>
+    @endif
 </x-layout>

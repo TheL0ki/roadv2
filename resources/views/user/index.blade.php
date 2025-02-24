@@ -40,6 +40,20 @@
             </x-table.body>
         </x-table.table>
     </div>
+
+    <x-modal.feedback>
+        {{ session('feedback') }}
+    </x-modal.feedback>
+
+    @if (session('feedback'))
+        <script>
+            document.getElementById("feedbackModal").classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById("feedbackModal").classList.add('hidden');
+            }, 2000);
+        </script>
+    @endif
     
     <div class="pt-4">
         <x-button onclick="openModal('createUserModal')">Create New User</x-button>

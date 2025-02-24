@@ -42,7 +42,7 @@ class SettingsController extends Controller
         
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully');
+        return redirect()->back()->with('feedback', 'profileUpdatedSuccess');
     }
 
     public function updatePassword(Request $request)
@@ -55,6 +55,6 @@ class SettingsController extends Controller
         $user->password = bcrypt($userInput['password']);
         $user->save();
 
-        return redirect()->back()->with('success', 'Password updated successfully');
+        return redirect()->back()->with('feedback', 'profileUpdatedSuccess');
     }
 }

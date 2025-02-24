@@ -15,7 +15,7 @@ class TeamController extends Controller
     public function index()
     {
         return view('team.index', [
-            'teams' => Team::all(),
+            'teams' => Team::where('active', "=", "1")->get()
         ]);
     }
 
@@ -39,7 +39,7 @@ class TeamController extends Controller
 
         $team = Team::create($teamAttributes);
 
-        return redirect()->back()->with('success', 'Team created successfully');
+        return redirect()->back()->with('feedback', 'teamCreated');
     }
 
     /**
@@ -74,7 +74,7 @@ class TeamController extends Controller
             $team->update($teamAttributes);
         }
 
-        return redirect()->back()->with('success', 'Team updated successfully');
+        return redirect()->back()->with('feedback', 'teamUpdated');
     }
 
     /**
@@ -84,10 +84,16 @@ class TeamController extends Controller
     {
         $team = Team::find($id);
 
-        if ($team) {
-            $team->delete();
+        if($team->user()->count() > 0) {
+            return redirect()->back()->with('feedback', 'teamActiveUser');
         }
 
-        return redirect()->back()->with('success', 'Team deleted successfully');
+        $team->active = 0;
+        $team->deletedAt = now();
+        $team->deletedBy = auth()->user()->id;
+
+        $team->save();
+
+        return redirect()->back()->with('feedback', 'teamDeleted');
     }
 }
