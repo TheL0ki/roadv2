@@ -47,6 +47,20 @@
             $heading = "Success";
             $message = "Team deleted successfully";
             break;
+        case 'shiftCreated':
+            $classes .=" bg-green-400 text-green-700";
+            $heading = "Success";
+            $message = "Shift created successfully";
+            break;
+        case 'shiftUpdated':
+            $classes .=" bg-green-400 text-green-700";
+            $heading = "Success";
+            $message = "Shift updated successfully";
+            break;
+        case 'shiftDeleted':
+            $classes .=" bg-green-400 text-green-700";
+            $heading = "Success";
+            $message = "Shift deleted successfully";
         default:
             $classes .=" bg-yellow-200";
             $heading = "Error";

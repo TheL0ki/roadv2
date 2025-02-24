@@ -54,7 +54,7 @@ class ShiftController extends Controller
 
         $shift = Shift::create($shiftAttributes);
 
-        return redirect('/shiftManagement')->with('success', 'Shift created successfully!');
+        return redirect('/shiftManagement')->with('feedback', 'shiftCreated');
     }
 
     /**
@@ -102,7 +102,7 @@ class ShiftController extends Controller
 
         $shift->update($shiftAttributes);
 
-        return redirect('/shiftManagement')->with('success', 'Shift updated successfully!');
+        return redirect('/shiftManagement')->with('feedback', 'shiftUpdated');
     }
 
     /**
@@ -112,8 +112,12 @@ class ShiftController extends Controller
     {
         $shift = Shift::find($id);
 
-        $shift->delete();
+        $shift->active = false;
+        $shift->deletedAt = now();
+        $shift->deletedBy = auth()->user()->id;
 
-        return redirect('/shiftManagement')->with('success', 'Shift deleted successfully!');
+        $shift->save();
+
+        return redirect('/shiftManagement')->with('feedback', 'shiftDeleted');
     }
 }

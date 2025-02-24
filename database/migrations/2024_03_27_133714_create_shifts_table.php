@@ -19,6 +19,8 @@ return new class () extends Migration {
             $table->float('hours');
             $table->boolean('flexLoc')->default(true);
             $table->boolean('active')->default(true);
+            $table->dateTime('deletedAt')->nullable();
+            $table->integer('deletedBy')->nullable();
             $table->timestamps();
         });
     }
