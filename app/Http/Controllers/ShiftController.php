@@ -51,6 +51,12 @@ class ShiftController extends Controller
         } else {
             $shiftAttributes['flexLoc'] = false;
         }
+        
+        if($request->override) {
+            $shiftAttributes['override'] = true;
+        } else {
+            $shiftAttributes['override'] = false;
+        }
 
         $shift = Shift::create($shiftAttributes);
 
@@ -91,16 +97,30 @@ class ShiftController extends Controller
                 'required',
                 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
             ],
-            'hours' => ['required', 'numeric'],
+            'hours' => ['required', 'numeric']
         ]);
 
-        if($request->flexLoc) {
-            $shiftAttributes['flexLoc'] = true;
-        } else {
+        if(!$request->flexLoc) {            
             $shiftAttributes['flexLoc'] = false;
+        } else {
+            $shiftAttributes['flexLoc'] = true;
         }
 
-        $shift->update($shiftAttributes);
+        if(!$request->override) {
+            $shiftAttributes['override'] = false;
+        } else {
+            $shiftAttributes['override'] = true;
+        }
+
+        $shift->name = $shiftAttributes['name'];
+        $shift->display = $shiftAttributes['display'];
+        $shift->color = $shiftAttributes['color'];
+        $shift->textColor = $shiftAttributes['textColor'];
+        $shift->hours = $shiftAttributes['hours'];
+        $shift->flexLoc = $shiftAttributes['flexLoc'];
+        $shift->override = $shiftAttributes['override'];
+
+        $shift->save();
 
         return redirect('/shiftManagement')->with('feedback', 'shiftUpdated');
     }

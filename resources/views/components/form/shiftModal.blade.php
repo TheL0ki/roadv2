@@ -97,6 +97,19 @@
                         @endif
                     </div>
                 </div>
+
+                <div class="mb-2">
+                    <div class="flex justify-between">
+                        <label for="flexLoc" class="block text-sm font-medium leading-6">Overridable?</label>
+                    </div>
+                    <div class="mt-2">
+                        @if($shift != null)
+                            <input name="override" id="override" type="checkbox" @if($shift->override == 1) checked @endif/>
+                        @else
+                            <input name="override" id="override" type="checkbox" checked />
+                        @endif
+                    </div>
+                </div>
             </div>
 
             <div class="flex justify-between pt-2">

@@ -18,6 +18,7 @@ return new class () extends Migration {
             $table->string('textColor')->nullable();
             $table->float('hours');
             $table->boolean('flexLoc')->default(true);
+            $table->boolean('override')->default(false);
             $table->boolean('active')->default(true);
             $table->dateTime('deletedAt')->nullable();
             $table->integer('deletedBy')->nullable();

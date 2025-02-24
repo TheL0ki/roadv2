@@ -63,11 +63,13 @@ class BatchController extends Controller
                         'month' => $attributes['month'],
                         'year' => $attributes['year'],
                     ]);
-                    
-                    $schedule->user_id = $user->id;
-                    $schedule->shift_id = $attributes['shift'];
-                    $schedule->flexLoc = 0;
-                    $schedule->save();
+
+                    if($schedule->override !== 0) {
+                        $schedule->user_id = $user->id;
+                        $schedule->shift_id = $attributes['shift'];
+                        $schedule->flexLoc = 0;
+                        $schedule->save();
+                    }
                 }
             }
         }
