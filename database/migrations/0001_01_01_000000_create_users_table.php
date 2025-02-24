@@ -25,6 +25,8 @@ return new class () extends Migration {
             $table->boolean('active')->default(true);
             $table->dateTime('validFrom')->default(now());
             $table->dateTime('validUntil')->nullable();
+            $table->dateTime('deletedAt')->nullable();
+            $table->integer('deletedBy')->nullable();
             $table->foreignIdFor(Role::class)->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -9,9 +9,9 @@
     <title>R.O.A.D</title>
 </head>
 
-<body class="bg-neutral-700 text-white pb-20">
-    <div class="px-10">
-        <nav class="flex justify-between items-center py-2 border-b border-white/10">
+<body class="bg-neutral-600 text-white pb-20">
+    <div>
+        <nav class="flex justify-between items-center py-2 border-b border-white/10 bg-neutral-700 px-10">
             <div>
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logo.svg') }}"  class="max-w-32">
@@ -27,7 +27,7 @@
                     @endadmin
                 </div>
                 <div class="relative">
-                    <button class="pt-2 pr-2 pl-2 border-l-2 border-r-2 border-t-2 border-neutral-700 space-x-6 flex justify-between items-center" id="dropdown-button">
+                    <button class="pt-2 pr-2 pl-2 space-x-6 flex justify-between items-center" id="dropdown-button">
                         <div>
                             <x-profilePic :path="Auth::User()->profilePic" class="w-[40px] h-[40px]" />
                         </div>
@@ -40,7 +40,7 @@
                     </button>
                     
                     <div id="dropdown-menu" 
-                        class="left-0 w-full border-l-2 border-r-2 border-b-2 border-gray-400 absolute bg-neutral-700 shadow-md 
+                        class="pt-2 left-0 w-full absolute bg-neutral-700 shadow-md 
                                transition-transform duration-300 ease-in-out transform scale-y-0 origin-top 
                                opacity-0 pointer-events-none">
                         <!-- Dropdown items -->
@@ -58,7 +58,7 @@
                 </div>
             @endguest
         </nav>
-        <main>
+        <main class="px-10 pt-2">
             {{ $slot }}
         </main>
     </div>
@@ -71,8 +71,6 @@
             dropdownMenu.classList.remove('opacity-0', 'pointer-events-none');
             setTimeout(() => {
                 dropdownMenu.classList.remove('scale-y-0');
-                dropdownButton.classList.remove('border-neutral-700');
-                dropdownButton.classList.add('border-gray-400');
             }, 10);
         }
 
@@ -81,8 +79,6 @@
             dropdownMenu.classList.add('scale-y-0');
             setTimeout(() => {
                 dropdownMenu.classList.add('opacity-0', 'pointer-events-none');
-                dropdownButton.classList.remove('border-gray-400');
-                dropdownButton.classList.add('border-neutral-700');
             }, 200);
         }
 
