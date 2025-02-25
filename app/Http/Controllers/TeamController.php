@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTeamRequest;
 use App\Http\Requests\UpdateTeamRequest;
 
@@ -90,7 +91,7 @@ class TeamController extends Controller
 
         $team->active = 0;
         $team->deletedAt = now();
-        $team->deletedBy = auth()->user()->id;
+        $team->deletedBy = Auth::user()->id;
 
         $team->save();
 

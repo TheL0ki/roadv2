@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\Shift;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 
@@ -15,7 +16,7 @@ class ShiftController extends Controller
      */
     public function index()
     {
-        $shifts = Shift::all();
+        $shifts = Shift::where('isHoliday', 0)->where('active', 1)->get();
         return view('shift.index', ['shifts' => $shifts]);
     }
 
@@ -134,7 +135,7 @@ class ShiftController extends Controller
 
         $shift->active = false;
         $shift->deletedAt = now();
-        $shift->deletedBy = auth()->user()->id;
+        $shift->deletedBy = Auth::user()->id;
 
         $shift->save();
 

@@ -20,6 +20,7 @@ return new class () extends Migration {
             $table->boolean('flexLoc')->default(true);
             $table->boolean('override')->default(true);
             $table->boolean('active')->default(true);
+            $table->boolean('isHoliday')->default(false);
             $table->dateTime('deletedAt')->nullable();
             $table->integer('deletedBy')->nullable();
             $table->timestamps();
