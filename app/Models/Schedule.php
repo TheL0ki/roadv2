@@ -14,7 +14,8 @@ class Schedule extends Model
         'day',
         'month',
         'year',
-        'homeOffice'
+        'flexLoc',
+        'shift_id'
     ];
 
     public function user() : BelongsTo

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use DateTime;
 use App\Models\User;
 use App\Models\Shift;
@@ -64,7 +65,7 @@ class BatchController extends Controller
                         'year' => $attributes['year'],
                     ]);
 
-                    if($schedule->override !== 0) {
+                    if(isset($schedule->shift->override) === false || $schedule->shift->override !== 0) {
                         $schedule->user_id = $user->id;
                         $schedule->shift_id = $attributes['shift'];
                         $schedule->flexLoc = 0;
@@ -77,8 +78,32 @@ class BatchController extends Controller
         return redirect()->route('index');
     }
 
-    public function storeHolidy(Request $request) {
-        
+    public function storeHoliday(Request $request)
+    {
+        $attributes = $request->validate([
+            'day' => ['required', 'integer', 'min:1', 'max:31'],
+            'month' => ['required', 'integer', 'min:1', 'max:12'],
+            'year' => ['required', 'integer'],
+        ]);
+
+        $user = User::all();
+
+        foreach($user as $user) {
+            $user->schedule()->updateOrCreate(
+                [   
+                    'user_id' => $user->id,
+                    'day' => $attributes['day'],
+                    'month' => $attributes['month'],
+                    'year' => $attributes['year'],
+                ],
+                [
+                    'shift_id' => 10,
+                    'flexLoc' => 0,
+                ]
+            );
+        }
+
+        return redirect()->route('index');
     }
 
     /**

@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(Role::class)->group(function () {
     Route::get('/batch', [BatchController::class, 'index']);
     Route::post('/batch/update', [BatchController::class, 'store']);
+    Route::post('/batch/holiday', [BatchController::class,'storeHoliday'])->name('batch.holiday');
 
     Route::get('/userManagement', [UserController::class, 'index']);
     Route::post('/userManagement/store', [UserController::class, 'store'])->name('user.store');

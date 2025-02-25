@@ -8,6 +8,7 @@
                     <x-table.head-cell class="w-1/6">Colors</x-table.head-cell>
                     <x-table.head-cell class="w-1/6">Hours</x-table.head-cell>
                     <x-table.head-cell class="w-1/6">Flexible Location</x-table.head-cell>
+                    <x-table.head-cell class="w-1/6">Overrideable</x-table.head-cell>
                     <x-table.head-cell class="w-1/6">Options</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
@@ -27,6 +28,7 @@
                         </x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ $shift->hours }}</x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ $shift->flexLoc }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ $shift->override }}</x-table.body-cell>
                         <x-table.options :item=$shift category="shift" modal="editShift{{ $i }}" />
                     </x-table.body-row>
                     @php

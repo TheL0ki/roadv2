@@ -16,9 +16,10 @@ class ShiftFactory extends Factory
      */
     public function definition(): array
     {
+        $shiftname = strtoupper(fake()->randomLetter());
         return [
-            'name' => strtoupper(fake()->randomLetter()),
-            'display' => strtoupper(fake()->randomLetter()),
+            'name' => $shiftname,
+            'display' => $shiftname,
             'color' => fake()->hexColor(),
             'textColor' => fake()->hexColor(),
             'hours' => fake()->numberBetween(6, 10),

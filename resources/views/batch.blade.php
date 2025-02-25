@@ -106,7 +106,7 @@
                     </div>
                 </div>
             </form>
-            <form>
+            <form action="{{ route('batch.holiday') }}" method="POST">
                 @csrf
                 @method('POST')
                 <div class="flex flex-col space-y-2">
