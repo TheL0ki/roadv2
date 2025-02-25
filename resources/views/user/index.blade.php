@@ -29,7 +29,7 @@
                         </x-table.body-cell>
                         <x-table.body-cell>{{ $item->email }}</x-table.body-cell>
                         <x-table.body-cell>{{ $item->team->displayName }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ $item->model }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ strtoupper($item->model) }}</x-table.body-cell>
                         <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
                         <x-table.options :item=$item category="user" modal="editUser{{ $i }}"></x-table.options>
                     </x-table.body-row>

@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'team_id' => Team::factory(),
-            'model' => 'VZ',
+            'model' => 'ft',
             'role_id' => rand(1, 3),
             'active' => 1,
             'validFrom' => now(),
