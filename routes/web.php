@@ -13,6 +13,7 @@ use App\Http\Controllers\SettingsController;
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
     Route::post('/login', [SessionController::class, 'store']);
+    Route::get('/test', [SessionController::class, 'test'])->name('test');
 });
 
 Route::middleware('auth')->group(function () {

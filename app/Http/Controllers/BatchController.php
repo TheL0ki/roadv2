@@ -17,6 +17,7 @@ class BatchController extends Controller
     {
         $user = User::where('active', '=', '1')->orderBy('lastName')->get();
         $shift = Shift::where('active', '=', '1')->get();
+        $holidays = Shift::where('isHoliday', '=', '1')->get();
 
         $date = new DateTime();
         $date->setDate($date->format('Y'), $date->format('m'), '01');
@@ -25,6 +26,7 @@ class BatchController extends Controller
             'users' => $user,
             'shifts' => $shift,
             'date' => $date,
+            'holidays' => $holidays,
         ]);
     }
 
