@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BGkCdt_G.css",
+    "file": "assets/app-DpRwzdSi.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -8,12 +8,12 @@
     "file": "assets/logo-SsZxyQJ5.svg",
     "src": "resources/images/logo.svg"
   },
-  "resources/images/profilePlaceholder.png": {
-    "file": "assets/profilePlaceholder-HAj8KM6-.png",
-    "src": "resources/images/profilePlaceholder.png"
+  "resources/images/placeholder.png": {
+    "file": "assets/placeholder-HAj8KM6-.png",
+    "src": "resources/images/placeholder.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DkDdL2UM.js",
+    "file": "assets/app-CqflisoM.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
