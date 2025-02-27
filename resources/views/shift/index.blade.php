@@ -27,8 +27,20 @@
                             </div>
                         </x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ $shift->hours }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ $shift->flexLoc }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ $shift->override }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">
+                            @if($shift->flexLoc === 1)
+                                ✔️
+                            @else
+                                ❌
+                            @endif
+                        </x-table.body-cell>
+                        <x-table.body-cell class="text-center">
+                            @if($shift->override === 1)
+                                ✔️
+                            @else
+                                ❌
+                            @endif
+                        </x-table.body-cell>
                         <x-table.options :item=$shift category="shift" modal="editShift{{ $i }}" />
                     </x-table.body-row>
                     @php
