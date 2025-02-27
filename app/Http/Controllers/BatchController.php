@@ -99,7 +99,7 @@ class BatchController extends Controller
                     'year' => $attributes['year'],
                 ],
                 [
-                    'shift_id' => 10,
+                    'shift_id' => 14,
                     'flexLoc' => 0,
                 ]
             );
