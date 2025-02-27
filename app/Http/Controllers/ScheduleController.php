@@ -50,11 +50,11 @@ class ScheduleController extends Controller
         $date = new DateTime($displayDate);
 
         if($team !== null) {
-            $user = User::where('team_id', '=', $team)->with(['schedule' => function ($query) use ($date) {
+            $user = User::where('team_id', '=', $team)->where('active', '=', '1')->with(['schedule' => function ($query) use ($date) {
                 $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
             }])->get();;
         } else {
-            $user = User::with(['schedule' => function ($query) use ($date) {
+            $user = User::where('active', '=', '1')->with(['schedule' => function ($query) use ($date) {
                 $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
             }])->get(); 
         }
