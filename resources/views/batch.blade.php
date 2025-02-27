@@ -1,4 +1,7 @@
 <x-layout>
+    @if($errors->any())
+        {{ $errors }}
+    @endif
     <div class="space-y-4 pt-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <form action="/batch/update" method="POST">
@@ -119,8 +122,8 @@
                     <div class="space-y-2">
                         @if(count($holidays) > 1)
                             <div>
-                                <label for="shift">Holiday</label>
-                                <x-form.select name="holiday">
+                                <label for="holidayId">Holiday</label>
+                                <x-form.select name="holidayId">
                                     @foreach ($holidays as $holiday)
                                         <option value="{{ $holiday->id }}">{{ $holiday->name }}</option>
                                     @endforeach
@@ -156,7 +159,7 @@
                         <div>
                             <x-button>Save</x-button>
                             @if(count($holidays) === 1)
-                                <input type="hidden" name="holiday" value="{{ $holidays[0]->id }}" readonly>
+                                <input type="hidden" name="holidayId" value="{{ $holidays[0]->id }}" readonly>
                             @endif
                         </div>
                     </div>

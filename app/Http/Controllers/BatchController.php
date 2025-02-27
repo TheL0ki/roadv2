@@ -86,6 +86,7 @@ class BatchController extends Controller
             'day' => ['required', 'integer', 'min:1', 'max:31'],
             'month' => ['required', 'integer', 'min:1', 'max:12'],
             'year' => ['required', 'integer'],
+            'holidayId' => ['required', 'integer'],
         ]);
 
         $user = User::all();
@@ -99,7 +100,7 @@ class BatchController extends Controller
                     'year' => $attributes['year'],
                 ],
                 [
-                    'shift_id' => 14,
+                    'shift_id' => $attributes['holidayId'],
                     'flexLoc' => 0,
                 ]
             );
