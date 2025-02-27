@@ -44,14 +44,20 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($year, $month)
+    public function show($year, $month, $team = null)
     {
         $displayDate = $year . '-' . $month . '-01';
         $date = new DateTime($displayDate);
 
-        $user = User::with(['schedule' => function ($query) use ($date) {
-            $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
-        }])->get();
+        if($team !== null) {
+            $user = User::where('team_id', '=', $team)->with(['schedule' => function ($query) use ($date) {
+                $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
+            }])->get();;
+        } else {
+            $user = User::with(['schedule' => function ($query) use ($date) {
+                $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
+            }])->get(); 
+        }
 
         $table = [];
 

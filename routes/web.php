@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
     Route::get('/schedule/change/{id}/{year}/{month}', [ScheduleController::class, 'edit'])->middleware(Role::class);
     Route::patch('/schedule/{id}/update', [ScheduleController::class, 'update'])->middleware(Role::class);
+    Route::get('/schedule/{year}/{month}/{team}', [ScheduleController::class, 'show']);
     Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show']);
 
     Route::get('/settings', [SettingsController::class, 'index']);

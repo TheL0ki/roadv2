@@ -5,9 +5,16 @@
             <div class="sm:col-span-6">
                 <label for="first-name" class="block text-sm font-medium leading-6">Team</label>
                 <div class="mt-2">
-                    <x-form.select class="text-start pl-3 rounded-md">
+                    <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
+                            <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}">All Teams</option>
+                            <option value="{{ Request::url() }}">---</option>
                         @foreach ($teams as $team)
-                            <option>{{ $team->displayName }}</option>
+                            <option 
+                                value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') . '/' . $team->id }}" 
+                                @if (Request::is('schedule/' . $date->format('Y') . '/' . $date->format('n') . '/' . $team->id)) selected="selected" @endif
+                            >
+                                {{ $team->displayName }}
+                            </option>
                         @endforeach
                     </x-form.select>
                 </div>

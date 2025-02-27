@@ -155,7 +155,7 @@
                         </div>
                         <div>
                             <x-button>Save</x-button>
-                            @if(count($holidays) < 1)
+                            @if(count($holidays) === 1)
                                 <input type="hidden" name="holiday" value="{{ $holidays[0]->id }}" readonly>
                             @endif
                         </div>
