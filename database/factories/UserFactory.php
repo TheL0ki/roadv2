@@ -38,6 +38,7 @@ class UserFactory extends Factory
             'active' => 1,
             'validFrom' => now(),
             'remember_token' => Str::random(10),
+            'slackId' => strtoupper('u' . Str::random(10))
         ];
     }
 
