@@ -112,7 +112,7 @@
                             @for ($i = 1; $i <= $date->format('t'); $i++)
                                 @isset($table[$item->id][$i])
                                     <x-table.body-cell 
-                                        class="w-[50px] text-center !h-12" 
+                                        class="w-[50px] text-center text-xs !h-12" 
                                         type="schedule" 
                                         :$loopdate
                                         :$last
