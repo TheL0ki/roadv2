@@ -7,5 +7,5 @@
 @if($path === NULL)
     <img src="{{ Vite::asset('resources/images/placeholder.png') }}" {{ $attributes(['class' => $class]) }}>
 @else
-    <img src="{{ URL::asset('storage/app/public/' . $path) }}" {{ $attributes(['class' => $class]) }}>
+    <img src="{{ URL::asset($path) }}" {{ $attributes(['class' => $class]) }}>
 @endif
