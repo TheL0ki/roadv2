@@ -47,6 +47,7 @@ class UserController extends Controller
             'role_id' => ['required'],
             'team_id' => ['required'],
             'model' => ['required'],
+            'slackId' => ['required', 'unique:users,slackId'],
         ]);
 
         $user = User::create($userAttributes);
@@ -86,9 +87,14 @@ class UserController extends Controller
             'role_id' => ['required'],
             'team_id' => ['required'],
             'model' => ['required'],
+            'slackId' => ['required', Rule::unique('users', 'slackId')->ignore($user->id)],
         ]);
 
-        $user->update($userAttributes);
+        $user->firstName = $userAttributes['firstName'];
+        $user->lastName = $userAttributes['lastName'];
+        $user->email = $userAttributes['email'];
+        $user->model = $userAttributes['model'];
+        $user->slackId = $userAttributes['slackId'];
 
         $this->associateUser($user, $userAttributes);
 

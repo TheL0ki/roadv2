@@ -72,6 +72,19 @@
 
                 <div class="mb-2">
                     <div class="flex items-center justify-between">
+                        <label for="slackId" class="block text-sm font-medium leading-6">Slack ID</label>
+                    </div>
+                    <div class="mt-2">
+                        @if ($user != null)
+                            <x-form.textInput id="slackId" name="slackId" type="text" required :value="$user->slackId"></x-form.textInput> 
+                        @else
+                            <x-form.textInput id="slackId" name="slackId" type="text" required></x-form.textInput>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <div class="flex items-center justify-between">
                         <label for="team" class="block text-sm font-medium leading-6">Team</label>
                     </div>
                     <div class="mt-2">
