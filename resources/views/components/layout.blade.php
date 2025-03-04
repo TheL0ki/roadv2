@@ -85,8 +85,6 @@
             {{ $slot }}
         </main>
     </div>
-    <script src="{{ Vite::asset('resources/js/dropdownMenu.js')}}" type="text/javascript"></script>
-    <script src="{{ Vite::asset('resources/js/mobileMenu.js')}}" type="text/javascript"></script>
 </body>
 
 </html>
