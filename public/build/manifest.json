@@ -21,5 +21,17 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/dropdownMenu.js": {
+    "file": "assets/dropdownMenu-CNUUHxEr.js",
+    "name": "dropdownMenu",
+    "src": "resources/js/dropdownMenu.js",
+    "isEntry": true
+  },
+  "resources/js/mobileMenu.js": {
+    "file": "assets/mobileMenu-BM6Fc1BE.js",
+    "name": "mobileMenu",
+    "src": "resources/js/mobileMenu.js",
+    "isEntry": true
   }
 }
