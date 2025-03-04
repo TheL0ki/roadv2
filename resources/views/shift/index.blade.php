@@ -1,15 +1,15 @@
 <x-layout>
-    <div class="space-y-4 pt-4">
+    <div class="w-100 overflow-x-auto">
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
-                    <x-table.head-cell class="w-1/6">Name</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Display</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Colors</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Hours</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Flexible Location</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Overrideable</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Options</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">Name</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">Display</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Colors</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">Hours</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">Flexible Location</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">Overrideable</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Options</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>

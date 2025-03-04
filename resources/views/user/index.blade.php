@@ -1,14 +1,14 @@
 <x-layout>
-    <div class="space-y-4 pt-4">
+    <div class="w-100 overflow-x-auto">
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
-                    <x-table.head-cell>Full Name</x-table.head-cell>
-                    <x-table.head-cell>E-mail</x-table.head-cell>
-                    <x-table.head-cell>Team</x-table.head-cell>
-                    <x-table.head-cell>Model</x-table.head-cell>
-                    <x-table.head-cell>Role</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Options</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Full Name</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">E-mail</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Team</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Model</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Role</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Options</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>

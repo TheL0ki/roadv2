@@ -1,13 +1,13 @@
 <x-layout>
-    <div class="space-y-4 pt-4">
+    <div class="w-100 overflow-x-auto">
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
-                    <x-table.head-cell>Name</x-table.head-cell>
-                    <x-table.head-cell>Display Name</x-table.head-cell>
-                    <x-table.head-cell>Manager</x-table.head-cell>
-                    <x-table.head-cell>Members</x-table.head-cell>
-                    <x-table.head-cell class="w-1/6">Options</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Name</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Display Name</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Manager</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Members</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Options</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>
@@ -34,34 +34,34 @@
                 @endforeach
             </x-table.body>
         </x-table.table>
-
-        <div class="pt-4">
-            <x-button onclick="openModal('createTeamModal')">Add New Team</x-button>
-        </div>
-    
-        <form action="{{ route('team.store') }}" method="POST">
-            @csrf
-            <x-form.teamModal modalName="createTeamModal">
-                <x-slot:heading>Add Team</x-slot:heading>
-            </x-form.teamModal>
-        </form>
-
-        @php
-            $i = 1;
-        @endphp
-        @foreach ($teams as $item)
-            <form action="{{ route('team.update', $item->id) }}" method="POST">
-                @csrf
-                @method('PATCH')
-                <x-form.teamModal modalName="editTeam{{ $i }}" :team="$item">
-                    <x-slot:heading>Edit Team {{ $item->displayName }}</x-slot:heading>
-                </x-form.teamModal>
-                @php
-                    $i++;
-                @endphp
-            </form>
-        @endforeach
     </div>
+    
+    <div class="pt-4">
+        <x-button onclick="openModal('createTeamModal')">Add New Team</x-button>
+    </div>
+
+    <form action="{{ route('team.store') }}" method="POST">
+        @csrf
+        <x-form.teamModal modalName="createTeamModal">
+            <x-slot:heading>Add Team</x-slot:heading>
+        </x-form.teamModal>
+    </form>
+
+    @php
+        $i = 1;
+    @endphp
+    @foreach ($teams as $item)
+        <form action="{{ route('team.update', $item->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <x-form.teamModal modalName="editTeam{{ $i }}" :team="$item">
+                <x-slot:heading>Edit Team {{ $item->displayName }}</x-slot:heading>
+            </x-form.teamModal>
+            @php
+                $i++;
+            @endphp
+        </form>
+    @endforeach
     
     <x-modal.feedback>
         {{ session('feedback') }}
