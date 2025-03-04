@@ -11,7 +11,7 @@
 
 <body class="bg-neutral-600 text-white pb-20">
     <div>
-        <nav class="flex justify-between items-center py-2 border-b border-white/10 bg-neutral-700 px-2 md:px-10">
+        <nav class="flex justify-between items-center bg-neutral-700 py-2 px-2 md:px-10">
             <div>
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logo.svg') }}"  class="max-w-32">
@@ -26,10 +26,19 @@
                         <x-nav-link href="/shiftManagement">Shift Management</x-nav-link>
                     @endadmin
                 </div>
+                
+                <div class="grid md:hidden content-center">
+                    <button id="mobileMenuButton">
+                        <svg fill="rgb(203, 203, 203)" height="32px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+                        </svg>
+                    </button>
+                </div>
+
                 <div class="relative hidden md:block">
-                    <button class="pt-2 pr-2 pl-2 space-x-6 flex justify-between items-center" id="dropdown-button">
+                    <button class="space-x-6 flex justify-between items-center" id="dropdown-button">
                         <div>
-                            <x-profilePic :path="Auth::User()->profilePic" class="w-[40px] h-[40px]" />
+                            <x-profilePic :path="Auth::User()->profilePic" class="size-[40px]" />
                         </div>
                         <div>
                             {{ auth()->user()->firstName }} {{ auth()->user()->lastName }}
@@ -58,49 +67,26 @@
                 </div>
             @endguest
         </nav>
+        <div id="mobileMenuContainer" class="left-0 w-full absolute bg-neutral-700 shadow-md 
+        transition-transform duration-300 ease-in-out transform scale-y-0 origin-top 
+        opacity-0 pointer-events-none md:hidden">
+            <!-- Dropdown items -->
+            @admin
+                <a href="/batch" class="block py-2 px-4 text-white hover:bg-neutral-600">Batch Assign</a>
+                <a href="/userManagement" class="block py-2 px-4 text-white hover:bg-neutral-600">User Management</a>
+                <a href="/teamManagement" class="block py-2 px-4 text-white hover:bg-neutral-600">Team Management</a>
+                <a href="/shiftManagement" class="block py-2 px-4 text-white hover:bg-neutral-600">Shift Management</a>
+                <hr>
+            @endadmin
+            <a href="/settings" class="block py-2 px-4 text-white hover:bg-neutral-600">Settings</a>
+            <a href="/logout" class="block py-2 px-4 text-white hover:bg-neutral-600">Logout</a>
+        </div>
         <main class="px-2 md:px-10 pt-2">
             {{ $slot }}
         </main>
     </div>
-    <script type="text/javascript">
-        const dropdownButton = document.getElementById('dropdown-button');
-        const dropdownMenu = document.getElementById('dropdown-menu');
-
-        // Function to open dropdown
-        function openDropdown() {
-            dropdownMenu.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                dropdownMenu.classList.remove('scale-y-0');
-            }, 10);
-        }
-
-        // Function to close dropdown
-        function closeDropdown() {
-            dropdownMenu.classList.add('scale-y-0');
-            setTimeout(() => {
-                dropdownMenu.classList.add('opacity-0', 'pointer-events-none');
-            }, 200);
-        }
-
-        // Toggle dropdown on button click
-        dropdownButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent click from propagating to document
-
-            if (dropdownMenu.classList.contains('scale-y-0')) {
-                openDropdown();
-            } else {
-                closeDropdown();
-            }
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (event) => {
-            if (!dropdownMenu.contains(event.target) && !dropdownButton.contains(event.target)) {
-                closeDropdown();
-            }
-        });
-
-    </script>
+    <script src="{{ Vite::asset('resources/js/dropdownMenu.js')}}" type="text/javascript"></script>
+    <script src="{{ Vite::asset('resources/js/mobileMenu.js')}}" type="text/javascript"></script>
 </body>
 
 </html>
