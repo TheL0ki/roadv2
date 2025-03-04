@@ -11,14 +11,14 @@
 
 <body class="bg-neutral-600 text-white pb-20">
     <div>
-        <nav class="flex justify-between items-center py-2 border-b border-white/10 bg-neutral-700 px-10">
+        <nav class="flex justify-between items-center py-2 border-b border-white/10 bg-neutral-700 px-2 md:px-10">
             <div>
                 <a href="/">
                     <img src="{{ Vite::asset('resources/images/logo.svg') }}"  class="max-w-32">
                 </a>
             </div>
             @auth
-                <div class="space-x-6">
+                <div class="space-x-6 hidden md:block">
                     @admin
                         <x-nav-link href="/batch">Batch Assign</x-nav-link>
                         <x-nav-link href="/userManagement">User Management</x-nav-link>
@@ -26,7 +26,7 @@
                         <x-nav-link href="/shiftManagement">Shift Management</x-nav-link>
                     @endadmin
                 </div>
-                <div class="relative">
+                <div class="relative hidden md:block">
                     <button class="pt-2 pr-2 pl-2 space-x-6 flex justify-between items-center" id="dropdown-button">
                         <div>
                             <x-profilePic :path="Auth::User()->profilePic" class="w-[40px] h-[40px]" />
@@ -58,7 +58,7 @@
                 </div>
             @endguest
         </nav>
-        <main class="px-10 pt-2">
+        <main class="px-2 md:px-10 pt-2">
             {{ $slot }}
         </main>
     </div>
