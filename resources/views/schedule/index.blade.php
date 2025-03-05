@@ -3,7 +3,7 @@
     <div class="grid gap-y-4">
         <div class="grid gap-y-2">
             <div>
-                <label for="first-name" class="block text-sm font-medium leading-6">Team</label>
+                <label for="Team" class="block text-sm font-medium leading-6">Team</label>
                 <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
                         <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}">All Teams</option>
                         <option value="{{ Request::url() }}">---</option>
@@ -17,23 +17,25 @@
                     @endforeach
                 </x-form.select>
             </div>
-            <div>
-                <label for="month" class="block text-sm font-medium leading-6">Month</label>
-                <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
-                    @foreach ($months as $key => $month)
-                        <option value="/schedule/{{ $date->format('Y') . '/' . $key }}" @if ($key == $date->format('n')) selected="selected" @endif">{{ $month }}</option>
-                    @endforeach
-                </x-form.select>
-            </div>
-            <div>
-                <label for="year" class="block text-sm font-medium leading-6">Year</label>
-                <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
-                    <option value="/schedule/{{ $date->format('Y')-2 . '/' . $date->format('n') }}">{{ $date->format('Y')-2 }}</option>
-                    <option value="/schedule/{{ $date->format('Y')-1 . '/' . $date->format('n') }}">{{ $date->format('Y')-1 }}</option>
-                    <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}" selected="selected">{{ $date->format('Y') }}</option>
-                    <option value="/schedule/{{ $date->format('Y')+1 . '/' . $date->format('n') }}">{{ $date->format('Y')+1 }}</option>
-                    <option value="/schedule/{{ $date->format('Y')+2 . '/' . $date->format('n') }}">{{ $date->format('Y')+2 }}</option>
-                </x-form.select>
+            <div class="grid md:grid-cols-2 gap-y-2 gap-x-2 md:gap-x-6">
+                <div>
+                    <label for="month" class="block text-sm font-medium leading-6">Month</label>
+                    <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
+                        @foreach ($months as $key => $month)
+                            <option value="/schedule/{{ $date->format('Y') . '/' . $key }}" @if ($key == $date->format('n')) selected="selected" @endif">{{ $month }}</option>
+                        @endforeach
+                    </x-form.select>
+                </div>
+                <div>
+                    <label for="year" class="block text-sm font-medium leading-6">Year</label>
+                    <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
+                        <option value="/schedule/{{ $date->format('Y')-2 . '/' . $date->format('n') }}">{{ $date->format('Y')-2 }}</option>
+                        <option value="/schedule/{{ $date->format('Y')-1 . '/' . $date->format('n') }}">{{ $date->format('Y')-1 }}</option>
+                        <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}" selected="selected">{{ $date->format('Y') }}</option>
+                        <option value="/schedule/{{ $date->format('Y')+1 . '/' . $date->format('n') }}">{{ $date->format('Y')+1 }}</option>
+                        <option value="/schedule/{{ $date->format('Y')+2 . '/' . $date->format('n') }}">{{ $date->format('Y')+2 }}</option>
+                    </x-form.select>
+                </div>
             </div>
         </div>
         <!-- Team and Date selector End -->
