@@ -14,6 +14,11 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
     Route::post('/login', [SessionController::class, 'store']);
     Route::get('/test', [SessionController::class, 'test'])->name('test');
+    Route::get('/mailable', function () {
+        $user = App\Models\User::find(1);
+
+        return new App\Mail\ScheduleChanged($user, new DateTime());
+    });
 });
 
 Route::middleware('auth')->group(function () {
