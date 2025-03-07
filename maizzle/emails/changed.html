@@ -5,20 +5,39 @@ lastname: God
 title: Schedule Changed
 ---
 <x-layout>
-    <h1 class="text-2xl font-bold">Schedule changed</h1>
-    <p>
-        Hallo {{ page.firstname }} {{ page.lastname }},
-    </p>
-    <p>
-        Dein Dienstplan wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
-    </p>
-    <table class="border-collapse w-full">
-        <tr>
-            <each loop="i, index in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
-                <td class="text-center w-[50px] border border-black">
-                    {{ i }}
-                </td>
-            </each>
-        </tr>
-    </table>
+    <table class="w-full">
+		<tr>
+			<td>
+				<h1 class="text-2xl font-bold">Schedule changed</h1>
+				<p>
+					Hallo {{page.firstname}} {{page.lastname}},
+				</p>
+				<p>
+					Dein Dienstplan wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
+				</p>
+				<table class="w-full border-collapse">
+					<tr>
+						<each loop="i, key in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+							<td class="text-center border border-solid border-black">{{i}}</td>
+						</each>
+						</tr>
+						<tr>
+						<each loop="i, key in ['', '','A','A','A','A','A','','','A','A','A','A','A','']">
+							<td class="text-center border border-solid border-black">{{i}}</td>
+						</each>
+						</tr>
+						<tr>
+							<each loop="i, key in [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]">
+							<td class="text-center border border-solid border-black">{{i}}</td>
+						</each>
+						</tr>
+						<tr>
+						<each loop="i, key in ['', '','A','A','A','A','A','','','A','A','A','A','A','','']">
+							<td class="text-center border border-solid border-black">{{i}}</td>
+						</each>
+						</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </x-layout>
