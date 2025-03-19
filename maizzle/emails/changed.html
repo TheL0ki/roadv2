@@ -1,19 +1,26 @@
 ---
 layout: email
-firstname: Admin
-lastname: God
+firstname: Firstname
+lastname: Lastname
 title: Schedule Changed
+month: Month
+year: Year
+bgClass: bg-gray-200
 ---
 <x-layout>
-    <table class="w-full">
+    <table class="w-full shadow-xl rounded">
 		<tr>
-			<td>
-				<h1 class="text-2xl font-bold">Schedule changed</h1>
+			<td class="bg-gray-400 p-2 text-gray-800 text-center">
+				<h2 class="text-2xl font-bold">Schedule changed</h2>
+			</td>
+		</tr>
+		<tr>
+			<td class="bg-white p-2">
 				<p>
 					Hallo {{page.firstname}} {{page.lastname}},
 				</p>
 				<p>
-					Dein Dienstplan wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
+					Dein Dienstplan für {{page.month}} {{page.year}} wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
 				</p>
 				<table class="w-full border-collapse">
 					<tr>
@@ -23,7 +30,7 @@ title: Schedule Changed
 						</tr>
 						<tr>
 						<each loop="i, key in ['', '','A','A','A','A','A','','','A','A','A','A','A','']">
-							<td class="text-center border border-solid border-black">{{i}}</td>
+							<x-shiftCell class="text-center border border-solid border-black">{{i}}</x-shiftCell>
 						</each>
 						</tr>
 						<tr>
@@ -33,7 +40,7 @@ title: Schedule Changed
 						</tr>
 						<tr>
 						<each loop="i, key in ['', '','A','A','A','A','A','','','A','A','A','A','A','','']">
-							<td class="text-center border border-solid border-black">{{i}}</td>
+							<x-shiftCell class="text-center border border-solid border-black">{{i}}</x-shiftCell>
 						</each>
 						</tr>
 				</table>
