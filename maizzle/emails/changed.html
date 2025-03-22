@@ -1,10 +1,6 @@
 ---
 layout: email
-firstname: Firstname
-lastname: Lastname
 title: Schedule Changed
-month: Month
-year: Year
 bgClass: bg-gray-200
 ---
 <x-layout>
@@ -17,32 +13,32 @@ bgClass: bg-gray-200
 		<tr>
 			<td class="bg-white p-2">
 				<p>
-					Hallo {{page.firstname}} {{page.lastname}},
+					Hallo @{{$user->firstName}} @{{$user->lastName}},
 				</p>
 				<p>
-					Dein Dienstplan für {{page.month}} {{page.year}} wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
+					Dein Dienstplan für @{{$date->format('F')}} @{{$date->format('Y')}} wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
 				</p>
-				<table class="w-full border-collapse">
+				<table class="table-fixed w-full border-collapse">
 					<tr>
-						<each loop="i, key in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+						<each loop="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
 							<td class="text-center border border-solid border-black">{{i}}</td>
 						</each>
-						</tr>
-						<tr>
-						<each loop="i, key in ['', '','A','A','A','A','A','','','A','A','A','A','A','']">
-							<x-shiftCell class="text-center border border-solid border-black">{{i}}</x-shiftCell>
+					</tr>
+					<tr>
+						<each loop ="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
+							<td class="text-center border border-solid border-black">@{{ $schedule[{{i}}]['display'] }}</td>
 						</each>
-						</tr>
-						<tr>
-							<each loop="i, key in [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]">
+					</tr>
+					<tr>
+						<each loop="i in [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]">
 							<td class="text-center border border-solid border-black">{{i}}</td>
 						</each>
-						</tr>
-						<tr>
-						<each loop="i, key in ['', '','A','A','A','A','A','','','A','A','A','A','A','','']">
-							<x-shiftCell class="text-center border border-solid border-black">{{i}}</x-shiftCell>
+					</tr>
+						<each loop ="i in [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]">
+							<td class="text-center border border-solid border-black">@{{ $schedule[{{i}}]['display'] }}</td>
 						</each>
-						</tr>
+					<tr>
+					</tr>
 				</table>
 			</td>
 		</tr>
