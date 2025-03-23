@@ -71,7 +71,6 @@
             <td style="border: 1px solid #000001; text-align: center">28</td>
             <td style="border: 1px solid #000001; text-align: center">29</td>
             <td style="border: 1px solid #000001; text-align: center">30</td>
-            <td style="border: 1px solid #000001; text-align: center">31</td>
           </tr>
           <td style="border: 1px solid #000001; text-align: center">{{ $schedule[16]['display'] }}</td>
           <td style="border: 1px solid #000001; text-align: center">{{ $schedule[17]['display'] }}</td>
@@ -88,10 +87,14 @@
           <td style="border: 1px solid #000001; text-align: center">{{ $schedule[28]['display'] }}</td>
           <td style="border: 1px solid #000001; text-align: center">{{ $schedule[29]['display'] }}</td>
           <td style="border: 1px solid #000001; text-align: center">{{ $schedule[30]['display'] }}</td>
-          <td style="border: 1px solid #000001; text-align: center">{{ $schedule[31]['display'] }}</td>
           <tr>
           </tr>
         </table>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color: #fffffe; padding: 8px">
+        Gehe zu Dienstplan für <a href="{{$_ENV['APP_URL']}}/schedule/{{$date->format('Y')}}/{{$date->format('m')}}">{{$date->format('F')}} {{$date->format('Y')}}</a>
       </td>
     </tr>
   </table>

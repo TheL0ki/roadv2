@@ -1,0 +1,49 @@
+---
+layout: email
+title: Schedule Changed
+bgClass: bg-gray-200
+---
+<x-layout>
+    <table class="w-full shadow-xl rounded">
+		<tr>
+			<td class="bg-gray-400 p-2 text-gray-800 text-center">
+				<h2 class="text-2xl font-bold">Schedule changed</h2>
+			</td>
+		</tr>
+		<tr>
+			<td class="bg-white p-2">
+				<p>
+					Hallo @{{$user->firstName}} @{{$user->lastName}},
+				</p>
+				<p>
+					Dein Dienstplan für @{{$date->format('F')}} @{{$date->format('Y')}} wurde angepasst. Dein neuer Dienstplan sieht wie folgt aus:
+				</p>
+				<table class="table-fixed w-full border-collapse">
+					<tr>
+						<each loop="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+							<td class="text-center border border-solid border-black">{{i}}</td>
+						</each>
+					</tr>
+					<tr>
+						<each loop ="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]">
+							<td class="text-center border border-solid border-black">@{{ $schedule[{{i}}]['display'] }}</td>
+						</each>
+					</tr>
+					<tr>
+						<each loop="i in [15,16,17,18,19,20,21,22,23,24,25,26,27,28]">
+							<td class="text-center border border-solid border-black">{{i}}</td>
+						</each>
+					</tr>
+						<each loop ="i in [15,16,17,18,19,20,21,22,23,24,25,26,27,28]">
+							<td class="text-center border border-solid border-black">@{{ $schedule[{{i}}]['display'] }}</td>
+						</each>
+					<tr>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<x-linkCell />
+		</tr>
+	</table>
+</x-layout>

@@ -46,22 +46,31 @@ class ScheduleChanged extends Mailable
         $schedule = Schedule::with('shift')->where('user_id', $this->user->id)->where('year', $this->date->format('Y'))->where('month', $this->date->format('m'))->get();
 
         $formattedSchedule = [];
-        $i = 1;
+
+        for($i = 1; $i <= 31; $i++) {
+            $formattedSchedule[$i] = [
+                'display' => null,
+            ];
+        }
 
         foreach ($schedule as $item) {
-            if(isset($formattedSchedule[$item->day])) {
-                $formattedSchedule[$i] = [
-                    'display' => $item->shift->display,
-                ];
-                $i++;
-            } else {
-                $formattedSchedule[$i]['display'] = null;
-                $i++;
-            }
+            $formattedSchedule[$item->day] = [
+                'display' => $item->shift->display,
+            ];
+        }
+
+        if($this->date->format('t') == 28) {
+            $template = 'changedMonthFebruary';
+        }
+        elseif ($this->date->format('t') == 30) {
+            $template = 'changedMonthShort';
+        }
+        else {
+            $template = 'changedMonthLong';
         }
 
         return new Content(
-            view: 'mail.schedule.changed',
+            view: 'mail.schedule.' . $template ,
             with: [
                 'user' => $this->user,
                 'date' => $this->date,

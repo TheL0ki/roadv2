@@ -27,9 +27,9 @@ class SendScheduleUpdateMail extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle() : void
     {
-        $date = new DateTime('2025-03-01');
-        Mail::to('alexander@dominikus.one')->send(new ScheduleChanged(User::find(1), $date));
+        $date = new DateTime('2025-04-01');
+        Mail::to($_ENV['ADMIN_EMAIL'])->send(new ScheduleChanged(User::find(1), $date));
     }
 }
