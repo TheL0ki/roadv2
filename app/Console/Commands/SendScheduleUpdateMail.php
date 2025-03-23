@@ -15,7 +15,7 @@ class SendScheduleUpdateMail extends Command
      *
      * @var string
      */
-    protected $signature = 'app:send-schedule-update-mail';
+    protected $signature = 'app:send-schedule-update-mail {date}';
 
     /**
      * The console command description.
@@ -29,7 +29,7 @@ class SendScheduleUpdateMail extends Command
      */
     public function handle() : void
     {
-        $date = new DateTime('2025-04-01');
+        $date = new DateTime($this->argument('date'));
         Mail::to($_ENV['ADMIN_EMAIL'])->send(new ScheduleChanged(User::find(1), $date));
     }
 }
