@@ -77,7 +77,10 @@ class BatchController extends Controller
             }
         }
 
-        return redirect()->route('index');
+        return redirect()->route('schedule', [
+            'year' => $attributes['year'],
+            'month' => $attributes['month'],
+        ]);
     }
 
     public function storeHoliday(Request $request)
@@ -106,7 +109,10 @@ class BatchController extends Controller
             );
         }
 
-        return redirect()->route('index');
+        return redirect()->route('schedule', [
+            'year' => $attributes['year'],
+            'month' => $attributes['month'],
+        ]);
     }
 
     /**
