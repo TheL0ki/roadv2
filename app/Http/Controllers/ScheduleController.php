@@ -8,9 +8,13 @@ use App\Models\User;
 use App\Models\Shift;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use App\Mail\ScheduleChanged;
+use App\Jobs\SendScheduleMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
-use Illuminate\Support\Facades\Date;
 
 class ScheduleController extends Controller
 {
@@ -145,6 +149,10 @@ class ScheduleController extends Controller
                 $schedule->flexLoc = $details['flexLoc'] ?? 0;
                 $schedule->save();                
             }
+        }
+
+        if(in_array(Auth::user()->role->id, [1, 2])) {
+            SendScheduleMail::dispatch(new ScheduleChanged($user, new DateTime($request->year . '-' . $request->month . '-01')));
         }
         
         return redirect('/schedule/' . $request->year .'/' . $request->month);

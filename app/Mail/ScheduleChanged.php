@@ -35,6 +35,9 @@ class ScheduleChanged extends Mailable
     {
         return new Envelope(
             subject: 'Schedule Changed',
+            to: [
+                new Address($this->user->email, $this->user->name),
+            ],
         );
     }
 
