@@ -15,18 +15,6 @@
                 <label for="email">E-Mail Address</label>
                 <input type="text" id="email" name="email" class="w-full bg-white/10" value="{{ Auth::User()->email }}" autocomplete="email" />
             </div>
-            @admin
-                <div>
-                    <label for="apiToken">API Token</label>
-                    <input type="text" id="apiToken" name="apiToken" class="w-full cursor-not-allowed bg-white/10" value="{{ Auth::User()->api_token }}" disabled/>
-                </div>
-                @if ({{ Auth::User()->api_token }} === null)
-                    <div>
-                        <label for="generateToken">Generate API Token</label>
-                        <button type="button" id="generateToken" class="w-full bg-green-600 hover:bg-green-900">Generate</button>
-                    </div>
-                @endif
-            @endadmin
             <div>
                 <label for="avatar">Profile picture</label>
                 <div class="flex justify-around w-full items-center">

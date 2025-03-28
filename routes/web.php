@@ -9,6 +9,7 @@ use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\apiAccessController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
@@ -54,5 +55,9 @@ Route::middleware(Role::class)->group(function () {
     Route::get('/shiftManagement', [ShiftController::class, 'index']);
     Route::post('/shiftManagement/store', [ShiftController::class, 'store'])->name('shift.store');
     Route::patch('/shiftManagement/{id}/update', [ShiftController::class, 'update'])->name('shift.update');
-    Route::delete('/shiftManagement/{id}/destroy', [ShiftController::class, 'destroy'])->name('shift.destroy'); 
+    Route::delete('/shiftManagement/{id}/destroy', [ShiftController::class, 'destroy'])->name('shift.destroy');
+    
+    Route::get('/apiAccess', [apiAccessController::class, 'index']);
+    Route::post('/apiAccess', [apiAccessController::class, 'create']);
+    Route::delete('/apiAccess', [apiAccessController::class, 'destroy']);
 });

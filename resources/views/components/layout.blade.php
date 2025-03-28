@@ -54,6 +54,9 @@
                                opacity-0 pointer-events-none">
                         <!-- Dropdown items -->
                         <a href="/settings" class="block py-2 px-4 text-white hover:bg-neutral-600">Settings</a>
+                        @admin
+                            <a href="/apiAccess" class="block py-2 px-4 text-white hover:bg-neutral-600">API Access</a>
+                        @endadmin
                         <a href="/logout" class="block py-2 px-4 text-white hover:bg-neutral-600">Logout</a>
                     </div>
                 </div>
