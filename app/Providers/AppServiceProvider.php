@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
        Blade::if('admin', function () {
-            return auth()->check() && in_array(auth()->user()->role->id, [1, 2]);
+            return Auth::User()->check() && in_array(Auth::User()->role->id, [1, 2]);
         });
     }
 }
