@@ -76,9 +76,9 @@
                     </div>
                     <div class="mt-2">
                         @if ($user != null)
-                            <x-form.textInput id="slackId" name="slackId" type="text" required :value="$user->slackId"></x-form.textInput> 
+                            <x-form.textInput id="slackId" name="slackId" type="text" :value="$user->slackId"></x-form.textInput> 
                         @else
-                            <x-form.textInput id="slackId" name="slackId" type="text" required></x-form.textInput>
+                            <x-form.textInput id="slackId" name="slackId" type="text"></x-form.textInput>
                         @endif
                     </div>
                 </div>

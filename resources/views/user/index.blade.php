@@ -61,6 +61,7 @@
 
     <form action="{{ route('user.store') }}" method="POST">
         @csrf
+        @method('POST')
         <x-form.userModal :$teams :$roles modalName="createUserModal">
             <x-slot:heading>Create New User</x-slot:heading>
         </x-form.userModal>

@@ -71,6 +71,7 @@
 
     <form action="{{ route('shift.store') }}" method="POST">
         @csrf
+        @method('POST')
         <x-form.shiftModal modalName="createShiftModal">
             <x-slot:heading>Add Shift</x-slot:heading>
         </x-form.shiftModal>
