@@ -31,7 +31,7 @@
                         <x-table.body-cell>{{ $item->team->displayName }}</x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ strtoupper($item->model) }}</x-table.body-cell>
                         <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
-                        <x-table.options :item=$item category="user" modal="editUser{{ $i }}"></x-table.options>
+                        <x-table.options :item=$item category="employee" modal="editUser{{ $i }}"></x-table.options>
                     </x-table.body-row>
                     @php
                         $i++;
@@ -59,7 +59,7 @@
         <x-button onclick="openModal('createUserModal')">Create New User</x-button>
     </div>
 
-    <form action="{{ route('user.save') }}" method="POST">
+    <form action="{{ route('employee.save') }}" method="POST">
         @csrf
         @method('POST')
         <x-form.userModal :$teams :$roles modalName="createUserModal">
@@ -71,7 +71,7 @@
         $i = 1;
     @endphp
     @foreach ($user as $item)
-        <form action="{{ route('user.update', $item->id) }}" method="POST">
+        <form action="{{ route('employee.update', $item->id) }}" method="POST">
             @csrf
             @method('PATCH')
             <x-form.userModal :$teams :$roles modalName="editUser{{ $i }}" :user="$item">

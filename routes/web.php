@@ -43,19 +43,19 @@ Route::middleware(Role::class)->group(function () {
     Route::post('/batch/holiday', [BatchController::class,'storeHoliday'])->name('batch.holiday');
 
     Route::get('/userManagement', [UserController::class, 'index']);
-    Route::post('/userManagement', [UserController::class, 'store'])->name('user.save');
-    Route::patch('/userManagement/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/userManagement/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/userManagement', [UserController::class, 'store'])->name('employee.save');
+    Route::patch('/userManagement/{id}', [UserController::class, 'update'])->name('employee.update');
+    Route::delete('/userManagement/{id}', [UserController::class, 'destroy'])->name('employee.destroy');
 
     Route::get('/teamManagement', [TeamController::class, 'index']);
-    Route::post('/teamManagement', [TeamController::class, 'store'])->name('team.store');
-    Route::patch('/teamManagement/{id}', [TeamController::class, 'update'])->name('team.update');
-    Route::delete('/teamManagement/{id}', [TeamController::class, 'destroy'])->name('team.destroy');
+    Route::post('/teamManagement', [TeamController::class, 'store'])->name('teams.store');
+    Route::patch('/teamManagement/{id}', [TeamController::class, 'update'])->name('teams.update');
+    Route::delete('/teamManagement/{id}', [TeamController::class, 'destroy'])->name('teams.destroy');
 
     Route::get('/shiftManagement', [ShiftController::class, 'index']);
-    Route::post('/shiftManagement', [ShiftController::class, 'store'])->name('shift.store');
-    Route::patch('/shiftManagement/{id}', [ShiftController::class, 'update'])->name('shift.update');
-    Route::delete('/shiftManagement/{id}', [ShiftController::class, 'destroy'])->name('shift.destroy');
+    Route::post('/shiftManagement', [ShiftController::class, 'store'])->name('shifts.store');
+    Route::patch('/shiftManagement/{id}', [ShiftController::class, 'update'])->name('shifts.update');
+    Route::delete('/shiftManagement/{id}', [ShiftController::class, 'destroy'])->name('shifts.destroy');
     
     Route::get('/apiAccess', [apiAccessController::class, 'index']);
     Route::post('/apiAccess', [apiAccessController::class, 'store']);

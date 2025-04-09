@@ -40,7 +40,7 @@
         <x-button onclick="openModal('createTeamModal')">Add New Team</x-button>
     </div>
 
-    <form action="{{ route('team.store') }}" method="POST">
+    <form action="{{ route('teams.store') }}" method="POST">
         @csrf
         <x-form.teamModal modalName="createTeamModal">
             <x-slot:heading>Add Team</x-slot:heading>
@@ -51,7 +51,7 @@
         $i = 1;
     @endphp
     @foreach ($teams as $item)
-        <form action="{{ route('team.update', $item->id) }}" method="POST">
+        <form action="{{ route('teams.update', $item->id) }}" method="POST">
             @csrf
             @method('PATCH')
             <x-form.teamModal modalName="editTeam{{ $i }}" :team="$item">

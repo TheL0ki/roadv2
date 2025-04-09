@@ -69,7 +69,7 @@
         <x-button onclick="openModal('createShiftModal')">Add Shift</x-button>
     </div>
 
-    <form action="{{ route('shift.store') }}" method="POST">
+    <form action="{{ route('shifts.store') }}" method="POST">
         @csrf
         @method('POST')
         <x-form.shiftModal modalName="createShiftModal">
@@ -81,7 +81,7 @@
         $i = 1;
     @endphp
     @foreach ($shifts as $item)
-        <form action="{{ route('shift.update', $item->id) }}" method="POST">
+        <form action="{{ route('shifts.update', $item->id) }}" method="POST">
             @csrf
             @method('PATCH')
             <x-form.shiftModal modalName="editShift{{ $i }}" :shift="$item">
