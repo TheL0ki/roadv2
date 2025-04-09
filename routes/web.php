@@ -43,7 +43,7 @@ Route::middleware(Role::class)->group(function () {
     Route::post('/batch/holiday', [BatchController::class,'storeHoliday'])->name('batch.holiday');
 
     Route::get('/userManagement', [UserController::class, 'index']);
-    Route::post('/userManagement', [UserController::class, 'store'])->name('user.store');
+    Route::post('/userManagement', [UserController::class, 'store'])->name('user.save');
     Route::patch('/userManagement/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/userManagement/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 

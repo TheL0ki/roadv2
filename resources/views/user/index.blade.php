@@ -59,7 +59,7 @@
         <x-button onclick="openModal('createUserModal')">Create New User</x-button>
     </div>
 
-    <form action="{{ route('user.store') }}" method="POST">
+    <form action="{{ route('user.save') }}" method="POST">
         @csrf
         @method('POST')
         <x-form.userModal :$teams :$roles modalName="createUserModal">
