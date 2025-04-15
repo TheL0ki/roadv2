@@ -94,7 +94,7 @@
     </tr>
     <tr>
       <td style="background-color: #fffffe; padding: 8px">
-        Gehe zu Dienstplan für <a href="{{$_ENV['APP_URL']}}/schedule/{{$date->format('Y')}}/{{$date->format('m')}}">{{$date->format('F')}} {{$date->format('Y')}}</a>
+        Gehe zu Dienstplan für <a href="{{$appUrl}}/schedule/{{$date->format('Y')}}/{{$date->format('m')}}">{{$date->format('F')}} {{$date->format('Y')}}</a>
       </td>
     </tr>
   </table>
