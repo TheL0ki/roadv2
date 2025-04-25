@@ -39,8 +39,11 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(Role::class)->group(function () {
     Route::get('/batch', [BatchController::class, 'index']);
-    Route::post('/batch/update', [BatchController::class, 'store']);
+    Route::post('/batch', [BatchController::class, 'store'])->name('batch.store');
     Route::post('/batch/holiday', [BatchController::class,'storeHoliday'])->name('batch.holiday');
+    Route::post('/batch/holiday/new', [BatchController::class, 'createHoliday'])->name('holiday.create');
+    Route::delete('/batch/holiday/{id}', [BatchController::class, 'destroyHoliday'])->name('holiday.destroy');
+    Route::patch('/batch/holiday/{id}', [BatchController::class, 'updateHoliday'])->name('holiday.update');
 
     Route::get('/userManagement', [UserController::class, 'index']);
     Route::post('/userManagement', [UserController::class, 'store'])->name('employee.save');
