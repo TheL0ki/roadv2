@@ -43,7 +43,7 @@ class UserController extends Controller
             'firstName' => ['required'],
             'lastName' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', Password::min(6)],
+            'password' => ['required', Password::min(8)],
             'role_id' => ['required'],
             'team_id' => ['required'],
             'model' => ['required'],

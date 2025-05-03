@@ -62,7 +62,7 @@
     <form action="{{ route('employee.save') }}" method="POST">
         @csrf
         @method('POST')
-        <x-form.userModal :$teams :$roles modalName="createUserModal">
+        <x-form.userModal :$teams :$roles :$errors modalName="createUserModal">
             <x-slot:heading>Create New User</x-slot:heading>
         </x-form.userModal>
     </form>
@@ -82,4 +82,32 @@
             @endphp
         </form>
     @endforeach
+    
+    <script type="text/javascript">
+        window.openModal = function(modalId) {
+            document.getElementById(modalId).style.display = 'block'
+            document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
+        };
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).style.display = 'none'
+            document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+        };
+
+        // Close all modals when press ESC
+        document.onkeydown = function(event) {
+            event = event || window.event;
+            if (event.keyCode === 27) {
+                let modals = document.getElementsByClassName('userModal');
+                Array.prototype.slice.call(modals).forEach(i => {
+                    window.closeModal(i.id);
+                })
+            }
+        };
+    </script>
+    @if($errors->any())
+        <script>
+            window.openModal('createUserModal');
+        </script>
+    @endif
 </x-layout>

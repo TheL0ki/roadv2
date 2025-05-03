@@ -1,6 +1,6 @@
-@props(['teams', 'roles', 'modalName', 'user' => null])
+@props(['teams', 'roles', 'modalName', 'user' => null, 'errors' => null])
 
-<div id="{{ $modalName }}" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4">
+<div id="{{ $modalName }}" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4 userModal">
     <div class="relative top-20 mx-auto shadow-xl rounded-md bg-neutral-700 max-w-md">
         <div class="flex justify-between p-2 border-b border-white/20">
             <div>
@@ -136,6 +136,16 @@
                 </div>
             </div>
 
+            @if ($errors->any())
+                <x-form.auth.errors>
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-form.auth.errors>
+            @endif
+
             <div class="flex justify-between pt-2">
                 <x-button class="bg-green-600 hover:bg-green-900">Save</x-button>
                 <x-button class="bg-red-600 hover:bg-red-900" onclick="closeModal('{{ $modalName }}')">Cancel</x-button>
@@ -143,27 +153,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">            
-    window.openModal = function(modalId) {
-        document.getElementById(modalId).style.display = 'block'
-        document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
-    };
-
-    window.closeModal = function(modalId) {
-        document.getElementById(modalId).style.display = 'none'
-        document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-    };
-
-    // Close all modals when press ESC
-    document.onkeydown = function(event) {
-        event = event || window.event;
-        if (event.keyCode === 27) {
-            document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-            let modals = document.getElementsById('{{ $modalName }}');
-            Array.prototype.slice.call(modals).forEach(i => {
-                i.style.display = 'none'
-            })
-        }
-    };
-</script>
