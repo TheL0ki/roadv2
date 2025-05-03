@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\Role;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BatchController;
@@ -14,12 +15,10 @@ use App\Http\Controllers\apiAccessController;
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
     Route::post('/login', [SessionController::class, 'store']);
-    Route::get('/test', [SessionController::class, 'test'])->name('test');
-    Route::get('/mailable', function () {
-        $user = App\Models\User::find(1);
-
-        return new App\Mail\ScheduleChanged($user, new DateTime());
-    });
+    Route::get('/forgot-password', [ForgotPassword::class, 'index'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPassword::class, 'sendResetLink'])->name('password.email');
+    Route::get('/forgot-password/{token}', [ForgotPassword::class, 'showReset'])->name('password.reset');
+    Route::post('/resetPassword', [ForgotPassword::class, 'reset'])->name('password.doReset');
 });
 
 Route::middleware('auth')->group(function () {
