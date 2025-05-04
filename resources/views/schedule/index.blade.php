@@ -68,7 +68,7 @@
                         @endphp
                         @for ($i = 1; $i <= $date->format('t'); $i++)
                             <x-table.head-cell :$loopdate class="w-[50px]">
-                                {{ $i }}
+                                <a href="/daily/{{ $date->format('Y') . '/' . $date->format('n') . '/' . $i }}">{{ $i }}</a>
                             </x-table.head-cell>
                             @php
                                 $loopdate->modify('+1 Day');
