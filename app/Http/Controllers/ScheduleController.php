@@ -53,8 +53,11 @@ class ScheduleController extends Controller
         $date = new DateTime($year . '-' . $month . '-01');
 
         if($team !== null) {
-            $user = User::where('team_id', '=', $team)
-                ->where('active', '=', '1')
+            $user = User::where('validFrom', '<=', \Carbon\Carbon::parse($date)->addMonth()->format('Y-m-d'))
+                ->where(function($query) use ($date) {
+                    $query->where('validUntil', '>=', \Carbon\Carbon::parse($date)->format('Y-m-d'))
+                        ->orWhereNull('validUntil');
+                })
                 ->orderBy('lastName', 'asc')
                 ->with(['schedule' => function ($query) use ($date) {
                     $query->with('shift')->where('month', '=', $date->format('n'))->where('year', '=', $date->format('Y'));
