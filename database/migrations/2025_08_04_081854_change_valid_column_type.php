@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->date('validFrom')->default(DB::raw('CURRENT_DATE'))->change();
+            $table->date('validFrom')->default(DB::raw('(CURDATE())'))->change();
             $table->date('validUntil')->nullable()->change();
         });
     }
