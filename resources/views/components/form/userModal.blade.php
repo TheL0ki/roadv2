@@ -25,11 +25,7 @@
                         <label for="firstName" class="block text-sm font-medium leading-6">First Name</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="firstName" name="firstName" type="text" required :value="$user->firstName"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="firstName" name="firstName" type="text" required></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="firstName" name="firstName" type="text" required :value="$user->firstName ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -38,11 +34,7 @@
                         <label for="lastName" class="block text-sm font-medium leading-6">Last Name</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="lastName" name="lastName" type="text" required :value="$user->lastName"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="lastName" name="lastName" type="text" required></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="lastName" name="lastName" type="text" required :value="$user->lastName ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -62,11 +54,7 @@
                         <label for="email" class="block text-sm font-medium leading-6">Email</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="email" name="email" type="text" required :value="$user->email"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="email" name="email" type="text" required></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="email" name="email" type="text" required :value="$user->email ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -75,11 +63,7 @@
                         <label for="slackId" class="block text-sm font-medium leading-6">Slack ID</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="slackId" name="slackId" type="text" :value="$user->slackId"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="slackId" name="slackId" type="text"></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="slackId" name="slackId" type="text" :value="$user->slackId ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -132,6 +116,24 @@
                             <option value="ft">Full Time</option>
                             <option value="pt">Part Time</option>
                         </x-form.select>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <label for="validFrom" class="block text-sm font-medium leading-6">Start Date</label>
+                        </div>
+                        <div class="flex items-start">
+                            <label for="validUntil" class="block text-sm font-medium leading-6">End Date</label>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-2">
+                        <div class="flex items-start">
+                            <x-form.dateInput name="validFrom" id="validFrom" :value="isset($user->validFrom) ? \Carbon\Carbon::parse($user->validFrom)->format('Y-m-d') : null"></x-form.dateInput>
+                        </div>
+                        <div class="flex items-start">
+                            <x-form.dateInput name="validUntil" id="validUntil" :value="isset($user->validUntil) ? \Carbon\Carbon::parse($user->validUntil)->format('Y-m-d') : null"></x-form.dateInput>
+                        </div>
                     </div>
                 </div>
             </div>

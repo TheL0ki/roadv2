@@ -48,6 +48,8 @@ class UserController extends Controller
             'team_id' => ['required'],
             'model' => ['required'],
             'slackId' => ['required', 'unique:users,slackId'],
+            'validFrom' => ['required', 'date'],
+            'validUntil' => 'nullable|date',
         ]);
 
         $user = User::create($userAttributes);
@@ -88,6 +90,8 @@ class UserController extends Controller
             'team_id' => ['required'],
             'model' => ['required'],
             'slackId' => ['required', Rule::unique('users', 'slackId')->ignore($user->id)],
+            'validFrom' => ['required', 'date'],
+            'validUntil' => 'nullable|date',
         ]);
 
         $user->firstName = $userAttributes['firstName'];
@@ -95,6 +99,8 @@ class UserController extends Controller
         $user->email = $userAttributes['email'];
         $user->model = $userAttributes['model'];
         $user->slackId = $userAttributes['slackId'];
+        $user->validFrom = $userAttributes['validFrom'];
+        $user->validUntil = $userAttributes['validUntil'];
 
         $this->associateUser($user, $userAttributes);
 
@@ -109,6 +115,9 @@ class UserController extends Controller
         $user = User::find($id);
 
         $user->active = 0;
+        if($user->validUntil === null) {
+            $user->validUntil = now()->format('Y-m-d');
+        }
         $user->deletedAt = now();
         $user->deletedBy = Auth::user()->id;
 
