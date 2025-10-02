@@ -5,15 +5,15 @@
         <div class="space-y-2">
             <x-table.table>
                 <x-table.body-row>
-                    <x-table.head-cell rowspan="4">
-                        <div class="flex">
-                            <div>
-                                <x-profilePic :path="$user->profilePic" class="w-[50px] h-[50px]" />
+                    <x-table.head-cell class="w-[200px]" rowspan="4">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <x-profilePic :path="$user->profilePic" class="w-[50px] h-[50px]" />
+                                </div>
+                                <div>
+                                    {{ $user->firstName }} {{ $user->lastName }}
+                                </div>
                             </div>
-                            <div class="px-2 flex items-center">
-                                {{ $user->firstName }} {{ $user->lastName }}
-                            </div>
-                        </div>
                     </x-table.head-cell>
                     @php
                         $loopdate = clone $date;

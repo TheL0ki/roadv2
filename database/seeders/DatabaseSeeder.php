@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'firstName' => 'Admin',
             'lastName' => 'God',
-            'email' => 'login@password.com',
+            'email' => 'login1@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'model' => 'VZ',

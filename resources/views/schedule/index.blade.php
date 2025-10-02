@@ -62,7 +62,7 @@
             <x-table.table>
                 <x-table.head>
                     <x-table.head-row>
-                        <x-table.head-cell class="w-[200px] md:w-1/6">Name</x-table.head-cell>
+                        <x-table.head-cell class="w-[200px]">Name</x-table.head-cell>
                         @php
                             $loopdate = clone $date;
                         @endphp
