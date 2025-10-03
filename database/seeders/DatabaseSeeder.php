@@ -29,11 +29,11 @@ class DatabaseSeeder extends Seeder
             'firstName' => 'Admin',
             'lastName' => 'God',
             'email' => 'login1@example.com',
-            'email_verified_at' => now(),
+            'email_verified_at' => now()->subMonths(1),
             'password' => Hash::make('password'),
             'model' => 'VZ',
             'active' => 1,
-            'validFrom' => now(),
+            'validFrom' => now()->subMonths(1),
             'remember_token' => Str::random(10),
         ]);
 

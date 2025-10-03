@@ -105,9 +105,9 @@
 
                     <!-- Navigation Buttons -->
                     <div class="flex justify-end space-x-4">
-                        <button type="button" id="next-to-users" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                        <x-button type="primary" id="next-to-users" class="px-6 py-2 transition-colors">
                             Next: Select Users →
-                        </button>
+                        </x-button>
                     </div>
                 </form>
             </div>
@@ -133,9 +133,9 @@
                         @foreach ($users as $user)
                             <label class="relative cursor-pointer">
                                 <input type="checkbox" name="user[]" value="{{ $user->id }}" class="sr-only peer user-checkbox">
-                                <div class="bg-neutral-600 rounded-lg p-4 border-2 border-transparent peer-checked:border-blue-400 peer-checked:bg-blue-500/20 hover:bg-neutral-500 transition-all duration-200">
+                                <div class="bg-neutral-600 rounded-lg p-4 border-2 border-transparent peer-checked:border-blue-400 peer-checked:bg-blue-800/20 hover:bg-neutral-500 transition-all duration-200">
                                     <div class="flex items-center space-x-3">
-                                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                                        <div class="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center text-white font-semibold">
                                             {{ strtoupper(substr($user->firstName, 0, 1) . substr($user->lastName, 0, 1)) }}
                                         </div>
                                         <div class="flex-1 min-w-0">
@@ -163,7 +163,7 @@
                     <button type="button" id="back-to-config" class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                         ← Back to Configuration
                     </button>
-                    <button type="button" id="next-to-review" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    <button type="button" id="next-to-review" class="px-6 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-600 transition-colors">
                         Next: Review & Confirm →
                     </button>
                 </div>
@@ -282,7 +282,7 @@
                 </div>
 
                 <div class="flex justify-end">
-                    <x-button class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    <x-button class="px-6 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-600 transition-colors">
                         Assign Holiday to All Users
                     </x-button>
                 </div>
@@ -351,7 +351,7 @@
                     </div>
                     <h4 class="text-lg font-medium text-white mb-2">No Holidays Created</h4>
                     <p class="text-gray-400 mb-4">Create your first holiday template to get started.</p>
-                    <button onclick="openModal('createHoliday')" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    <button onclick="openModal('createHoliday')" class="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-600 transition-colors">
                         Create First Holiday
                     </button>
                 </div>
@@ -416,7 +416,7 @@
                 
                 // Reset all steps to inactive
                 circles.forEach((circle) => {
-                    circle.classList.remove('bg-blue-500', 'text-white');
+                    circle.classList.remove('bg-blue-800', 'text-white');
                     circle.classList.add('bg-gray-600', 'text-gray-400');
                 });
                 
@@ -432,7 +432,7 @@
                     
                     if (circle) {
                         circle.classList.remove('bg-gray-600', 'text-gray-400');
-                        circle.classList.add('bg-blue-500', 'text-white');
+                        circle.classList.add('bg-blue-800', 'text-white');
                     }
                     if (text) {
                         text.classList.remove('text-gray-400');
@@ -540,7 +540,7 @@
                     if (selectedUsers.length > 0) {
                         usersContainer.innerHTML = selectedUsers.map(user => 
                             `<div class="flex items-center space-x-2 mb-2">
-                                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-semibold">
+                                <div class="w-6 h-6 bg-blue-800 rounded-full flex items-center justify-center text-white text-xs font-semibold">
                                     ${user.split(' ').map(n => n[0]).join('')}
                                 </div>
                                 <span>${user}</span>

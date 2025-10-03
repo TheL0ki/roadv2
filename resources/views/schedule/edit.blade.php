@@ -65,7 +65,7 @@
                     @endfor
                 </x-table.body-row>
             </x-table.table>
-            <x-button>Save</x-button>
+            <x-button type="success">Save</x-button>
         </div>
         <input type="hidden" value="{{ $user->id }}" name="user_id">
         <input type="hidden" value="{{ $date->format('m') }}" name="month">
