@@ -92,7 +92,9 @@ class User extends Authenticatable
         'team',
         'model',
         'active',
-        'admin'
+        'admin',
+        'validFrom',
+        'validUntil'
     ];
 
     /**

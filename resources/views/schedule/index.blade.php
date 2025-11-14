@@ -1,74 +1,76 @@
 <x-layout>
-    <!-- Team and Date selector start -->
     <div class="grid gap-y-4">
-        <div class="grid gap-y-2">
-            <div>
-                <label for="Team" class="block text-sm font-medium leading-6">Team</label>
-                <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
-                        <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}">All Teams</option>
-                        <option value="{{ Request::url() }}">---</option>
-                    @foreach ($teams as $team)
-                        <option
-                            value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') . '/' . $team->id }}"
-                            @if (Request::is('schedule/' . $date->format('Y') . '/' . $date->format('n') . '/' . $team->id)) selected="selected" @endif
-                        >
-                            {{ $team->displayName }}
-                        </option>
-                    @endforeach
-                </x-form.select>
-            </div>
-            <div class="grid md:grid-cols-2 gap-y-2 gap-x-2 md:gap-x-6">
+        <div class="bg-neutral-700 p-4 rounded-md space-y-4">
+            <!-- Team and Date selector start -->
+            <div class="grid gap-y-2">
                 <div>
-                    <label for="month" class="block text-sm font-medium leading-6">Month</label>
+                    <label for="Team" class="block text-sm font-medium leading-6 text-neutral-200">Team</label>
                     <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
-                        @foreach ($months as $key => $month)
-                            <option value="/schedule/{{ $date->format('Y') . '/' . $key }}" @if ($key == $date->format('n')) selected="selected" @endif">{{ $month }}</option>
+                            <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}">All Teams</option>
+                            <option value="{{ Request::url() }}">---</option>
+                        @foreach ($teams as $team)
+                            <option
+                                value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') . '/' . $team->id }}"
+                                @if (Request::is('schedule/' . $date->format('Y') . '/' . $date->format('n') . '/' . $team->id)) selected="selected" @endif
+                            >
+                                {{ $team->displayName }}
+                            </option>
                         @endforeach
                     </x-form.select>
                 </div>
-                <div>
-                    <label for="year" class="block text-sm font-medium leading-6">Year</label>
-                    <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
-                        <option value="/schedule/{{ $date->format('Y')-2 . '/' . $date->format('n') }}">{{ $date->format('Y')-2 }}</option>
-                        <option value="/schedule/{{ $date->format('Y')-1 . '/' . $date->format('n') }}">{{ $date->format('Y')-1 }}</option>
-                        <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}" selected="selected">{{ $date->format('Y') }}</option>
-                        <option value="/schedule/{{ $date->format('Y')+1 . '/' . $date->format('n') }}">{{ $date->format('Y')+1 }}</option>
-                        <option value="/schedule/{{ $date->format('Y')+2 . '/' . $date->format('n') }}">{{ $date->format('Y')+2 }}</option>
-                    </x-form.select>
+                <div class="grid md:grid-cols-2 gap-y-2 gap-x-2 md:gap-x-6">
+                    <div>
+                        <label for="month" class="block text-sm font-medium leading-6 text-neutral-200">Month</label>
+                        <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
+                            @foreach ($months as $key => $month)
+                                <option value="/schedule/{{ $date->format('Y') . '/' . $key }}" @if ($key == $date->format('n')) selected="selected" @endif">{{ $month }}</option>
+                            @endforeach
+                        </x-form.select>
+                    </div>
+                    <div>
+                        <label for="year" class="block text-sm font-medium leading-6 text-neutral-200">Year</label>
+                        <x-form.select class="text-start pl-3 rounded-md" onchange="if (this.value) window.location.href=this.value">
+                            <option value="/schedule/{{ $date->format('Y')-2 . '/' . $date->format('n') }}">{{ $date->format('Y')-2 }}</option>
+                            <option value="/schedule/{{ $date->format('Y')-1 . '/' . $date->format('n') }}">{{ $date->format('Y')-1 }}</option>
+                            <option value="/schedule/{{ $date->format('Y') . '/' . $date->format('n') }}" selected="selected">{{ $date->format('Y') }}</option>
+                            <option value="/schedule/{{ $date->format('Y')+1 . '/' . $date->format('n') }}">{{ $date->format('Y')+1 }}</option>
+                            <option value="/schedule/{{ $date->format('Y')+2 . '/' . $date->format('n') }}">{{ $date->format('Y')+2 }}</option>
+                        </x-form.select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Team and Date selector End -->
-        <!-- Previous and next month buttons start -->
-        <div>
-            @php
-                $prevMonth = clone $date;
-                $prevMonth->modify('-1 Month');
-                $nextMonth = clone $date;
-                $nextMonth->modify('+1 Month');
-            @endphp
-            <div class="grid grid-cols-2 gap-x-2 md:gap-x-6">
-                <div>
-                    <a href="/schedule/{{ $prevMonth->format('Y') . '/' . $prevMonth->format('n') }}"><x-button class="w-full">← {{ $prevMonth->format('F') . ' ' . $prevMonth->format('Y') }}</x-button></a>
-                </div>
-                <div>
-                    <a href="/schedule/{{ $nextMonth->format('Y') . '/' . $nextMonth->format('n') }}"><x-button class="w-full">{{ $nextMonth->format('F') . ' ' . $nextMonth->format('Y') }} →</x-button></a>
+            <!-- Team and Date selector End -->
+            <!-- Previous and next month buttons start -->
+            <div>
+                @php
+                    $prevMonth = clone $date;
+                    $prevMonth->modify('-1 Month');
+                    $nextMonth = clone $date;
+                    $nextMonth->modify('+1 Month');
+                @endphp
+                <div class="grid grid-cols-2 gap-x-2 md:gap-x-6">
+                    <div>
+                        <a href="/schedule/{{ $prevMonth->format('Y') . '/' . $prevMonth->format('n') }}"><x-button class="w-full">← {{ $prevMonth->format('F') . ' ' . $prevMonth->format('Y') }}</x-button></a>
+                    </div>
+                    <div>
+                        <a href="/schedule/{{ $nextMonth->format('Y') . '/' . $nextMonth->format('n') }}"><x-button class="w-full">{{ $nextMonth->format('F') . ' ' . $nextMonth->format('Y') }} →</x-button></a>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- Previous and next month buttons end -->
         <!-- Schedule Table start -->
-        <div class="w-100 overflow-x-auto">
+        <div class="w-100 overflow-x-auto bg-neutral-700 p-4 rounded-md">
             <x-table.table>
                 <x-table.head>
                     <x-table.head-row>
-                        <x-table.head-cell class="w-[200px] md:w-1/6">Name</x-table.head-cell>
+                        <x-table.head-cell class="w-[250px]">Name</x-table.head-cell>
                         @php
                             $loopdate = clone $date;
                         @endphp
                         @for ($i = 1; $i <= $date->format('t'); $i++)
                             <x-table.head-cell :$loopdate class="w-[50px]">
-                                {{ $i }}
+                                <a href="/daily/{{ $date->format('Y') . '/' . $date->format('n') . '/' . $i }}">{{ $i }}</a>
                             </x-table.head-cell>
                             @php
                                 $loopdate->modify('+1 Day');

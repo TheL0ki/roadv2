@@ -78,6 +78,7 @@ class ScheduleChanged extends Mailable
                 'user' => $this->user,
                 'date' => $this->date,
                 'schedule' => $formattedSchedule,
+                'appUrl' => env('APP_URL'),
             ]
         );
     }

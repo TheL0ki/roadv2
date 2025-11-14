@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Schedule;
 use DateTime;
 use App\Models\User;
 use App\Models\Shift;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BatchController extends Controller
 {
@@ -17,7 +18,7 @@ class BatchController extends Controller
     {
         $user = User::where('active', '=', '1')->orderBy('lastName')->get();
         $shift = Shift::where('active', '=', '1')->get();
-        $holidays = Shift::where('isHoliday', '=', '1')->get();
+        $holidays = Shift::where('isHoliday', '=', '1')->where('active', '=', '1')->get();
 
         $date = new DateTime();
         $date->setDate($date->format('Y'), $date->format('m'), '01');
@@ -113,6 +114,71 @@ class BatchController extends Controller
             'year' => $attributes['year'],
             'month' => $attributes['month'],
         ]);
+    }
+
+    public function createHoliday(Request $request) 
+    {
+        $input = $request->validate([
+            'name' => 'required',
+            'display' => 'required',
+            'color' => [
+                'required',
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+            ],
+            'textColor' => [
+                'required',
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+            ],
+            'hours' => ['required', 'numeric'],
+        ]);
+
+        Shift::create([
+            'name' => $input['name'],
+            'display' => $input['display'],
+            'color' => $input['color'],
+            'textColor' => $input['textColor'],
+            'hours' => $input['hours'],
+            'isHoliday' => true
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function destroyHoliday($id)
+    {
+        $shift = Shift::find($id);
+        $shift->active = false;
+        $shift->deletedAt = now();
+        $shift->deletedBy = Auth::user()->id;
+        $shift->save();
+        return redirect()->back();
+    }
+
+    public function updateHoliday(Request $request, $id) 
+    {
+        $input = $request->validate([
+            'name' => ['required', 'string'],
+            'display' => ['required', 'string'],
+            'color' => [
+                'required',
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+            ],
+            'textColor' => [
+                'required',
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+            ],
+            'hours' => ['required', 'numeric'],
+        ]);
+
+        $shift = Shift::find($id);
+        $shift->name = $input['name'];
+        $shift->display = $input['display'];
+        $shift->color = $input['color'];
+        $shift->textColor = $input['textColor'];
+        $shift->hours = $input['hours'];
+        $shift->save();
+
+        return redirect()->back();
     }
 
     /**

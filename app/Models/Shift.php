@@ -65,7 +65,8 @@ class Shift extends Model
         'hours',
         'active',
         'flexLoc',
-        'override'
+        'override',
+        'isHoliday'
     ];
 
     public function schedules() : HasMany

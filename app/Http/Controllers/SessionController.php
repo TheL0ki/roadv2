@@ -30,6 +30,9 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
+        $request->merge([ 'remember' => $request->has('remember'), ]);
+
+        $request->validate([ 'remember' => 'boolean', ]);
         // validate
         $attributes = request()->validate([
             'email' => ['required', 'email'],
@@ -37,7 +40,7 @@ class SessionController extends Controller
         ]);
 
         // attempt login
-        if(! Auth::attempt($attributes)) {
+        if(! Auth::attempt($attributes, $request->remember)) {
             throw ValidationException::withMessages([
                 'email' => 'Sorry, those credentials do not match'
             ]);

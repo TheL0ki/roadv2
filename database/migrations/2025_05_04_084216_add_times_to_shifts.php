@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('slackId')->nullable();
+        Schema::table('shifts', function (Blueprint $table) {
+            $table->time('hour_start', precision: 0)->default('00:00')->after('hours');
+            $table->time('hour_end', precision: 0)->default('00:00')->after('hour_start');
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('slackId');
+        Schema::table('shifts', function (Blueprint $table) {
+            $table->dropColumn(['hour_start', 'hour_end']);
         });
     }
 };

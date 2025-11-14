@@ -31,7 +31,7 @@
                         <x-table.body-cell>{{ $item->team->displayName }}</x-table.body-cell>
                         <x-table.body-cell class="text-center">{{ strtoupper($item->model) }}</x-table.body-cell>
                         <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
-                        <x-table.options :item=$item category="user" modal="editUser{{ $i }}"></x-table.options>
+                        <x-table.options :item=$item category="employee" modal="editUser{{ $i }}"></x-table.options>
                     </x-table.body-row>
                     @php
                         $i++;
@@ -59,10 +59,10 @@
         <x-button onclick="openModal('createUserModal')">Create New User</x-button>
     </div>
 
-    <form action="{{ route('user.store') }}" method="POST">
+    <form action="{{ route('employee.save') }}" method="POST">
         @csrf
         @method('POST')
-        <x-form.userModal :$teams :$roles modalName="createUserModal">
+        <x-form.userModal :$teams :$roles :$errors modalName="createUserModal">
             <x-slot:heading>Create New User</x-slot:heading>
         </x-form.userModal>
     </form>
@@ -71,7 +71,7 @@
         $i = 1;
     @endphp
     @foreach ($user as $item)
-        <form action="{{ route('user.update', $item->id) }}" method="POST">
+        <form action="{{ route('employee.update', $item->id) }}" method="POST">
             @csrf
             @method('PATCH')
             <x-form.userModal :$teams :$roles modalName="editUser{{ $i }}" :user="$item">
@@ -82,4 +82,32 @@
             @endphp
         </form>
     @endforeach
+    
+    <script type="text/javascript">
+        window.openModal = function(modalId) {
+            document.getElementById(modalId).style.display = 'block'
+            document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
+        };
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).style.display = 'none'
+            document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
+        };
+
+        // Close all modals when press ESC
+        document.onkeydown = function(event) {
+            event = event || window.event;
+            if (event.keyCode === 27) {
+                let modals = document.getElementsByClassName('userModal');
+                Array.prototype.slice.call(modals).forEach(i => {
+                    window.closeModal(i.id);
+                })
+            }
+        };
+    </script>
+    @if($errors->any())
+        <script>
+            window.openModal('createUserModal');
+        </script>
+    @endif
 </x-layout>

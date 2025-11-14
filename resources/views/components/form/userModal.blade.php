@@ -1,6 +1,6 @@
-@props(['teams', 'roles', 'modalName', 'user' => null])
+@props(['teams', 'roles', 'modalName', 'user' => null, 'errors' => null])
 
-<div id="{{ $modalName }}" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4">
+<div id="{{ $modalName }}" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4 userModal">
     <div class="relative top-20 mx-auto shadow-xl rounded-md bg-neutral-700 max-w-md">
         <div class="flex justify-between p-2 border-b border-white/20">
             <div>
@@ -25,11 +25,7 @@
                         <label for="firstName" class="block text-sm font-medium leading-6">First Name</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="firstName" name="firstName" type="text" required :value="$user->firstName"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="firstName" name="firstName" type="text" required></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="firstName" name="firstName" type="text" required :value="$user->firstName ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -38,11 +34,7 @@
                         <label for="lastName" class="block text-sm font-medium leading-6">Last Name</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="lastName" name="lastName" type="text" required :value="$user->lastName"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="lastName" name="lastName" type="text" required></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="lastName" name="lastName" type="text" required :value="$user->lastName ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -62,11 +54,7 @@
                         <label for="email" class="block text-sm font-medium leading-6">Email</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="email" name="email" type="text" required :value="$user->email"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="email" name="email" type="text" required></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="email" name="email" type="text" required :value="$user->email ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -75,11 +63,7 @@
                         <label for="slackId" class="block text-sm font-medium leading-6">Slack ID</label>
                     </div>
                     <div class="mt-2">
-                        @if ($user != null)
-                            <x-form.textInput id="slackId" name="slackId" type="text" :value="$user->slackId"></x-form.textInput> 
-                        @else
-                            <x-form.textInput id="slackId" name="slackId" type="text"></x-form.textInput>
-                        @endif
+                        <x-form.textInput id="slackId" name="slackId" type="text" :value="$user->slackId ?? null"></x-form.textInput> 
                     </div>
                 </div>
 
@@ -134,7 +118,35 @@
                         </x-form.select>
                     </div>
                 </div>
+                <div class="mb-2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-start">
+                            <label for="validFrom" class="block text-sm font-medium leading-6">Start Date</label>
+                        </div>
+                        <div class="flex items-start">
+                            <label for="validUntil" class="block text-sm font-medium leading-6">End Date</label>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mt-2">
+                        <div class="flex items-start">
+                            <x-form.dateInput name="validFrom" id="validFrom" :value="isset($user->validFrom) ? \Carbon\Carbon::parse($user->validFrom)->format('Y-m-d') : null"></x-form.dateInput>
+                        </div>
+                        <div class="flex items-start">
+                            <x-form.dateInput name="validUntil" id="validUntil" :value="isset($user->validUntil) ? \Carbon\Carbon::parse($user->validUntil)->format('Y-m-d') : null"></x-form.dateInput>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            @if ($errors->any())
+                <x-form.auth.errors>
+                    <ul class="list-disc list-inside text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </x-form.auth.errors>
+            @endif
 
             <div class="flex justify-between pt-2">
                 <x-button class="bg-green-600 hover:bg-green-900">Save</x-button>
@@ -143,27 +155,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">            
-    window.openModal = function(modalId) {
-        document.getElementById(modalId).style.display = 'block'
-        document.getElementsByTagName('body')[0].classList.add('overflow-y-hidden')
-    };
-
-    window.closeModal = function(modalId) {
-        document.getElementById(modalId).style.display = 'none'
-        document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-    };
-
-    // Close all modals when press ESC
-    document.onkeydown = function(event) {
-        event = event || window.event;
-        if (event.keyCode === 27) {
-            document.getElementsByTagName('body')[0].classList.remove('overflow-y-hidden')
-            let modals = document.getElementsById('{{ $modalName }}');
-            Array.prototype.slice.call(modals).forEach(i => {
-                i.style.display = 'none'
-            })
-        }
-    };
-</script>
