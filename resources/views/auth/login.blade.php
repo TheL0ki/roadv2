@@ -19,6 +19,15 @@
                 </div>
 
                 <div>
+                    <div class="flex items-center justify-start space-x-2">
+                        <div class="text-sm">
+                            <input id="remember" name="remember" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-400 focus:ring-blue-400">
+                        </div>
+                        <label for="remember" class="block text-sm font-medium leading-6">Remember me</label>
+                    </div>
+                </div>
+
+                <div>
                     <x-form.auth.submitButton>Sign In</x-form.auth.submitButton>
                 </div>
             </form>
