@@ -1,5 +1,8 @@
 <x-layout>
-    <div class="w-100 overflow-x-auto">
+    <div class="pt-4 flex justify-end">
+        <x-button onclick="openModal('createShiftModal')">+ Add Shift</x-button>
+    </div>
+    <div class="w-100 overflow-x-auto mt-4 p-4 bg-neutral-700 rounded-md">
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
@@ -64,10 +67,6 @@
             }, 2000);
         </script>
     @endif
-
-    <div class="pt-4">
-        <x-button onclick="openModal('createShiftModal')">Add Shift</x-button>
-    </div>
 
     <form action="{{ route('shifts.store') }}" method="POST">
         @csrf

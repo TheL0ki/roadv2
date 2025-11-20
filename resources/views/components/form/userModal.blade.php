@@ -2,7 +2,7 @@
 
 <div id="{{ $modalName }}" class="fixed hidden inset-0 bg-gray-950 bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 h-screen w-screen px-4 userModal">
     <div class="relative top-20 mx-auto shadow-xl rounded-md bg-neutral-700 max-w-md">
-        <div class="flex justify-between p-2 border-b border-white/20">
+        <div class="flex justify-between p-4 border-b border-white/20">
             <div>
                 <h2 class="text-2xl font-bold text-left">{{ $heading }}</h2>
             </div>
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <div class="p-8 pt-2 text-center">
+        <div class="p-4 pt-2 text-center">
             <div class="mb-4">
                 <div class="mb-2">
                     <div class="flex items-center justify-between">

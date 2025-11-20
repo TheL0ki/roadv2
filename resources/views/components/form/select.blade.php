@@ -1,7 +1,7 @@
 @php
     $classes = "block
                 w-full
-                bg-neutral-700
+                bg-neutral-600
                 rounded-md
                 border-neutral-500
                 text-white
