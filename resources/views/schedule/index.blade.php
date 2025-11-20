@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="grid gap-y-4">
+    <div class="grid mt-2">
         <div class="bg-neutral-700 p-4 rounded-md space-y-4">
             <!-- Team and Date selector start -->
             <div class="grid gap-y-2">
@@ -60,7 +60,7 @@
         </div>
         <!-- Previous and next month buttons end -->
         <!-- Schedule Table start -->
-        <div class="w-100 overflow-x-auto bg-neutral-700 p-4 rounded-md">
+        <div class="w-100 overflow-x-auto bg-neutral-700 p-4 mt-4 rounded-md">
             <x-table.table>
                 <x-table.head>
                     <x-table.head-row>
