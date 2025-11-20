@@ -21,3 +21,5 @@ yarn-error.log
 deploy.*
 _ide*
 .env.testing
+AGENTS.md
+.cursor/
