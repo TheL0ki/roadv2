@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="pt-4 flex justify-end">
+    <div class="flex justify-end">
         <x-button onclick="openModal('createShiftModal')">+ Add Shift</x-button>
     </div>
     <div class="w-100 overflow-x-auto mt-4 p-4 bg-neutral-700 rounded-md">

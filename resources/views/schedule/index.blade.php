@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="grid mt-2">
+    <div class="grid">
         <div class="bg-neutral-700 p-4 rounded-md space-y-4">
             <!-- Team and Date selector start -->
             <div class="grid gap-y-2">

@@ -84,7 +84,7 @@
             <a href="/settings" class="block py-2 px-4 text-white hover:bg-neutral-600">Settings</a>
             <a href="/logout" class="block py-2 px-4 text-white hover:bg-neutral-600">Logout</a>
         </div>
-        <main class="px-2 md:px-10 pt-2">
+        <main class="px-2 md:px-10 pt-4">
             {{ $slot }}
         </main>
     </div>
