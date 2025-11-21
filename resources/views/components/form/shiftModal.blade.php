@@ -73,14 +73,27 @@
                 </div>
 
                 <div class="mb-2">
-                    <div class="flex items-center justify-between">
-                        <label for="hours" class="block text-sm font-medium leading-6">Hours</label>
+                    <div class="flex justify-between">
+                        <label for="hour_start" class="block text-sm font-medium leading-6">Start</label>
                     </div>
                     <div class="mt-2">
                         @if ($shift != null)
-                            <x-form.textInput id="hours" name="hours" type="text" required :value="$shift->hours"></x-form.textInput>
+                            <x-form.inputTime id="hour_start" name="hour_start" required :value="$shift->hour_start"></x-form.inputTime>
                         @else
-                            <x-form.textInput id="hours" name="hours" type="text" required></x-form.textInput>
+                            <x-form.inputTime id="hour_start" name="hour_start" required></x-form.inputTime>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <div class="flex justify-between">
+                        <label for="hour_end" class="block text-sm font-medium leading-6">End</label>
+                    </div>
+                    <div class="mt-2">
+                        @if ($shift != null)
+                            <x-form.inputTime id="hour_end" name="hour_end" required :value="$shift->hour_end"></x-form.inputTime>
+                        @else
+                            <x-form.inputTime id="hour_end" name="hour_end" required></x-form.inputTime>
                         @endif
                     </div>
                 </div>

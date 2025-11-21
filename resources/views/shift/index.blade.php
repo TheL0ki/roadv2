@@ -9,7 +9,8 @@
                     <x-table.head-cell class="w-[100px] md:w-auto">Name</x-table.head-cell>
                     <x-table.head-cell class="w-[100px] md:w-auto">Display</x-table.head-cell>
                     <x-table.head-cell class="w-[200px] md:w-auto">Colors</x-table.head-cell>
-                    <x-table.head-cell class="w-[100px] md:w-auto">Hours</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">Start</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto">End</x-table.head-cell>
                     <x-table.head-cell class="w-[100px] md:w-auto">Flexible Location</x-table.head-cell>
                     <x-table.head-cell class="w-[100px] md:w-auto">Overrideable</x-table.head-cell>
                     <x-table.head-cell class="w-[200px] md:w-auto">Options</x-table.head-cell>
@@ -29,7 +30,8 @@
                                 Text: {{ strtoupper($shift->textColor) }}
                             </div>
                         </x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ $shift->hours }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ date('H:i', strtotime($shift->hour_start)) }}</x-table.body-cell>
+                        <x-table.body-cell class="text-center">{{ date('H:i', strtotime($shift->hour_end)) }}</x-table.body-cell>
                         <x-table.body-cell class="text-center">
                             @if($shift->flexLoc === 1)
                                 ✔️
@@ -84,7 +86,7 @@
             @csrf
             @method('PATCH')
             <x-form.shiftModal modalName="editShift{{ $i }}" :shift="$item">
-                <x-slot:heading>Edit User {{ $item->display }}</x-slot:heading>
+                <x-slot:heading>Edit Shift {{ $item->display }}</x-slot:heading>
             </x-form.shiftModal>
             @php
                 $i++;

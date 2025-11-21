@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\StoreShiftRequest;
-use App\Http\Requests\UpdateShiftRequest;
 
 class ShiftController extends Controller
 {
@@ -17,6 +14,7 @@ class ShiftController extends Controller
     public function index()
     {
         $shifts = Shift::where('isHoliday', 0)->where('active', 1)->get();
+
         return view('shift.index', ['shifts' => $shifts]);
     }
 
@@ -38,22 +36,23 @@ class ShiftController extends Controller
             'display' => 'required',
             'color' => [
                 'required',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
             ],
             'textColor' => [
                 'required',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
             ],
-            'hours' => ['required', 'numeric'],
+            'hour_start' => ['required', 'date_format:H:i'],
+            'hour_end' => ['required', 'date_format:H:i'],
         ]);
 
-        if($request->flexLoc) {
+        if ($request->flexLoc) {
             $shiftAttributes['flexLoc'] = true;
         } else {
             $shiftAttributes['flexLoc'] = false;
         }
-        
-        if($request->override) {
+
+        if ($request->override) {
             $shiftAttributes['override'] = true;
         } else {
             $shiftAttributes['override'] = false;
@@ -92,22 +91,23 @@ class ShiftController extends Controller
             'display' => 'required',
             'color' => [
                 'required',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
             ],
             'textColor' => [
                 'required',
-                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/'
+                'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
             ],
-            'hours' => ['required', 'numeric']
+            'hour_start' => ['required', 'date_format:H:i'],
+            'hour_end' => ['required', 'date_format:H:i'],
         ]);
 
-        if(!$request->flexLoc) {            
+        if (! $request->flexLoc) {
             $shiftAttributes['flexLoc'] = false;
         } else {
             $shiftAttributes['flexLoc'] = true;
         }
 
-        if(!$request->override) {
+        if (! $request->override) {
             $shiftAttributes['override'] = false;
         } else {
             $shiftAttributes['override'] = true;
@@ -117,7 +117,8 @@ class ShiftController extends Controller
         $shift->display = $shiftAttributes['display'];
         $shift->color = $shiftAttributes['color'];
         $shift->textColor = $shiftAttributes['textColor'];
-        $shift->hours = $shiftAttributes['hours'];
+        $shift->hour_start = $shiftAttributes['hour_start'];
+        $shift->hour_end = $shiftAttributes['hour_end'];
         $shift->flexLoc = $shiftAttributes['flexLoc'];
         $shift->override = $shiftAttributes['override'];
 

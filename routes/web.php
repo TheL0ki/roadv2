@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Middleware\Role;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\apiAccessController;
+use App\Http\Controllers\BatchController;
+use App\Http\Controllers\DailyController;
 use App\Http\Controllers\ForgotPassword;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\BatchController;
-use App\Http\Controllers\ShiftController;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\apiAccessController;
-use App\Http\Controllers\DailyController;
+use App\Http\Middleware\Role;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SessionController::class, 'create'])->name('login');
@@ -29,7 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/schedule/{year}/{month}/{team}', [ScheduleController::class, 'show']);
     Route::get('/schedule/{year}/{month}', [ScheduleController::class, 'show'])->name('schedule');
 
-    Route::get('/daily/{year}/{month}/{day}', [DailyController::class, 'index'])->name('daily.index');
+    Route::get('/daily/{year}/{month}/{day}', [DailyController::class, 'index'])
+        ->where(['year' => '[0-9]{4}', 'month' => '[0-9]{1,2}', 'day' => '[0-9]{1,2}'])
+        ->name('daily.index');
 
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::patch('/settings', [SettingsController::class, 'update'])->name('settings.update');
@@ -38,11 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [SessionController::class, 'destroy']);
 });
 
-
 Route::middleware(Role::class)->group(function () {
     Route::get('/batch', [BatchController::class, 'index']);
     Route::post('/batch', [BatchController::class, 'store'])->name('batch.store');
-    Route::post('/batch/holiday', [BatchController::class,'storeHoliday'])->name('batch.holiday');
+    Route::post('/batch/holiday', [BatchController::class, 'storeHoliday'])->name('batch.holiday');
     Route::post('/batch/holiday/new', [BatchController::class, 'createHoliday'])->name('holiday.create');
     Route::delete('/batch/holiday/{id}', [BatchController::class, 'destroyHoliday'])->name('holiday.destroy');
     Route::patch('/batch/holiday/{id}', [BatchController::class, 'updateHoliday'])->name('holiday.update');
@@ -61,7 +62,7 @@ Route::middleware(Role::class)->group(function () {
     Route::post('/shiftManagement', [ShiftController::class, 'store'])->name('shifts.store');
     Route::patch('/shiftManagement/{id}', [ShiftController::class, 'update'])->name('shifts.update');
     Route::delete('/shiftManagement/{id}', [ShiftController::class, 'destroy'])->name('shifts.destroy');
-    
+
     Route::get('/apiAccess', [apiAccessController::class, 'index']);
     Route::post('/apiAccess', [apiAccessController::class, 'store']);
     Route::delete('/apiAccess', [apiAccessController::class, 'destroy']);

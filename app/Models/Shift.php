@@ -2,23 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Schedule;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $display
  * @property string|null $color
  * @property string|null $textColor
- * @property float $hours
  * @property int $flexLoc
  * @property int $override
  * @property int $active
@@ -33,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\ShiftFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift newQuery()
@@ -44,13 +39,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereDeletedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereDisplay($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereFlexLoc($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereHours($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereIsHoliday($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereOverride($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereTextColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shift whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Shift extends Model
@@ -62,31 +57,32 @@ class Shift extends Model
         'display',
         'color',
         'textColor',
-        'hours',
         'active',
         'flexLoc',
         'override',
-        'isHoliday'
+        'isHoliday',
+        'hour_start',
+        'hour_end',
     ];
 
-    public function schedules() : HasMany
+    public function schedules(): HasMany
     {
         return $this->hasMany(Schedule::class);
     }
 
-    public function users() : BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
-    public function team(int $id) : void
+    public function team(int $id): void
     {
         $team = Team::find($id);
-        
+
         $this->teams()->attach($team);
     }
 
-    public function teams() : BelongsToMany
+    public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);
     }
