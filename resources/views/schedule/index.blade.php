@@ -64,7 +64,7 @@
             <x-table.table>
                 <x-table.head>
                     <x-table.head-row>
-                        <x-table.head-cell class="w-[250px]">Name</x-table.head-cell>
+                        <x-table.head-cell class="w-[230px]">Name</x-table.head-cell>
                         @php
                             $loopdate = clone $date;
                         @endphp
@@ -94,10 +94,10 @@
                         <x-table.body-row class="!h-12">
                             <x-table.body-cell>
                                 <a href="/schedule/change/{{ $item->id }}/{{ $date->format('Y') . '/' . $date->format('n') }}" class="flex">
-                                    <div>
+                                    <div class="min-w-[30px]">
                                         <x-profilePic :path="$item->profilePic" class="size-[30px]" />
                                     </div>
-                                    <div class="px-2 flex items-center">
+                                    <div class="px-2 flex items-center truncate">
                                         {{ $item->firstName }} {{ $item->lastName }}
                                     </div>
                                 </a>
@@ -116,7 +116,7 @@
                                         @php echo str_replace('-', '-<br>', $table[$item->id][$i]->shift->display); @endphp
                                     </x-table.body-cell>
                                 @else
-                                    <x-table.body-cell class="w-[50px] text-center" :$loopdate :$last />
+                                    <x-table.body-cell class="w-[50px] text-center" :$loopdate :$last type="schedule" />
                                 @endisset
                                 @php
                                     $loopdate->modify('+1 Day');

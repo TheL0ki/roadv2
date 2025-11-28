@@ -7,8 +7,8 @@
                 <x-table.body-row>
                     <x-table.head-cell class="w-[200px]" rowspan="4">
                             <div class="flex justify-between items-center">
-                                <div>
-                                    <x-profilePic :path="$user->profilePic" class="w-[50px] h-[50px]" />
+                                <div class="min-w-[50px]">
+                                    <x-profilePic :path="$user->profilePic" class="size-[50px]" />
                                 </div>
                                 <div>
                                     {{ $user->firstName }} {{ $user->lastName }}
