@@ -1,4 +1,4 @@
-@props(['type' => 'primary'])
+@props(['type' => 'primary', 'buttonType' => 'submit'])
 @php
     $classes="text-white font-bold py-2 px-4 rounded duration-300";
 
@@ -13,4 +13,4 @@
     }
 @endphp
 
-<button {{ $attributes(['class' => $classes])}}>{{ $slot }}</button>
+<button type="{{ $buttonType }}" {{ $attributes(['class' => $classes])}}>{{ $slot }}</button>

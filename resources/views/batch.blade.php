@@ -105,7 +105,7 @@
 
                     <!-- Navigation Buttons -->
                     <div class="flex justify-end space-x-4">
-                        <x-button type="primary" id="next-to-users" class="px-6 py-2 transition-colors">
+                        <x-button type="primary" button-type="button" id="next-to-users" class="px-6 py-2 transition-colors">
                             Next: Select Users →
                         </x-button>
                     </div>
