@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 
 class SettingsController extends Controller
 {
@@ -32,14 +31,15 @@ class SettingsController extends Controller
         $user = User::find($userAttributes['userId']);
 
         $user->email = $userAttributes['email'];
-        if(isset($userAttributes['profilePic'])) {
-            if($user->profilePic !== NULL) {
+        $user->highlight_current_user_row = $request->boolean('highlightCurrentUserRow');
+        if (isset($userAttributes['profilePic'])) {
+            if ($user->profilePic !== null) {
                 Storage::disk('public')->delete($user->profilePic);
             }
-            $profilePicPath = $request->file("profilePic")->storePublicly('profilePic', 'public');
+            $profilePicPath = $request->file('profilePic')->storePublicly('profilePic', 'public');
             $user->profilePic = $profilePicPath;
         }
-        
+
         $user->save();
 
         return redirect()->back()->with('feedback', 'profileUpdatedSuccess');

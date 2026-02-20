@@ -16,7 +16,7 @@
             </x-table.head>
             <x-table.body>
                 @foreach ($users as $user)
-                    <x-table.body-row  class="!h-12">
+                    <x-table.body-row class="!h-12" :highlighted="Auth::user()->highlight_current_user_row && $user->id === Auth::id()">
                             <x-table.body-cell>
                                 <div class="flex">
                                     <div>
