@@ -3,20 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Team;
-use App\Models\Shift;
-use App\Models\Schedule;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
- * 
- *
  * @property int $id
  * @property string $firstName
  * @property string $lastName
@@ -48,6 +43,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property-read Team|null $team
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
@@ -71,13 +67,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereValidFrom($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereValidUntil($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
+    use HasApiTokens;
     use HasFactory;
     use Notifiable;
-    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -94,7 +91,8 @@ class User extends Authenticatable
         'active',
         'admin',
         'validFrom',
-        'validUntil'
+        'validUntil',
+        'highlight_current_user_row',
     ];
 
     /**
@@ -117,6 +115,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'highlight_current_user_row' => 'boolean',
         ];
     }
 
@@ -140,7 +139,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Team::class);
     }
 
-    public function role() : BelongsTo
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }

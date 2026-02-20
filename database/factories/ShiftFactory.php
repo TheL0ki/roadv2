@@ -17,13 +17,13 @@ class ShiftFactory extends Factory
     public function definition(): array
     {
         $shiftname = strtoupper(fake()->randomLetter());
+
         return [
             'name' => $shiftname,
             'display' => $shiftname,
             'color' => fake()->hexColor(),
             'textColor' => fake()->hexColor(),
-            'hours' => fake()->numberBetween(6, 10),
-            'active' => 1
+            'active' => 1,
         ];
     }
 }

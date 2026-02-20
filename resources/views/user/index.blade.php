@@ -20,7 +20,7 @@
                         $i = 1;
                     @endphp
                     @foreach ($user as $item)
-                        <x-table.body-row>
+                        <x-table.body-row :highlighted="Auth::user()->highlight_current_user_row && $item->id === Auth::id()">
                             <x-table.body-cell>
                                 <div class="flex space-x-3">
                                     <div>

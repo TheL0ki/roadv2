@@ -91,7 +91,7 @@
                                 $last = true;
                             }
                         @endphp
-                        <x-table.body-row class="!h-12">
+                        <x-table.body-row class="!h-12" :highlighted="Auth::user()->highlight_current_user_row && $item->id === Auth::id()">
                             <x-table.body-cell>
                                 <a href="/schedule/change/{{ $item->id }}/{{ $date->format('Y') . '/' . $date->format('n') }}" class="flex">
                                     <div class="min-w-[30px]">
