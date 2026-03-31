@@ -49,15 +49,16 @@
                     </button>
                     
                     <div id="dropdown-menu" 
-                        class="pt-2 left-0 w-full absolute bg-neutral-700 shadow-md 
+                        class="mt-3 left-0 w-full absolute bg-neutral-500 border-neutral-500 shadow-md 
                                transition-transform duration-300 ease-in-out transform scale-y-0 origin-top 
-                               opacity-0 pointer-events-none">
+                               opacity-0 pointer-events-none rounded-lg">
                         <!-- Dropdown items -->
-                        <a href="/settings" class="block py-2 px-4 text-white hover:bg-neutral-600">Settings</a>
+                        <a href="/settings" class="block py-2 px-4 text-white hover:bg-neutral-700 hover:text-blue-400">Settings</a>
                         @admin
-                            <a href="/apiAccess" class="block py-2 px-4 text-white hover:bg-neutral-600">API Access</a>
+                            <a href="/apiAccess" class="block py-2 px-4 text-white hover:bg-neutral-700 hover:text-blue-400">API Access</a>
                         @endadmin
-                        <a href="/logout" class="block py-2 px-4 text-white hover:bg-neutral-600">Logout</a>
+                        <hr>
+                        <a href="/logout" class="block py-2 px-4 text-white hover:bg-neutral-700 hover:text-blue-400">Logout</a>
                     </div>
                 </div>
             @endauth
