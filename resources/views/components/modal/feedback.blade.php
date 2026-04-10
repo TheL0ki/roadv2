@@ -1,3 +1,5 @@
+@props(['details' => null])
+
 @php
     $classes = "py-2 px-4 rounded w-64";
 
@@ -77,5 +79,10 @@
         <div>
             {{ $message }}
         </div>
+        @if ($details)
+            <div class="mt-1 text-xs opacity-90 break-words">
+                {{ $details }}
+            </div>
+        @endif
     </div>
 </div>
