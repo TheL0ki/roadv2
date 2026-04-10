@@ -56,11 +56,11 @@
         </x-table.table>
     </div>
 
-    <x-modal.feedback>
-        {{ session('feedback') }}
+    <x-modal.feedback :details="$errors->first()">
+        {{ $errors->any() ? 'savingError' : session('feedback') }}
     </x-modal.feedback>
 
-    @if (session('feedback'))
+    @if (session('feedback') || $errors->any())
         <script>
             document.getElementById("feedbackModal").classList.remove('hidden');
 

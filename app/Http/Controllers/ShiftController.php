@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ShiftController extends Controller
 {
+    private function normalizeTime(string $value): string
+    {
+        return strlen($value) === 5 ? "{$value}:00" : $value;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -42,21 +47,16 @@ class ShiftController extends Controller
                 'required',
                 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
             ],
-            'hour_start' => ['required', 'date_format:H:i'],
-            'hour_end' => ['required', 'date_format:H:i'],
+            'hour_start' => ['required', 'regex:/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/'],
+            'hour_end' => ['required', 'regex:/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/'],
+            'flexLoc' => ['required', 'boolean'],
+            'override' => ['required', 'boolean'],
         ]);
 
-        if ($request->flexLoc) {
-            $shiftAttributes['flexLoc'] = true;
-        } else {
-            $shiftAttributes['flexLoc'] = false;
-        }
-
-        if ($request->override) {
-            $shiftAttributes['override'] = true;
-        } else {
-            $shiftAttributes['override'] = false;
-        }
+        $shiftAttributes['flexLoc'] = $request->boolean('flexLoc');
+        $shiftAttributes['override'] = $request->boolean('override');
+        $shiftAttributes['hour_start'] = $this->normalizeTime($shiftAttributes['hour_start']);
+        $shiftAttributes['hour_end'] = $this->normalizeTime($shiftAttributes['hour_end']);
 
         $shift = Shift::create($shiftAttributes);
 
@@ -97,21 +97,16 @@ class ShiftController extends Controller
                 'required',
                 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/',
             ],
-            'hour_start' => ['required', 'date_format:H:i'],
-            'hour_end' => ['required', 'date_format:H:i'],
+            'hour_start' => ['required', 'regex:/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/'],
+            'hour_end' => ['required', 'regex:/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/'],
+            'flexLoc' => ['required', 'boolean'],
+            'override' => ['required', 'boolean'],
         ]);
 
-        if (! $request->flexLoc) {
-            $shiftAttributes['flexLoc'] = false;
-        } else {
-            $shiftAttributes['flexLoc'] = true;
-        }
-
-        if (! $request->override) {
-            $shiftAttributes['override'] = false;
-        } else {
-            $shiftAttributes['override'] = true;
-        }
+        $shiftAttributes['flexLoc'] = $request->boolean('flexLoc');
+        $shiftAttributes['override'] = $request->boolean('override');
+        $shiftAttributes['hour_start'] = $this->normalizeTime($shiftAttributes['hour_start']);
+        $shiftAttributes['hour_end'] = $this->normalizeTime($shiftAttributes['hour_end']);
 
         $shift->name = $shiftAttributes['name'];
         $shift->display = $shiftAttributes['display'];

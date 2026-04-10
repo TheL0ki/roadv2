@@ -78,7 +78,7 @@
                     </div>
                     <div class="mt-2">
                         @if ($shift != null)
-                            <x-form.inputTime id="hour_start" name="hour_start" required :value="$shift->hour_start"></x-form.inputTime>
+                            <x-form.inputTime id="hour_start" name="hour_start" required :value="substr((string) $shift->hour_start, 0, 5)"></x-form.inputTime>
                         @else
                             <x-form.inputTime id="hour_start" name="hour_start" required></x-form.inputTime>
                         @endif
@@ -91,7 +91,7 @@
                     </div>
                     <div class="mt-2">
                         @if ($shift != null)
-                            <x-form.inputTime id="hour_end" name="hour_end" required :value="$shift->hour_end"></x-form.inputTime>
+                            <x-form.inputTime id="hour_end" name="hour_end" required :value="substr((string) $shift->hour_end, 0, 5)"></x-form.inputTime>
                         @else
                             <x-form.inputTime id="hour_end" name="hour_end" required></x-form.inputTime>
                         @endif
@@ -103,10 +103,11 @@
                         <label for="flexLoc" class="block text-sm font-medium leading-6">Flexible Location?</label>
                     </div>
                     <div class="mt-2">
+                        <input type="hidden" name="flexLoc" value="0" />
                         @if($shift != null)
-                            <input name="flexLoc" id="flexLoc" type="checkbox" @if($shift->flexLoc == 1) checked @endif/>
+                            <input name="flexLoc" id="flexLoc" type="checkbox" value="1" @if($shift->flexLoc == 1) checked @endif/>
                         @else
-                            <input name="flexLoc" id="flexLoc" type="checkbox" checked />
+                            <input name="flexLoc" id="flexLoc" type="checkbox" value="1" checked />
                         @endif
                     </div>
                 </div>
@@ -116,10 +117,11 @@
                         <label for="flexLoc" class="block text-sm font-medium leading-6">Overridable?</label>
                     </div>
                     <div class="mt-2">
+                        <input type="hidden" name="override" value="0" />
                         @if($shift != null)
-                            <input name="override" id="override" type="checkbox" @if($shift->override == 1) checked @endif/>
+                            <input name="override" id="override" type="checkbox" value="1" @if($shift->override == 1) checked @endif/>
                         @else
-                            <input name="override" id="override" type="checkbox" checked />
+                            <input name="override" id="override" type="checkbox" value="1" checked />
                         @endif
                     </div>
                 </div>
@@ -127,7 +129,7 @@
 
             <div class="flex justify-between pt-2">
                 <x-button class="bg-green-600 hover:bg-green-900">Save</x-button>
-                <x-button class="bg-red-600 hover:bg-red-900" onclick="closeModal('{{ $modalName }}')">Cancel</x-button>
+                <x-button buttonType="button" class="bg-red-600 hover:bg-red-900" onclick="closeModal('{{ $modalName }}')">Cancel</x-button>
             </div>
         </div>
     </div>

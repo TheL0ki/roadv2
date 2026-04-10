@@ -150,6 +150,7 @@ class ScheduleController extends Controller
             }
             else
             {
+                $selectedShift = Shift::findOrFail($details['shift']);
                 $schedule = $user->schedule()->firstOrNew([
                     'day' => $day,
                     'month' => $request->month,
@@ -157,8 +158,10 @@ class ScheduleController extends Controller
                 ]);
     
                 $schedule->user_id = $user->id;
-                $schedule->shift_id = $details['shift'];
-                $schedule->flexLoc = $details['flexLoc'] ?? 0;
+                $schedule->shift_id = $selectedShift->id;
+                $schedule->flexLoc = $selectedShift->flexLoc
+                    ? (int) ($details['flexLoc'] ?? 0)
+                    : 0;
                 $schedule->save();                
             }
         }
