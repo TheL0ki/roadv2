@@ -4,7 +4,7 @@
     'type' => false,
     'color' => false,
     'textColor' => false,
-    'ho' => false,
+    'flexLoc' => false,
 ])
 
 @php
@@ -34,8 +34,8 @@
 
 @if($type === 'schedule')
     <td {{ $attributes(['class' => $classes]) }} style="background: {{ $color }}; color: {{ $textColor }};">
-        @if($ho == 1)
-            <div class="h-full border-2 border-red-500 content-center">
+        @if($flexLoc == 1)
+            <div class="h-full border-2 border-green-500 content-center">
         @endif
             {{ $slot }}
         </div>

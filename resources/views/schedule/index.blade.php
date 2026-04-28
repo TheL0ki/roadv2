@@ -111,7 +111,7 @@
                                         :$last
                                         color="{{ $table[$item->id][$i]->shift->color }}"
                                         textColor="{{ $table[$item->id][$i]->shift->textColor }}"
-                                        ho="{{ $table[$item->id][$i]->flexLoc }}"
+                                        flexLoc="{{ $table[$item->id][$i]->flexLoc }}"
                                     >
                                         @php echo str_replace('-', '-<br>', $table[$item->id][$i]->shift->display); @endphp
                                     </x-table.body-cell>

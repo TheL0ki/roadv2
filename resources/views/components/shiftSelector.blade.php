@@ -34,7 +34,7 @@
         </div>
         <div class="h-[50px] content-center">
             @if ($todayShift && $todayShift->shift->flexLoc === 1)
-                HO: <input type="checkbox" name="shift[{{ $i }}][flexLoc]" value="1" @if($todayShift->flexLoc == 1) checked @endif>
+                🏢: <input type="checkbox" name="shift[{{ $i }}][flexLoc]" value="1" @if($todayShift->flexLoc == 1) checked @endif>
             @endif
         </div>
     </div>
