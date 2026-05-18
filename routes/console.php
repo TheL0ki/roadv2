@@ -12,5 +12,4 @@ Artisan::command('inspire', function () {
 Schedule::command(NotifySlackShiftUser::class)
     ->weekdays()
     ->dailyAt('13:00')
-    ->timezone('Europe/Berlin')
-    ->purpose('Inform user via webhook about upcoming shift');
+    ->timezone('Europe/Berlin');
