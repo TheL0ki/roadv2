@@ -2,24 +2,24 @@
     <form action="{{ route('settings.update') }}" method="POST" enctype="multipart/form-data" class="flex justify-center">
         @method('PATCH')
         @csrf
-        <div class="max-w-2xl grow space-y-2">
+        <div class="w-100 max-w-2xl grow space-y-2 overflow-x-auto mt-4 p-4 bg-neutral-700 rounded-md">
             <div>
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" class="w-full cursor-not-allowed bg-white/10" value="{{ Auth::User()->firstName }}" disabled/>
+                <label for="firstName" class="text-sm">First Name</label>
+                <input type="text" id="firstName" name="firstName" class="mt-1 w-full cursor-not-allowed bg-white/10 rounded-md" value="{{ Auth::User()->firstName }}" disabled/>
             </div>
             <div>
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" class="w-full cursor-not-allowed bg-white/10" value="{{ Auth::User()->lastName }}" disabled/>
+                <label for="lastName" class="text-sm">Last Name</label>
+                <input type="text" id="lastName" name="lastName" class="mt-1 w-full cursor-not-allowed bg-white/10 rounded-md" value="{{ Auth::User()->lastName }}" disabled/>
             </div>
             <div>
-                <label for="email">E-Mail Address</label>
-                <input type="text" id="email" name="email" class="w-full bg-white/10" value="{{ Auth::User()->email }}" autocomplete="email" />
+                <label for="email" class="text-sm">E-Mail Address</label>
+                <input type="text" id="email" name="email" class="mt-1 w-full bg-white/10 rounded-md" value="{{ Auth::User()->email }}" autocomplete="email" />
             </div>
             <div>
-                <label for="profilePic">Profile picture</label>
-                <div class="flex justify-around w-full items-center">
+                <label for="profilePic" class="text-sm">Profile picture</label>
+                <div class="mt-1 flex justify-around w-full items-center">
                     <x-profilePic :path="Auth::user()->profilePic" class="w-[50px] h-[50px]" />
-                    <input type="file" id="profilePic" name="profilePic" accept=".png, .jpg, .jpeg, .gif">
+                    <input type="file" id="profilePic" name="profilePic" accept=".png, .jpg, .jpeg, .gif" class="bg-white/10 rounded-md">
                     @error('profilePic')
                         {{ $message }}
                     @enderror
