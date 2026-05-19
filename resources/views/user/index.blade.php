@@ -7,12 +7,10 @@
             <x-table.table>
                 <x-table.head>
                     <x-table.head-row>
-                        <x-table.head-cell class="w-[200px] md:w-auto">Full Name</x-table.head-cell>
-                        <x-table.head-cell class="w-[200px] md:w-auto">E-mail</x-table.head-cell>
-                        <x-table.head-cell class="w-[200px] md:w-auto">Team</x-table.head-cell>
-                        <x-table.head-cell class="w-[200px] md:w-auto">Model</x-table.head-cell>
+                        <x-table.head-cell class="w-[200px] md:w-auto text-start">Full Name</x-table.head-cell>
+                        <x-table.head-cell class="w-[200px] md:w-auto text-start">Team</x-table.head-cell>
                         <x-table.head-cell class="w-[200px] md:w-auto">Role</x-table.head-cell>
-                        <x-table.head-cell class="w-[200px] md:w-auto">Edit</x-table.head-cell>
+                        <x-table.head-cell class="w-[200px] md:w-auto">Actions</x-table.head-cell>
                     </x-table.head-row>
                 </x-table.head>
                 <x-table.body>
@@ -21,20 +19,24 @@
                     @endphp
                     @foreach ($user as $item)
                         <x-table.body-row :highlighted="Auth::user()->highlight_current_user_row && $item->id === Auth::id()">
-                            <x-table.body-cell>
-                                <div class="flex space-x-3">
+                            <td class="border-t border-white/30">
+                                <div class="flex space-x-3 px-3">
                                     <div>
                                         <x-profilePic :path="$item->profilePic" class="w-[50px] h-[50px]" />
                                     </div>
-                                    <div class="flex items-center">
-                                        <p>{{ $item->firstName . ' ' . $item->lastName }}</p>
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span>{{ $item->firstName . ' ' . $item->lastName }}</span>
+                                            <span class="inline-flex items-center rounded-full bg-blue-100 py-1 px-2 text-xs font-medium text-blue-800">
+                                                {{ strtoupper($item->model) }}
+                                            </span>                                            
+                                        </div>
+                                        <p class="text-sm text-gray-400">{{ $item->email }}</p>
                                     </div>
                                 </div>
-                            </x-table.body-cell>
-                            <x-table.body-cell>{{ $item->email }}</x-table.body-cell>
-                            <x-table.body-cell>{{ $item->team->displayName }}</x-table.body-cell>
-                            <x-table.body-cell class="text-center">{{ strtoupper($item->model) }}</x-table.body-cell>
-                            <x-table.body-cell class="text-center"><span class="bg-blue-800 rounded-full text-xs font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></x-table.body-cell>
+                            </td>
+                            <td class="border-t border-white/30 px-2">{{ $item->team->displayName }}</td>
+                            <td class="text-center border-t border-white/30"><span class="bg-blue-800 rounded-full text-sm font-bold px-3 py-1">{{ ucfirst($item->role->name) }}</span></td>
                             <x-table.options :item=$item category="employee" modal="editUser{{ $i }}"></x-table.options>
                         </x-table.body-row>
                         @php

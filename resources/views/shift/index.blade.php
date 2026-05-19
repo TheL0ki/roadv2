@@ -6,9 +6,8 @@
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
-                    <x-table.head-cell class="w-[100px] md:w-auto">Name</x-table.head-cell>
-                    <x-table.head-cell class="w-[100px] md:w-auto">Display</x-table.head-cell>
-                    <x-table.head-cell class="w-[200px] md:w-auto">Colors</x-table.head-cell>
+                    <x-table.head-cell class="w-[100px] md:w-auto text-start">Name</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto text-start">Colors</x-table.head-cell>
                     <x-table.head-cell class="w-[100px] md:w-auto">Start</x-table.head-cell>
                     <x-table.head-cell class="w-[100px] md:w-auto">End</x-table.head-cell>
                     <x-table.head-cell class="w-[100px] md:w-auto">Flexible Location</x-table.head-cell>
@@ -22,30 +21,48 @@
                 @endphp
                 @foreach ($shifts as $shift)
                     <x-table.body-row>
-                        <x-table.body-cell class="text-center">{{ $shift->name }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ $shift->display }}</x-table.body-cell>
-                        <x-table.body-cell>
-                            <div style="background-color: {{ $shift->color }}; color: {{ $shift->textColor }};">
-                                Background: {{ strtoupper($shift->color) }}<br>
-                                Text: {{ strtoupper($shift->textColor) }}
+                        <td class="px-3 text-start border-t border-white/30">
+                            <p>{{ $shift->display }}</p>
+                            <p class="text-sm text-gray-400">{{ $shift->name }}</p>
+                        </td>
+                        <td class="border-t border-white/30">
+
+                            <div class="px-2 mt-2 mb-2">
+                                <div class="grid grid-cols-2 gap-1">
+                                    <span class="text-sm text-gray-400">Background:</span>
+                                    <div class="flex justify-start">
+                                        <div class="w-6 h-6 rounded border border-gray-600" style="background-color: {{ $shift->color }};"></div>
+                                        <span class="ml-2 text-sm text-gray-300 font-mono">{{ strtoupper($shift->color) }}</span>
+                                    </div>
+                                    <span class="text-sm text-gray-400">Text:</span>
+                                    <div class="flex justify-start">
+                                        <div class="w-6 h-6 rounded border border-gray-600" style="background-color: {{ $shift->textColor }};"></div>
+                                        <span class="ml-2 text-sm text-gray-300 font-mono">{{ strtoupper($shift->textColor) }}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-2 p-2 rounded" style="background-color: {{ $shift->color }}; color: {{ $shift->textColor }};">
+                                    <span class="text-sm font-medium">Preview: {{ $shift->display }}</span>
+                                </div>
                             </div>
-                        </x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ date('H:i', strtotime($shift->hour_start)) }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ date('H:i', strtotime($shift->hour_end)) }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">
+
+                        </td class="border-t border-white/30">
+                        <td class="text-center border-t border-white/30" class="text-center">{{ date('H:i', strtotime($shift->hour_start)) }}</td>
+                        <td class="text-center border-t border-white/30" class="text-center">{{ date('H:i', strtotime($shift->hour_end)) }}</td>
+                        <td class="text-center border-t border-white/30" class="text-center">
                             @if($shift->flexLoc === 1)
                                 ✔️
                             @else
                                 ❌
                             @endif
-                        </x-table.body-cell>
-                        <x-table.body-cell class="text-center">
+                        </td>
+                        <td class="text-center border-t border-white/30" class="text-center">
                             @if($shift->override === 1)
                                 ✔️
                             @else
                                 ❌
                             @endif
-                        </x-table.body-cell>
+                        </td>
                         <x-table.options :item=$shift category="shift" modal="editShift{{ $i }}" />
                     </x-table.body-row>
                     @php

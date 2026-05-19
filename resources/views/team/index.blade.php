@@ -6,11 +6,10 @@
         <x-table.table>
             <x-table.head>
                 <x-table.head-row>
-                    <x-table.head-cell class="w-[200px] md:w-auto">Name</x-table.head-cell>
-                    <x-table.head-cell class="w-[200px] md:w-auto">Display Name</x-table.head-cell>
-                    <x-table.head-cell class="w-[200px] md:w-auto">Manager</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto text-start">Name</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto text-start">Manager</x-table.head-cell>
                     <x-table.head-cell class="w-[200px] md:w-auto">Members</x-table.head-cell>
-                    <x-table.head-cell class="w-[200px] md:w-auto">Options</x-table.head-cell>
+                    <x-table.head-cell class="w-[200px] md:w-auto">Actions</x-table.head-cell>
                 </x-table.head-row>
             </x-table.head>
             <x-table.body>
@@ -19,16 +18,22 @@
                 @endphp
                 @foreach ($teams as $team)            
                     <x-table.body-row>
-                        <x-table.body-cell class="text-center">{{ $team->name }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">{{ $team->displayName }}</x-table.body-cell>
-                        <x-table.body-cell class="text-center">
+                        <td class="px-3 text-start border-t border-white/30">
+                            <p>
+                                {{ $team->displayName }}
+                            </p>
+                            <p class="text-sm text-gray-400">
+                                {{ $team->name }}
+                            </p>
+                        </td>
+                        <td class="text-center border-t border-white/30">
                             @foreach($team->manager as $manager)
                                 {{ $manager->firstName }} {{ $manager->lastName }}
                             @endforeach
-                        </x-table.body-cell>
-                        <x-table.body-cell class="text-center">
+                        </td>
+                        <td class="text-center border-t border-white/30">
                             {{ $team->user->count() }}
-                        </x-table.body-cell>
+                        </td>
                         <x-table.options :item=$team category="team" modal="editTeam{{ $i }}"/>
                     </x-table.body-row>
                     @php
