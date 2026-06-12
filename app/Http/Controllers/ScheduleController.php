@@ -156,13 +156,23 @@ class ScheduleController extends Controller
                     'month' => $request->month,
                     'year' => $request->year,
                 ]);
+
+                $flexLocChange = false;
+
+                if($selectedShift->id === $schedule->shift_id && $selectedShift->flexLoc != $schedule->flexLoc) {
+                    $flexLocChange = true;
+                }
     
                 $schedule->user_id = $user->id;
                 $schedule->shift_id = $selectedShift->id;
                 $schedule->flexLoc = $selectedShift->flexLoc
                     ? (int) ($details['flexLoc'] ?? 0)
                     : 0;
-                $schedule->save();                
+                $schedule->save();
+
+                if($flexLocChange) {
+                    return redirect('/schedule/' . $request->year .'/' . $request->month);
+                }
             }
         }
 
