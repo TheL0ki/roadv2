@@ -1,6 +1,7 @@
 <?php
 
 use App\Console\Commands\NotifySlackShiftUser;
+use App\Console\Commands\SendShiftReport;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -12,4 +13,8 @@ Artisan::command('inspire', function () {
 Schedule::command(NotifySlackShiftUser::class)
     ->weekdays()
     ->dailyAt('13:00')
+    ->timezone('Europe/Berlin');
+
+Schedule::command(SendShiftReport::class)
+    ->monthlyOn(1, '08:00')
     ->timezone('Europe/Berlin');
