@@ -96,3 +96,77 @@ it('clears schedule flexLoc when saving to a non-flex shift', function () {
     expect($entry->shift_id)->toBe($fixedShift->id)
         ->and($entry->flexLoc)->toBe(0);
 });
+
+it('can set and change shifts on days after an already saved shift', function () {
+    $adminRole = Role::create(['name' => 'administrator']);
+    Role::create(['name' => 'manager']);
+    Role::create(['name' => 'user']);
+
+    $admin = User::factory()->create([
+        'role_id' => $adminRole->id,
+    ]);
+
+    $existingShift = Shift::factory()->create([
+        'name' => 'D',
+        'display' => 'Day',
+        'hour_start' => '08:00:00',
+        'hour_end' => '16:00:00',
+        'flexLoc' => 1,
+    ]);
+
+    $earlierShift = Shift::factory()->create([
+        'name' => 'E',
+        'display' => 'Earlier',
+        'hour_start' => '06:00:00',
+        'hour_end' => '14:00:00',
+        'flexLoc' => 1,
+    ]);
+
+    $laterShift = Shift::factory()->create([
+        'name' => 'L',
+        'display' => 'Later',
+        'hour_start' => '14:00:00',
+        'hour_end' => '22:00:00',
+        'flexLoc' => 1,
+    ]);
+
+    $user = User::factory()->create([
+        'role_id' => $adminRole->id,
+    ]);
+
+    Schedule::factory()->create([
+        'user_id' => $user->id,
+        'day' => 6,
+        'month' => 9,
+        'year' => 2026,
+        'shift_id' => $existingShift->id,
+        'flexLoc' => 0,
+    ]);
+
+    $shiftPayload = [];
+    for ($day = 1; $day <= 30; $day++) {
+        $shiftPayload[$day] = ['shift' => 'null'];
+    }
+    $shiftPayload[5] = ['shift' => (string) $earlierShift->id];
+    $shiftPayload[6] = ['shift' => (string) $existingShift->id];
+    $shiftPayload[7] = ['shift' => (string) $laterShift->id];
+
+    $response = $this->actingAs($admin)->patch("/schedule/{$user->id}/update", [
+        'user_id' => $user->id,
+        'month' => 9,
+        'year' => 2026,
+        'shift' => $shiftPayload,
+    ]);
+
+    $response->assertRedirect('/schedule/2026/9');
+
+    $saved = Schedule::where('user_id', $user->id)
+        ->where('month', 9)
+        ->where('year', 2026)
+        ->get()
+        ->keyBy('day');
+
+    expect($saved->get(5)?->shift_id)->toBe($earlierShift->id)
+        ->and($saved->get(6)?->shift_id)->toBe($existingShift->id)
+        ->and($saved->get(7)?->shift_id)->toBe($laterShift->id);
+});

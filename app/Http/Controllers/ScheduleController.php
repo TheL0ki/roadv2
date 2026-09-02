@@ -138,6 +138,7 @@ class ScheduleController extends Controller
         ]);
 
         $user = User::find($request->user_id);
+        $shiftAssignmentChanged = false;
 
         foreach($request->shift as $day => $details) {
             
@@ -146,6 +147,7 @@ class ScheduleController extends Controller
                 $schedule = $user->schedule()->where('day', $day)->where('month', $request->month)->where('year', $request->year)->first();
                 if($schedule) {
                     $schedule->delete();
+                    $shiftAssignmentChanged = true;
                 }
             }
             else
@@ -157,10 +159,8 @@ class ScheduleController extends Controller
                     'year' => $request->year,
                 ]);
 
-                $flexLocChange = false;
-
-                if($selectedShift->id === $schedule->shift_id && $selectedShift->flexLoc != $schedule->flexLoc) {
-                    $flexLocChange = true;
+                if (!$schedule->exists || (int) $schedule->shift_id !== (int) $selectedShift->id) {
+                    $shiftAssignmentChanged = true;
                 }
     
                 $schedule->user_id = $user->id;
@@ -169,14 +169,10 @@ class ScheduleController extends Controller
                     ? (int) ($details['flexLoc'] ?? 0)
                     : 0;
                 $schedule->save();
-
-                if($flexLocChange) {
-                    return redirect('/schedule/' . $request->year .'/' . $request->month);
-                }
             }
         }
 
-        if(in_array(Auth::user()->role->id, [1, 2])) {
+        if($shiftAssignmentChanged && in_array(Auth::user()->role->id, [1, 2])) {
             SendScheduleMail::dispatch(new ScheduleChanged($user, new DateTime($request->year . '-' . $request->month . '-01')));
         }
         
