@@ -34,7 +34,7 @@
                         <td class="text-center border-t border-white/30">
                             {{ $team->user->count() }}
                         </td>
-                        <x-table.options :item=$team category="team" modal="editTeam{{ $i }}"/>
+                        <x-table.options :item=$team category="teams" modal="editTeam{{ $i }}"/>
                     </x-table.body-row>
                     @php
                         $i++;
