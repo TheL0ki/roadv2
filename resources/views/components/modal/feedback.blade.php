@@ -3,7 +3,7 @@
 @php
     $classes = "py-2 px-4 rounded w-64";
 
-    switch ($slot) {
+    switch (trim((string) $slot)) {
         case 'savingError':
             $classes .=" bg-red-400 text-red-800";
             $heading = "Error";
@@ -63,6 +63,7 @@
             $classes .=" bg-green-400 text-green-700";
             $heading = "Success";
             $message = "Shift deleted successfully";
+            break;
         default:
             $classes .=" bg-yellow-200";
             $heading = "Error";
