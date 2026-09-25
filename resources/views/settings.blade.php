@@ -32,7 +32,12 @@
                 <input type="checkbox" id="highlightCurrentUserRow" name="highlightCurrentUserRow" value="1" class="rounded bg-white/10 border-neutral-500 size-4"
                     @checked(Auth::user()->highlight_current_user_row ?? true) />
                 <label for="highlightCurrentUserRow">Highlight my row in tables</label>
-            </div>
+                </div>
+                <div class="flex items-center gap-2 mt-3">
+                    <input type="checkbox" id="emailShiftReminder" name="emailShiftReminder" value="1" class="rounded bg-white/10 border-neutral-500 size-4"
+                        @checked(Auth::user()->email_shift_reminder) />
+                    <label for="emailShiftReminder">E-Mail shiftreminder</label>
+                </div>
             </div>
             <div class="flex justify-around space-x-4">
                 <x-button role="submit" class="bg-green-600 hover:bg-green-900 w-full">Save</x-button>

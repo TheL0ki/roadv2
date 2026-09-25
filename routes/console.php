@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\NotifyEmailShiftUser;
 use App\Console\Commands\NotifySlackShiftUser;
 use App\Console\Commands\SendShiftReport;
 use Illuminate\Foundation\Inspiring;
@@ -15,6 +16,13 @@ Schedule::command(NotifySlackShiftUser::class)
     ->dailyAt('13:00')
     ->timezone('Europe/Berlin');
 
+Schedule::command(NotifyEmailShiftUser::class)
+    ->weekdays()
+    ->dailyAt('13:00')
+    ->timezone('Europe/Berlin');
+
+Schedule::command(SendShiftReport::class)
+    ->monthlyOn(1, '08:00')
 Schedule::command(SendShiftReport::class, [
     '--month' => now('Europe/Berlin')->subMonth()->format('Y-m'),
 ])
