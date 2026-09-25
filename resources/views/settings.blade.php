@@ -36,7 +36,7 @@
                 <div class="flex items-center gap-2 mt-3">
                     <input type="checkbox" id="emailShiftReminder" name="emailShiftReminder" value="1" class="rounded bg-white/10 border-neutral-500 size-4"
                         @checked(Auth::user()->email_shift_reminder) />
-                    <label for="emailShiftReminder">E-Mail shiftreminder</label>
+                    <label for="emailShiftReminder">E-Mail Shift Reminder</label>
                 </div>
             </div>
             <div class="flex justify-around space-x-4">
