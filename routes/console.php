@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\NotifyEmailShiftUser;
 use App\Console\Commands\NotifySlackShiftUser;
 use App\Console\Commands\SendShiftReport;
 use Illuminate\Foundation\Inspiring;
@@ -11,6 +12,11 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command(NotifySlackShiftUser::class)
+    ->weekdays()
+    ->dailyAt('13:00')
+    ->timezone('Europe/Berlin');
+
+Schedule::command(NotifyEmailShiftUser::class)
     ->weekdays()
     ->dailyAt('13:00')
     ->timezone('Europe/Berlin');

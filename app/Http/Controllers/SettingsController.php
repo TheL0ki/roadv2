@@ -32,6 +32,7 @@ class SettingsController extends Controller
 
         $user->email = $userAttributes['email'];
         $user->highlight_current_user_row = $request->boolean('highlightCurrentUserRow');
+        $user->email_shift_reminder = $request->boolean('emailShiftReminder');
         if (isset($userAttributes['profilePic'])) {
             if ($user->profilePic !== null) {
                 Storage::disk('public')->delete($user->profilePic);

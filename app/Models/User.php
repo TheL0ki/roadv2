@@ -31,6 +31,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $slackId
+ * @property bool $email_shift_reminder
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Team> $managingTeams
  * @property-read int|null $managing_teams_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -93,6 +94,7 @@ class User extends Authenticatable
         'validFrom',
         'validUntil',
         'highlight_current_user_row',
+        'email_shift_reminder',
     ];
 
     /**
@@ -116,6 +118,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'highlight_current_user_row' => 'boolean',
+            'email_shift_reminder' => 'boolean',
         ];
     }
 
