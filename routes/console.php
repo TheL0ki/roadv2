@@ -23,4 +23,8 @@ Schedule::command(NotifyEmailShiftUser::class)
 
 Schedule::command(SendShiftReport::class)
     ->monthlyOn(1, '08:00')
+Schedule::command(SendShiftReport::class, [
+    '--month' => now('Europe/Berlin')->subMonth()->format('Y-m'),
+])
+    ->monthlyOn(15, '09:00')
     ->timezone('Europe/Berlin');

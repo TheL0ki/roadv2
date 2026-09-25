@@ -63,7 +63,7 @@
                                 ❌
                             @endif
                         </td>
-                        <x-table.options :item=$shift category="shift" modal="editShift{{ $i }}" />
+                        <x-table.options :item=$shift category="shifts" modal="editShift{{ $i }}" />
                     </x-table.body-row>
                     @php
                         $i++;

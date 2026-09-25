@@ -293,11 +293,21 @@ it('uses configured shift and emails when arguments are omitted', function () {
     Mail::assertSent(ShiftReport::class, fn (ShiftReport $mail) => $mail->hasTo('configured@example.com'));
 });
 
-it('is scheduled monthly on the first at 08:00 in europe berlin', function () {
+it('is scheduled monthly on the 15th at 09:00 for the previous month', function (string $runAt, string $month) {
+    Carbon::setTestNow(Carbon::parse($runAt, 'Europe/Berlin'));
+
+    $this->refreshApplication();
+
     $event = collect(app(Illuminate\Console\Scheduling\Schedule::class)->events())
         ->first(fn ($scheduledEvent) => str_contains($scheduledEvent->command ?? '', 'app:send-shift-report'));
 
     expect($event)->not->toBeNull()
         ->and($event->timezone)->toBe('Europe/Berlin')
-        ->and($event->expression)->toBe('0 8 1 * *');
-});
+        ->and($event->expression)->toBe('0 9 15 * *')
+        ->and($event->command)->toContain("--month='{$month}'");
+
+    Carbon::setTestNow();
+})->with([
+    'september reports august' => ['2026-09-15 09:00:00', '2026-08'],
+    'january reports december' => ['2027-01-15 09:00:00', '2026-12'],
+]);
