@@ -38,6 +38,24 @@
                         @checked(Auth::user()->email_shift_reminder) />
                     <label for="emailShiftReminder">E-Mail Shift Reminder</label>
                 </div>
+                <div class="mt-3">
+                    <p class="text-sm text-neutral-300 mb-3">Remind me the day before these shifts</p>
+                    @if ($shifts->isEmpty())
+                        <p class="text-sm text-neutral-400">No shifts available.</p>
+                    @else
+                        <div class="shift-reminder-grid">
+                            @foreach ($shifts as $shift)
+                                <label class="shift-reminder-option" for="reminderShift{{ $shift->id }}">
+                                    <input type="checkbox" id="reminderShift{{ $shift->id }}" name="reminderShifts[]" value="{{ $shift->id }}"
+                                        @checked($selectedShiftIds->contains($shift->id)) />
+                                    <span class="shift-reminder-tile" style="background-color: {{ $shift->color }}; color: {{ $shift->textColor }};">
+                                        {{ $shift->display }}
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
             </div>
             <div class="flex justify-around space-x-4">
                 <x-button role="submit" class="bg-green-600 hover:bg-green-900 w-full">Save</x-button>
@@ -46,6 +64,59 @@
         </div>
         <input type="hidden" name="userId" value="{{ Auth::User()->id }}">
     </form>
+
+    <style>
+        .shift-reminder-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .shift-reminder-option {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .shift-reminder-option input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .shift-reminder-tile {
+            display: flex;
+            min-height: 3.5rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            border: 2px solid transparent;
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            line-height: 1.25rem;
+            overflow-wrap: anywhere;
+            opacity: 0.45;
+            transition: opacity 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .shift-reminder-option:hover .shift-reminder-tile {
+            opacity: 0.85;
+        }
+
+        .shift-reminder-option input:checked + .shift-reminder-tile,
+        .shift-reminder-option input:focus-visible + .shift-reminder-tile {
+            opacity: 1;
+            border-color: #fff;
+            box-shadow: 0 0 0 2px #404040, 0 0 0 4px #fff;
+        }
+    </style>
 
     <x-modal.feedback>
         {{ session('feedback') }}

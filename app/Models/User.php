@@ -137,6 +137,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Shift::class);
     }
 
+    public function reminderShifts(): BelongsToMany
+    {
+        return $this->belongsToMany(Shift::class, 'shift_email_reminders');
+    }
+
     public function managingTeams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class);
