@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shift;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,17 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('settings');
+        $user = auth()->user();
+
+        return view('settings', [
+            'shifts' => Shift::query()
+                ->where('isHoliday', 0)
+                ->where('active', 1)
+                ->whereNull('deletedAt')
+                ->orderBy('name')
+                ->get(),
+            'selectedShiftIds' => $user->reminderShifts()->pluck('shifts.id'),
+        ]);
     }
 
     /**
@@ -26,6 +37,8 @@ class SettingsController extends Controller
             'email' => ['required', 'email'],
             'userId' => ['required'],
             'profilePic' => ['nullable', 'file', File::types(['png', 'jpg', 'jpeg', 'webp', 'gif'])],
+            'reminderShifts' => ['nullable', 'array'],
+            'reminderShifts.*' => ['integer'],
         ]);
 
         $user = User::find($userAttributes['userId']);
@@ -42,8 +55,29 @@ class SettingsController extends Controller
         }
 
         $user->save();
+        $user->reminderShifts()->sync($this->reminderShiftIds($request));
 
         return redirect()->back()->with('feedback', 'profileUpdatedSuccess');
+    }
+
+    /**
+     * @return list<int>
+     */
+    private function reminderShiftIds(Request $request): array
+    {
+        $requested = $request->input('reminderShifts', []);
+
+        if (! is_array($requested) || $requested === []) {
+            return [];
+        }
+
+        return Shift::query()
+            ->whereIn('id', $requested)
+            ->where('isHoliday', 0)
+            ->where('active', 1)
+            ->whereNull('deletedAt')
+            ->pluck('id')
+            ->all();
     }
 
     public function updatePassword(Request $request)

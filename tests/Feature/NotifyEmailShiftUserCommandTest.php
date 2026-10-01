@@ -7,50 +7,59 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 
-beforeEach(function () {
-    config(['road.email_notify_shift_id' => 42]);
-});
+function scheduleUser(User $user, Shift $shift, int $day, int $month, int $year): void
+{
+    Schedule::factory()->create([
+        'user_id' => $user->id,
+        'shift_id' => $shift->id,
+        'day' => $day,
+        'month' => $month,
+        'year' => $year,
+    ]);
+}
 
-it('emails opted-in users scheduled for the configured shift tomorrow', function () {
+it('emails users about the shifts they selected for tomorrow', function () {
     Carbon::setTestNow(Carbon::parse('2026-05-18 12:00:00', 'Europe/Berlin'));
 
     Mail::fake();
 
     $targetDate = Carbon::now('Europe/Berlin')->addDay();
-    $shift = Shift::factory()->create([
+    $night = Shift::factory()->create([
         'name' => 'Night',
         'hour_start' => '22:00:00',
         'hour_end' => '06:00:00',
     ]);
+    $day = Shift::factory()->create(['name' => 'Day']);
 
-    config(['road.email_notify_shift_id' => $shift->id]);
-
-    $user = User::factory()->create([
+    $jane = User::factory()->create([
         'firstName' => 'Jane',
         'lastName' => 'Doe',
         'email' => 'jane@example.com',
         'email_shift_reminder' => true,
     ]);
+    $jane->reminderShifts()->attach($night);
 
-    Schedule::factory()->create([
-        'user_id' => $user->id,
-        'shift_id' => $shift->id,
-        'day' => (int) $targetDate->format('d'),
-        'month' => (int) $targetDate->format('n'),
-        'year' => (int) $targetDate->format('Y'),
+    $bob = User::factory()->create([
+        'email' => 'bob@example.com',
+        'email_shift_reminder' => true,
     ]);
+    $bob->reminderShifts()->attach($day);
+
+    scheduleUser($jane, $night, (int) $targetDate->format('d'), (int) $targetDate->format('n'), (int) $targetDate->format('Y'));
+    scheduleUser($bob, $day, (int) $targetDate->format('d'), (int) $targetDate->format('n'), (int) $targetDate->format('Y'));
 
     $this->artisan('app:notify-email-shift-user')
         ->assertSuccessful()
-        ->expectsOutputToContain('Emailed 1 user(s) about Night');
+        ->expectsOutputToContain('Emailed 2 reminder(s) for 2026-05-19');
 
-    Mail::assertSent(ShiftReminder::class, function (ShiftReminder $mail) use ($user, $shift) {
+    Mail::assertSent(ShiftReminder::class, function (ShiftReminder $mail) use ($jane, $night) {
         return $mail->hasTo('jane@example.com')
-            && $mail->user->is($user)
-            && $mail->shift->is($shift)
+            && $mail->user->is($jane)
+            && $mail->shift->is($night)
             && $mail->date->toDateString() === '2026-05-19'
             && $mail->envelope()->subject === 'Erinnerung: Schicht Night am 19.05.2026';
     });
+    Mail::assertSent(ShiftReminder::class, fn (ShiftReminder $mail) => $mail->hasTo('bob@example.com') && $mail->shift->is($day));
 
     Carbon::setTestNow();
 });
@@ -62,66 +71,48 @@ it('does not email users who have not enabled the reminder', function () {
 
     $targetDate = Carbon::now('Europe/Berlin')->addDay();
     $shift = Shift::factory()->create();
-
-    config(['road.email_notify_shift_id' => $shift->id]);
-
     $user = User::factory()->create([
-        'firstName' => 'Jane',
-        'lastName' => 'Doe',
         'email_shift_reminder' => false,
     ]);
+    $user->reminderShifts()->attach($shift);
 
-    Schedule::factory()->create([
-        'user_id' => $user->id,
-        'shift_id' => $shift->id,
-        'day' => (int) $targetDate->format('d'),
-        'month' => (int) $targetDate->format('n'),
-        'year' => (int) $targetDate->format('Y'),
-    ]);
+    scheduleUser($user, $shift, (int) $targetDate->format('d'), (int) $targetDate->format('n'), (int) $targetDate->format('Y'));
 
     $this->artisan('app:notify-email-shift-user')
         ->assertSuccessful()
-        ->expectsOutputToContain('Skipping Jane Doe (email reminders disabled)')
-        ->expectsOutputToContain('No users with email reminders enabled');
+        ->expectsOutputToContain('No shift reminders to send for 2026-05-19');
 
     Mail::assertNothingSent();
 
     Carbon::setTestNow();
 });
 
-it('emails only the users who opted in', function () {
+it('does not email an enabled user about a shift they did not select', function () {
     Carbon::setTestNow(Carbon::parse('2026-05-18 12:00:00', 'Europe/Berlin'));
 
     Mail::fake();
 
     $targetDate = Carbon::now('Europe/Berlin')->addDay();
-    $shift = Shift::factory()->create(['name' => 'Night']);
+    $night = Shift::factory()->create(['name' => 'Night']);
+    $day = Shift::factory()->create(['name' => 'Day']);
 
-    config(['road.email_notify_shift_id' => $shift->id]);
-
-    $optedIn = User::factory()->create([
-        'email' => 'opted-in@example.com',
+    $user = User::factory()->create([
+        'firstName' => 'Jane',
+        'lastName' => 'Doe',
+        'email' => 'jane@example.com',
         'email_shift_reminder' => true,
     ]);
-    $optedOut = User::factory()->create([
-        'email' => 'opted-out@example.com',
-        'email_shift_reminder' => false,
-    ]);
+    $user->reminderShifts()->attach($day);
 
-    foreach ([$optedIn, $optedOut] as $user) {
-        Schedule::factory()->create([
-            'user_id' => $user->id,
-            'shift_id' => $shift->id,
-            'day' => (int) $targetDate->format('d'),
-            'month' => (int) $targetDate->format('n'),
-            'year' => (int) $targetDate->format('Y'),
-        ]);
-    }
+    scheduleUser($user, $night, (int) $targetDate->format('d'), (int) $targetDate->format('n'), (int) $targetDate->format('Y'));
+    scheduleUser($user, $day, (int) $targetDate->format('d'), (int) $targetDate->format('n'), (int) $targetDate->format('Y'));
 
-    $this->artisan('app:notify-email-shift-user')->assertSuccessful();
+    $this->artisan('app:notify-email-shift-user')
+        ->assertSuccessful()
+        ->expectsOutputToContain('Skipping Jane Doe for Night (shift not selected)');
 
-    Mail::assertSent(ShiftReminder::class, fn (ShiftReminder $mail) => $mail->hasTo('opted-in@example.com'));
-    Mail::assertNotSent(ShiftReminder::class, fn (ShiftReminder $mail) => $mail->hasTo('opted-out@example.com'));
+    Mail::assertSent(ShiftReminder::class, 1);
+    Mail::assertSent(ShiftReminder::class, fn (ShiftReminder $mail) => $mail->shift->is($day));
 
     Carbon::setTestNow();
 });
@@ -132,21 +123,13 @@ it('uses the given date instead of tomorrow', function () {
     Mail::fake();
 
     $shift = Shift::factory()->create(['name' => 'Night']);
-
-    config(['road.email_notify_shift_id' => $shift->id]);
-
     $user = User::factory()->create([
         'email' => 'jane@example.com',
         'email_shift_reminder' => true,
     ]);
+    $user->reminderShifts()->attach($shift);
 
-    Schedule::factory()->create([
-        'user_id' => $user->id,
-        'shift_id' => $shift->id,
-        'day' => 23,
-        'month' => 5,
-        'year' => 2026,
-    ]);
+    scheduleUser($user, $shift, 23, 5, 2026);
 
     $this->artisan('app:notify-email-shift-user', ['--date' => '2026-05-23'])
         ->assertSuccessful();
@@ -160,23 +143,15 @@ it('dry run prints the recipient without sending email', function () {
     Mail::fake();
 
     $shift = Shift::factory()->create(['name' => 'Night']);
-
-    config(['road.email_notify_shift_id' => $shift->id]);
-
     $user = User::factory()->create([
         'firstName' => 'Jane',
         'lastName' => 'Doe',
         'email' => 'jane@example.com',
         'email_shift_reminder' => true,
     ]);
+    $user->reminderShifts()->attach($shift);
 
-    Schedule::factory()->create([
-        'user_id' => $user->id,
-        'shift_id' => $shift->id,
-        'day' => 23,
-        'month' => 5,
-        'year' => 2026,
-    ]);
+    scheduleUser($user, $shift, 23, 5, 2026);
 
     $this->artisan('app:notify-email-shift-user', [
         '--date' => '2026-05-23',
@@ -188,37 +163,21 @@ it('dry run prints the recipient without sending email', function () {
     Mail::assertNothingSent();
 });
 
-it('fails when no schedule exists for the configured shift', function () {
+it('succeeds when nobody is scheduled', function () {
     Carbon::setTestNow(Carbon::parse('2026-05-18 12:00:00', 'Europe/Berlin'));
 
     Mail::fake();
 
-    $shift = Shift::factory()->create();
-
-    config(['road.email_notify_shift_id' => $shift->id]);
-
     $this->artisan('app:notify-email-shift-user')
-        ->assertFailed()
-        ->expectsOutputToContain('No user scheduled for shift');
+        ->assertSuccessful()
+        ->expectsOutputToContain('No shift reminders to send for 2026-05-19');
 
     Mail::assertNothingSent();
 
     Carbon::setTestNow();
 });
 
-it('fails when the shift id configuration is missing', function () {
-    config(['road.email_notify_shift_id' => null]);
-
-    $this->artisan('app:notify-email-shift-user')
-        ->assertFailed()
-        ->expectsOutputToContain('EMAIL_NOTIFY_SHIFT_ID must be configured');
-});
-
 it('fails when the date option is invalid', function () {
-    $shift = Shift::factory()->create();
-
-    config(['road.email_notify_shift_id' => $shift->id]);
-
     $this->artisan('app:notify-email-shift-user', ['--date' => 'not-a-date'])
         ->assertFailed()
         ->expectsOutputToContain('Invalid date');

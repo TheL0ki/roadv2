@@ -75,6 +75,11 @@ class Shift extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function reminderUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'shift_email_reminders');
+    }
+
     public function team(int $id): void
     {
         $team = Team::find($id);

@@ -18,19 +18,11 @@ class NotifyEmailShiftUser extends Command
                             {--date= : Target date (Y-m-d) for schedule lookup. Defaults to tomorrow}
                             {--dry-run : Print the recipients without sending email}';
 
-    protected $description = 'Email users who opted in about the configured shift on the next day';
+    protected $description = 'Email users the day before a shift they chose to be reminded about';
 
     public function handle(): int
     {
         $dryRun = (bool) $this->option('dry-run');
-        $shiftId = config('road.email_notify_shift_id');
-
-        if (! $shiftId) {
-            $this->error('EMAIL_NOTIFY_SHIFT_ID must be configured.');
-
-            return self::FAILURE;
-        }
-
         $targetDate = $this->resolveTargetDate();
 
         if ($targetDate === null) {
@@ -39,51 +31,38 @@ class NotifyEmailShiftUser extends Command
             return self::FAILURE;
         }
 
-        $shift = Shift::query()->find($shiftId);
-
-        if ($shift === null) {
-            $this->error("Shift [{$shiftId}] was not found.");
-
-            return self::FAILURE;
-        }
-
         $schedules = Schedule::query()
-            ->with('user')
-            ->where('shift_id', $shift->id)
+            ->with(['user.reminderShifts', 'shift'])
             ->where('day', (int) $targetDate->format('d'))
             ->where('month', (int) $targetDate->format('n'))
             ->where('year', (int) $targetDate->format('Y'))
             ->get()
-            ->unique('user_id');
-
-        if ($schedules->isEmpty()) {
-            $this->warn(sprintf(
-                'No user scheduled for shift %s on %s.',
-                $shift->id,
-                $targetDate->format('Y-m-d'),
-            ));
-
-            return self::FAILURE;
-        }
+            ->unique(fn (Schedule $schedule): string => $schedule->user_id.'-'.$schedule->shift_id);
 
         $sent = 0;
         $failed = false;
 
         foreach ($schedules as $schedule) {
             $user = $schedule->user;
+            $shift = $schedule->shift;
 
-            if ($user === null) {
-                $this->error('Scheduled entry has no user.');
+            if ($user === null || $shift === null) {
+                $this->error('Scheduled entry is missing a user or shift.');
                 $failed = true;
 
                 continue;
             }
 
             if (! $user->email_shift_reminder) {
+                continue;
+            }
+
+            if (! $user->reminderShifts->contains('id', $shift->id)) {
                 $this->line(sprintf(
-                    'Skipping %s %s (email reminders disabled).',
+                    'Skipping %s %s for %s (shift not selected).',
                     $user->firstName,
                     $user->lastName,
+                    $shift->name,
                 ));
 
                 continue;
@@ -125,8 +104,7 @@ class NotifyEmailShiftUser extends Command
 
         if ($sent === 0 && ! $failed) {
             $this->info(sprintf(
-                'No users with email reminders enabled for shift %s on %s.',
-                $shift->name,
+                'No shift reminders to send for %s.',
                 $targetDate->format('Y-m-d'),
             ));
 
@@ -138,9 +116,8 @@ class NotifyEmailShiftUser extends Command
         }
 
         $this->info(sprintf(
-            'Emailed %d user(s) about %s on %s.',
+            'Emailed %d reminder(s) for %s.',
             $sent,
-            $shift->name,
             $targetDate->format('Y-m-d'),
         ));
 
